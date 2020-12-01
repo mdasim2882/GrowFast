@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:padding="5dp"
+        android:background="@drawable/loginpreview" />
+
+    <TextView
+        android:id="@+id/create_an_account_text"
+        android:layout_width="match_parent"
+        android:layout_height="wraptaks_content"
+        android:layout_below="@id/imageLogin"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Create an account to continue "
+        android:fontFamily="@font/mclaren"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        app:cornerRadius="5dp"
+        android:fontFamily="@font/mclaren"
+        android:textStyle="bold"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:onClick="starthere"
+        android:text="Get Started"
+        />
+</RelativeLayout>

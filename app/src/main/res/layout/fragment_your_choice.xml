@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".ViewPagerAdapter.FragmentsStartUp.YourChoice">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/pictureOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+    <ImageView
+        android:id="@+id/imageorderpic"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="300dp"
+        android:padding="5dp"
+        android:background="@drawable/share_socially" />
+        <ImageView
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:id="@+id/handshake"
+            android:layout_alignEnd="@+id/imageorderpic"
+            android:layout_alignBottom="@+id/imageorderpic"
+            android:background="@drawable/success_order"/>
+</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pictureOrders"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="50dp"
+        android:fontFamily="@font/mclaren"
+        android:gravity="center"
+        android:text="@string/share_socially_to_become_popular"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+         />
+
+    <Button
+        android:id="@+id/letsGo"
+        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_height="50dp"
+        android:text="Let's Go"
+        android:fontFamily="@font/mclaren"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

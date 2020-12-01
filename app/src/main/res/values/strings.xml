@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GrowFast</string>
+    <string name="being_digital_text">Being Digital to grow your business at faster rate.</string>
+    <string name="offers_show_text">Create and share your digital cards,video clips, posters to become professional.</string>
+    <string name="share_socially_to_become_popular">Share socially to become popular</string>
+    <string name="helpdesk">Help Desk</string>
+    <string name="carttext">Cart</string>
+    <string name="menu_home">Home</string>
+    <string name="profiletext">Profile</string>
+</resources>

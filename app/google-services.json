@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "305260667369",
+    "firebase_url": "https://growfast-be85f.firebaseio.com",
+    "project_id": "growfast-be85f",
+    "storage_bucket": "growfast-be85f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305260667369:android:821b57a22a3fd781bdeb78",
+        "android_client_info": {
+          "package_name": "com.example.growfast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305260667369-2ii9u8c8n36ga15js880o9sll4ei2rkg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.growfast",
+            "certificate_hash": "92868152e3738fb39da6b0ebf03e095b3a396d0a"
+          }
+        },
+        {
+          "client_id": "305260667369-iatijor5accl2ra939s01ftm0477tshv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5lNY1phUPJKYpYEPzqNyjqDvxnirxsEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305260667369-iatijor5accl2ra939s01ftm0477tshv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
