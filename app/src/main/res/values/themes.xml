@@ -17,10 +17,10 @@
     <style name="Widget.GrowFast.TextInputLayout." parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.GrowFast.TextInputLayout.HintText
         </item>
-        <item name="hintTextColor">#D7FF521D</item>
+        <item name="hintTextColor">@color/skyblue</item>
 
         <item name="android:paddingBottom">8dp</item>
-        <item name="boxStrokeColor">@color/textInputOutlineColor</item>
+        <item name="boxStrokeColor">@color/dark_skyblue</item>
     </style>
 
     <style name="TextAppearance.GrowFast.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">

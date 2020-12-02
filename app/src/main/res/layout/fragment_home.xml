@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".NavigationItemsFolder.CoreFragments.Home">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/business_management_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:title="Digital Advisor"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/appBarLayout_name">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="edmt.dev.androidgridlayout.MainActivity">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/bg"
+
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@color/white"
+                        android:layout_margin="10dp" />
+                </RelativeLayout>
+
+                <GridLayout
+                    android:id="@+id/mainGrid"
+                    android:columnCount="3"
+                    android:rowCount="3"
+                    android:alignmentMode="alignMargins"
+                    android:columnOrderPreserved="false"
+                    android:layout_weight="8"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:padding="14dp">
+
+                    <!-- Row 1 -->
+
+                    <!-- Column 1 -->
+
+                    <!-- Column 2 -->
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_right"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_business_cards_id_card_svgrepo_com"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Digital Cards"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <!-- Row 2 -->
+
+                    <!-- Column 1 -->
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/website"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                app:tint="@color/dark_skyblue" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Website"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <!-- Column 2 -->
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_greetings"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                app:tint="@color/dark_skyblue"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Greetings"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <!-- Row 2 -->
+
+                    <!-- Column 1 -->
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_whatsapp_status"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                app:tint="@color/dark_skyblue"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Whatsapp Status Video"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                    >
+
+                    <!-- Column 2 -->
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_idea_creativity"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="UiPro Creativity Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_in_details_long"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="In-Details Long Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                    >
+
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_copy_paste"
+                                app:tint="@color/dark_skyblue"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Copy Paste Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_intro_videos"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Agent Intro Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_video_greetings"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                app:tint="@color/dark_skyblue"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:text="Greeting Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_round_video_library_own"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Own Videos"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp"
+                                app:tint="@color/dark_skyblue" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
+                        android:layout_marginLeft="@dimen/spacing_left"
+                        android:layout_marginRight="@dimen/spacing_left"
+                        app:cardElevation="8dp"
+                        app:cardCornerRadius="@dimen/spacing_left">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_twotone_info_24"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/mclaren"
+                                android:text="Help Desk"
+                                android:textAlignment="center"
+                                android:textColor="#5A5959"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </GridLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>

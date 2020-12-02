@@ -20,9 +20,9 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/imagewelcome"
         android:layout_margin="50dp"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/design_default_color_primary_dark"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/dark_skyblue"
         android:fontFamily="@font/mclaren"
         android:text="@string/offers_show_text" />
 

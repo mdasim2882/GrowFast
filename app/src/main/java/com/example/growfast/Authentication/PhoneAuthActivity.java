@@ -112,7 +112,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
         btnsend = findViewById(R.id.verifybutton);
         btnvalidate = findViewById(R.id.verifybutton);
 
-        app_name_ = findViewById(R.id.app_name_logo);
         layoutmob = findViewById(R.id.ll_mobno);
         layoutOTP = findViewById(R.id.ll_otpno);
     }

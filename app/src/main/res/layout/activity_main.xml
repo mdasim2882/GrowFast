@@ -16,11 +16,11 @@
 
     <TextView
         android:id="@+id/create_an_account_text"
-        android:layout_width="match_parent"
-        android:layout_height="wraptaks_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/imageLogin"
         android:gravity="center"
-        android:padding="5dp"
+        android:textAlignment="center"
         android:text="Create an account to continue "
         android:fontFamily="@font/mclaren"
         android:textColor="@color/design_default_color_primary_dark"
@@ -31,7 +31,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        app:cornerRadius="5dp"
+        app:cornerRadius="2dp"
         android:fontFamily="@font/mclaren"
         android:textStyle="bold"
         android:backgroundTint="@color/design_default_color_primary"

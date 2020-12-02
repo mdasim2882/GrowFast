@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cards_grid_title_dimensions">16dp</dimen>
+    <dimen name="card_image_grid_dimension">50dp</dimen>
+    <dimen name="card_margin_left">14dp</dimen>
+    <dimen name="card_margin_right">8dp</dimen>
+    <dimen name="spacing_left">4dp</dimen>
+    <dimen name="spacing_right">4dp</dimen>
+    <dimen name="spacing_bottom">12dp</dimen>
+</resources>
