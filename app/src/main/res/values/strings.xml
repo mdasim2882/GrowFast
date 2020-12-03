@@ -6,6 +6,7 @@
     <string name="helpdesk">Help Desk</string>
     <string name="carttext">Cart</string>
     <string name="menu_home">Home</string>
+    <string name="syncSummary">Enable or disable data synchronization</string>
     <string name="profiletext">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

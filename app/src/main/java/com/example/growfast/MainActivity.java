@@ -45,5 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public void starthere(View view) {
         Intent intent = new Intent(this, PhoneAuthActivity.class);
         startActivity(intent);
+        finish();
     }
 }

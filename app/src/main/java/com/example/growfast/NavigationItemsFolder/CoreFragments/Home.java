@@ -1,16 +1,20 @@
 package com.example.growfast.NavigationItemsFolder.CoreFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
 
 /**
@@ -79,6 +83,15 @@ public class Home extends Fragment {
             activity.setSupportActionBar(toolbar);
             activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settingiconclick) {
+            Intent i = new Intent(getActivity(), Settings.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="updateInterval">
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>30 minutes</item>
+    </string-array>
+
+    <string-array name="updateIntervalValues">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="planets_array">
+        <item>Set Quantity</item>
+        <item>150 g</item>
+        <item>250 g</item>
+        <item>500 g</item>
+        <item>1 kg</item>
+        <item>2 kg</item>
+        <item>5 kg</item>
+    </string-array>
+
+
+</resources>

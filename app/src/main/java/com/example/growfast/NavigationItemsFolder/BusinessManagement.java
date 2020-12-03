@@ -41,13 +41,13 @@ public class BusinessManagement extends AppCompatActivity {
                         fragment = new Home();
                         break;
 
-                    case R.id.action_offers:
+                    case R.id.action_profile:
                         fragment = new ProfileDetails();
                         break;
-                    case R.id.action_history:
+                    case R.id.action_cart:
                         fragment = new Cart();
                         break;
-                    case R.id.action_favourites:
+                    case R.id.action_favourites_menu:
                         fragment = new HelpDesk();
                         break;
 
