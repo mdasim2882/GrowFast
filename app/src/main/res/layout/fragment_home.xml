@@ -285,7 +285,7 @@
                         android:layout_height="0dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="@dimen/spacing_bottom"
                         android:layout_marginLeft="@dimen/spacing_left"
                         android:layout_marginRight="@dimen/spacing_left"
                         app:cardElevation="8dp"

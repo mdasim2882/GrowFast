@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowFast">
-        <activity android:name=".NavigationItemsFolder.Settings"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"></activity>
+        <activity android:name=".NavigationItemsFolder.Settings" />
         <activity android:name=".NavigationItemsFolder.BusinessManagement" />
         <activity android:name=".StructureBaseActivity" />
         <activity android:name=".WelcomePagesActivity" />

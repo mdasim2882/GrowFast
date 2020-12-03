@@ -8,12 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
 
@@ -28,7 +31,7 @@ public class Home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private GridLayout mainGrid;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -70,11 +73,69 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        mainGrid = (GridLayout) view.findViewById(R.id.mainGrid);
+        setSingleEvent(mainGrid);
         // Inflate the layout for this fragment
         setUpToolbar(view);
         return view;
     }
 
+    private void setSingleEvent(GridLayout mainGrid) {
+        //Loop all child item of Main Grid
+        for (int i = 0; i < mainGrid.getChildCount(); i++) {
+            //You can see , all child item is CardView , so we just cast object to CardView
+            CardView cardView = (CardView) mainGrid.getChildAt(i);
+            final int finalI = i;
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    executeMethodforCardIndex(finalI);
+                }
+            });
+        }
+    }
+
+    private void executeMethodforCardIndex(int finalI) {
+        switch (finalI) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                Intent i = new Intent(getActivity(), WebsiteActivity.class);
+                startActivity(i);
+                break;
+            }
+            case 2: {
+                break;
+            }
+            case 3: {
+                break;
+            }
+            case 4: {
+                break;
+            }
+            case 5: {
+                break;
+            }
+            case 6: {
+                break;
+            }
+            case 7: {
+                break;
+            }
+            case 8: {
+                break;
+            }
+            case 9: {
+                break;
+            }
+            case 10: {
+                break;
+            }
+
+
+        }
+    }
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.business_management_toolbar);
