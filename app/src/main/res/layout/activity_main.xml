@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageLogin"
         android:gravity="center"
+        android:layout_marginTop="50dp"
         android:textAlignment="center"
         android:text="Create an account to continue "
         android:fontFamily="@font/mclaren"

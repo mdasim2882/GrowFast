@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,38 +17,46 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.growfast.InterfacesUsed.BannerLoadListener;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
+import com.example.growfast.Services.Banners;
+import com.example.growfast.Services.HomeSliderAdapter;
+import com.example.growfast.Services.PicassoImageLoadingService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Home#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Home extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import ss.com.bannerslider.Slider;
+
+
+public class Home extends Fragment implements BannerLoadListener {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private GridLayout mainGrid;
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
+    //Slider Materials
+    BannerLoadListener bannerLoadListener;
+    Slider bannerSlider;
+    CollectionReference bannerRef;
+
     public Home() {
-        // Required empty public constructor
+        bannerRef = FirebaseFirestore.getInstance().collection("Banners");
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static Home newInstance(String param1, String param2) {
         Home fragment = new Home();
@@ -77,7 +86,36 @@ public class Home extends Fragment {
         setSingleEvent(mainGrid);
         // Inflate the layout for this fragment
         setUpToolbar(view);
+
+        //Load banner using service
+        Slider.init(new PicassoImageLoadingService());
+        bannerLoadListener = this;
+        bannerSlider = view.findViewById(R.id.layout_banner);
+
+
+        loadBanner();
         return view;
+    }
+
+    private void loadBanner() {
+        bannerRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Banners> banners = new ArrayList<>();
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
+                        Banners banner = bannerSnapshot.toObject(Banners.class);
+                        banners.add(banner);
+                    }
+                    bannerLoadListener.onBannerLoadSuccess(banners);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                bannerLoadListener.onBannerLoadFailure(e.getMessage());
+            }
+        });
     }
 
     private void setSingleEvent(GridLayout mainGrid) {
@@ -159,6 +197,18 @@ public class Home extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.business_management_menu, menu);
         super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    @Override
+    public void onBannerLoadSuccess(List<Banners> banners) {
+        bannerSlider.setAdapter(new HomeSliderAdapter(banners));
+
+    }
+
+    @Override
+    public void onBannerLoadFailure(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
     }
 
 }

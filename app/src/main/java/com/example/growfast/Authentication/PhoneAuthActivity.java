@@ -36,8 +36,10 @@ import java.util.concurrent.TimeUnit;
  *
  * */
 
+
 public class PhoneAuthActivity extends AppCompatActivity {
     public final String LOGIN_STATS = "loginStats";
+
     public final String ISLOGIN = "islogin";
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String verificationCodeBySystem;
@@ -108,6 +110,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
     private void initializeLayoutElements() {
         mobileno = findViewById(R.id.contactno);
+        mobileno.setSelection(mobileno.getText().length());
         otpno = findViewById(R.id.otpnum);
         btnsend = findViewById(R.id.verifybutton);
         btnvalidate = findViewById(R.id.verifybutton);

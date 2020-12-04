@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/mclaren"
                     android:hint="Mobile no."
+                    android:text="+91"
                     android:inputType="phone"
                     android:textColor="@color/purple_700"
                     android:textColorHint="@color/purple_200" />
