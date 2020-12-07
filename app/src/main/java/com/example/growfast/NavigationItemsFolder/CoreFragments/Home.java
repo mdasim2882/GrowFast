@@ -18,7 +18,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.growfast.InterfacesUsed.BannerLoadListener;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
 import com.example.growfast.Services.Banners;
@@ -75,6 +74,8 @@ public class Home extends Fragment implements BannerLoadListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -139,8 +140,8 @@ public class Home extends Fragment implements BannerLoadListener {
                 break;
             }
             case 1: {
-                Intent i = new Intent(getActivity(), WebsiteActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(getActivity(), WebsiteActivity.class);
+//                startActivity(i);
                 break;
             }
             case 2: {

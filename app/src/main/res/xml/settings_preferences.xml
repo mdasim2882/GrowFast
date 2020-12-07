@@ -59,9 +59,9 @@
             android:key="notifications_status"
             android:title="Notify me"
             android:summary="Get notifications about newly added items" />
-        <Preference
+     <!--   <Preference
             android:title="Logout"
-            android:key="logout_button_preference" />
+            android:key="logout_button_preference" />-->
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Support Us">

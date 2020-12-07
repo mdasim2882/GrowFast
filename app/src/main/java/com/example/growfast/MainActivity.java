@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         try {
             //Shared preferences is used to save login session after authentication on the same device
             sharedPreferences = getSharedPreferences(LOGIN_STATS, Context.MODE_PRIVATE);

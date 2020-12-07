@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:background="#549C9797">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -262,6 +262,17 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/mclaren"
                         android:hint="About Us"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/savebtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/mclaren"
+                        android:text="Save info"
                         android:textSize="15sp" />
 
                 </LinearLayout>
