@@ -1,14 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NavigationItemsFolder.CoreFragments.ProfileDetails">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/myprofileAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:title="My Profile"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myprofileAppBarLayout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="4dp"
+            android:elevation="0dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#549C9797">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/businessman"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/mclaren"
+                    android:text="User001"
+                    android:textColor="#575555"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/personal_info_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/mclaren"
+                        android:padding="5dp"
+                        android:text="Personal Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Full Name"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Phone Number"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Email Id"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/social_details"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/mclaren"
+                        android:padding="5dp"
+                        android:text="Social Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Facebook Id"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Linked In"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Whatsapp Number"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Website Url"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Twitter Id"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Telegram Id"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Instagram Id"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/business_info_box"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/mclaren"
+                        android:padding="5dp"
+                        android:text="Business Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Work Address"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Designation"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="About Us"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
