@@ -2,6 +2,7 @@ package com.example.growfast.NavigationItemsFolder;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,17 +17,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BusinessManagement extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_layout);
         setBottomNavigationMenu();
+
     }
 
     private void setBottomNavigationMenu() {
         bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 

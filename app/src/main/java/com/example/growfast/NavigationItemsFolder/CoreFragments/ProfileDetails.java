@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,10 +51,31 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileDetails extends Fragment {
 
+    public static final String NAME = "name";
+    public static final String MOBILE = "mobile";
+    public static final String EMAIL = "email";
+    public static final String FACEBOOK_ID = "FacebookID";
+    public static final String LINKED_IN_ID = "LinkedInID";
+    public static final String WHATSAPP_NO = "WhatsappNo";
+    public static final String WEBSITE_URL = "WebsiteUrl";
+    public static final String TWITTER_ID = "TwitterID";
+    public static final String TELEGRAM_ID = "TelegramID";
+    public static final String WORK_ADDRESS = "WorkAddress";
+    public static final String DESIGNATION = "Designation";
+    public static final String ABOUT_US = "About Us";
+    public static final String INSTAGRAM_ID = "InstagramID";
+    public static final String IMAGE = "image";
+
+
     CircleImageView profilePic;
-    Button saveButton;
-    EditText mName;
     TextView personUsername;
+    EditText mName, mMobile, mEmailId, sFacebookID, sLinkedIn, sWhatsappNo, sWebsiteUrl, sTwitterID, sTelegeramID, sIntagramID;
+    EditText bWorkAdd, bDesignation, bAboutUs;
+    String dataName, dataMobile, dataEmail;
+    String dataFacebookId, dataLinkedIn, dataWhatsappNo, dataWebsiteUrl, dataTwitterId, dataTelegramId, dataInstagramId;
+    String dataWorkAdd, dataDesignation, dataAboutUs;
+    Button saveButton;
+
 
     Uri picUri;
     String mypicUri, myname;
@@ -102,27 +126,66 @@ public class ProfileDetails extends Fragment {
         storageProfilePicsRef = FirebaseStorage.getInstance().getReference().child("Profile Pic");
         getSavedUserInfo();
 
-
+        ((BusinessManagement) getActivity()).bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getSavedUserInfo();
         // Inflate the layout for this fragment
         itemView = inflater.inflate(R.layout.fragment_profile_details, container, false);
 
         profilePic = itemView.findViewById(R.id.profile_image);
         saveButton = itemView.findViewById(R.id.savebtn);
-        mName = itemView.findViewById(R.id.mname);
-        personUsername = itemView.findViewById(R.id.pUsername);
+        initializeEditTextFields();
 
         profilePic.setOnClickListener(v -> {
             //Step 1 implementation is used over here
             CropImage.activity().setAspectRatio(1, 1).start(getContext(), ProfileDetails.this);
         });
         saveButton.setOnClickListener(v -> savedToStorageDatabase());
-
+        // Inflate the layout for this fragment
+        setUpToolbar(itemView);
         return itemView;
+    }
+
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.profile_details_toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+            activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+            toolbar.setNavigationOnClickListener(v -> {
+                ((BusinessManagement) getActivity()).bottomNavigationView.setSelectedItemId(R.id.action_home);
+                ((BusinessManagement) getActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
+            });
+        }
+    }
+
+    private void initializeEditTextFields() {
+
+        personUsername = itemView.findViewById(R.id.pUsername);
+
+        //Personal Info
+        mName = itemView.findViewById(R.id.m_name);
+        mMobile = itemView.findViewById(R.id.m_moblie);
+        mEmailId = itemView.findViewById(R.id.m_emailID);
+
+        //Social Info
+        sFacebookID = itemView.findViewById(R.id.s_facebookId);
+        sLinkedIn = itemView.findViewById(R.id.s_linkedId);
+        sWhatsappNo = itemView.findViewById(R.id.s_whatsappNo);
+        sWebsiteUrl = itemView.findViewById(R.id.s_websiteUrl);
+        sTwitterID = itemView.findViewById(R.id.s_twitterID);
+        sTelegeramID = itemView.findViewById(R.id.s_telegramID);
+        sIntagramID = itemView.findViewById(R.id.s_instagramID);
+
+        //Businness Info
+        bWorkAdd = itemView.findViewById(R.id.b_workAdd);
+        bDesignation = itemView.findViewById(R.id.b_designation);
+        bAboutUs = itemView.findViewById(R.id.b_aboutUs);
+
     }
 
     private void getSavedUserInfo() {
@@ -141,15 +204,82 @@ public class ProfileDetails extends Fragment {
 
                 if (snapshot.exists() && snapshot != null) {
                     progressDialog.show();
-                    if (snapshot.contains("image")) {
-                        String image = snapshot.get("image").toString();
+                    if (snapshot.contains(IMAGE)) {
+                        String image = snapshot.get(IMAGE).toString();
                         Picasso.get().load(image).into(profilePic);
                         progressDialog.dismiss();
                     }
-                    if (snapshot.contains("name")) {
+
+                    //  Personal Info
+                    if (snapshot.contains(NAME)) {
                         parameterForSavingInfo = true;
-                        String savedName = snapshot.get("name").toString();
+                        String savedName = snapshot.get(NAME).toString();
                         personUsername.setText(savedName);
+                        mName.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(MOBILE)) {
+                        String savedName = snapshot.get(MOBILE).toString();
+                        mMobile.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(EMAIL)) {
+                        String savedName = snapshot.get(EMAIL).toString();
+                        mEmailId.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+
+                    //  Social Info
+                    if (snapshot.contains(FACEBOOK_ID)) {
+                        String savedName = snapshot.get(FACEBOOK_ID).toString();
+                        sFacebookID.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(LINKED_IN_ID)) {
+                        String savedName = snapshot.get(LINKED_IN_ID).toString();
+                        sLinkedIn.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(WHATSAPP_NO)) {
+                        String savedName = snapshot.get(WHATSAPP_NO).toString();
+                        sWhatsappNo.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(WEBSITE_URL)) {
+                        String savedName = snapshot.get(WEBSITE_URL).toString();
+                        sWebsiteUrl.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(TWITTER_ID)) {
+                        String savedName = snapshot.get(TWITTER_ID).toString();
+                        sTwitterID.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(TELEGRAM_ID)) {
+                        String savedName = snapshot.get(TELEGRAM_ID).toString();
+                        sTelegeramID.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(INSTAGRAM_ID)) {
+                        String savedName = snapshot.get(INSTAGRAM_ID).toString();
+                        sIntagramID.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+
+                    //  Business Info
+                    if (snapshot.contains(WORK_ADDRESS)) {
+                        String savedName = snapshot.get(WORK_ADDRESS).toString();
+                        bWorkAdd.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(DESIGNATION)) {
+                        String savedName = snapshot.get(DESIGNATION).toString();
+                        bDesignation.setText(savedName);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains(ABOUT_US)) {
+                        String savedName = snapshot.get(ABOUT_US).toString();
+                        bAboutUs.setText(savedName);
                         progressDialog.dismiss();
                     }
 
@@ -165,20 +295,89 @@ public class ProfileDetails extends Fragment {
         progressDialog.setMessage("Please wait... uploading your profile data");
         progressDialog.show();
 
-        String nameTobeSaved = mName.getText().toString();
+        //Extracting user inputs
+        retrieveInputs();
 
-        if (nameTobeSaved.length() > 0 || parameterForSavingInfo) {
+
+        if (dataName.length() > 0 || parameterForSavingInfo) {
             final StorageReference fileRef = storageProfilePicsRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
             HashMap<String, Object> userNAME = new HashMap<>();
 
-            if (nameTobeSaved.length() > 0) {
-                userNAME.put("name", nameTobeSaved);
-                personUsername.setText(nameTobeSaved);
+            //  Personal Info
+            if (dataName.length() > 0) {
+                userNAME.put(NAME, dataName);
+                personUsername.setText(dataName);
+            }
+            if (dataMobile.length() > 0) {
+                userNAME.put(MOBILE, dataMobile);
+                mMobile.setText(dataMobile);
 
+            }
+            if (dataEmail.length() > 0) {
+                userNAME.put(EMAIL, dataEmail);
+                mEmailId.setText(dataEmail);
+            }
+
+            //  Social Info
+            if (dataFacebookId.length() > 0) {
+                userNAME.put(FACEBOOK_ID, dataFacebookId);
+                sFacebookID.setText(dataFacebookId);
+
+            }
+            if (dataLinkedIn.length() > 0) {
+                userNAME.put(LINKED_IN_ID, dataLinkedIn);
+                sLinkedIn.setText(dataLinkedIn);
+
+
+            }
+            if (dataWhatsappNo.length() > 0) {
+                userNAME.put(WHATSAPP_NO, dataWhatsappNo);
+                sWhatsappNo.setText(dataWhatsappNo);
+
+
+            }
+            if (dataWebsiteUrl.length() > 0) {
+                userNAME.put(WEBSITE_URL, dataWebsiteUrl);
+                sWebsiteUrl.setText(dataWebsiteUrl);
+
+
+            }
+            if (dataTwitterId.length() > 0) {
+                userNAME.put(TWITTER_ID, dataTwitterId);
+                sTwitterID.setText(dataTwitterId);
+            }
+            if (dataTelegramId.length() > 0) {
+                userNAME.put(TELEGRAM_ID, dataTelegramId);
+                sTelegeramID.setText(dataTelegramId);
+            }
+            if (dataInstagramId.length() > 0) {
+                userNAME.put(INSTAGRAM_ID, dataInstagramId);
+                sIntagramID.setText(dataInstagramId);
+            }
+
+            // Business Info
+            if (dataWorkAdd.length() > 0) {
+                userNAME.put(WORK_ADDRESS, dataWorkAdd);
+                bWorkAdd.setText(dataWorkAdd);
+            }
+            if (dataDesignation.length() > 0) {
+                userNAME.put(DESIGNATION, dataDesignation);
+                bDesignation.setText(dataDesignation);
+
+
+            }
+            if (dataAboutUs.length() > 0) {
+                userNAME.put(ABOUT_US, dataAboutUs);
+                bAboutUs.setText(dataAboutUs);
+
+            }
+
+
+            if (userNAME.size() > 0) {
                 database.collection("User").document(mAuth.getCurrentUser().getUid()).set(userNAME, SetOptions.merge());
-
                 progressDialog.dismiss();
             }
+
 
             if (picUri != null) {
                 progressDialog.show();
@@ -201,7 +400,7 @@ public class ProfileDetails extends Fragment {
                             mypicUri = downloadUri.toString();
 
                             HashMap<String, Object> uniqueUserData = new HashMap<>();
-                            uniqueUserData.put("image", mypicUri);
+                            uniqueUserData.put(IMAGE, mypicUri);
 
                             database.collection("User").document(mAuth.getCurrentUser().getUid()).set(uniqueUserData, SetOptions.merge());
                             progressDialog.dismiss();
@@ -210,15 +409,36 @@ public class ProfileDetails extends Fragment {
                     }
                 });
             }
-            if (nameTobeSaved.length() == 0) {
+            if (dataName.length() == 0) {
                 progressDialog.dismiss();
             }
 
 
         } else {
             progressDialog.dismiss();
-            Toast.makeText(getActivity(), "No inputs", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Enter your name first...", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void retrieveInputs() {
+        dataName = mName.getText().toString();
+        dataMobile = mMobile.getText().toString();
+        dataEmail = mEmailId.getText().toString();
+
+        dataFacebookId = sFacebookID.getText().toString();
+        dataLinkedIn = sLinkedIn.getText().toString();
+        dataWhatsappNo = sWhatsappNo.getText().toString();
+        dataWebsiteUrl = sWebsiteUrl.getText().toString();
+        dataTwitterId = sTwitterID.getText().toString();
+        dataTelegramId = sTelegeramID.getText().toString();
+        dataInstagramId = sIntagramID.getText().toString();
+
+
+        dataWorkAdd = bWorkAdd.getText().toString();
+        dataDesignation = bDesignation.getText().toString();
+        dataAboutUs = bAboutUs.getText().toString();
+
+
     }
 
 
@@ -235,5 +455,6 @@ public class ProfileDetails extends Fragment {
             Toast.makeText(getActivity(), "Error: Try again...", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
