@@ -13,11 +13,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,11 +30,11 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -49,15 +50,19 @@ public class ProfileDetails extends Fragment {
 
     CircleImageView profilePic;
     Button saveButton;
+    EditText mName;
+    TextView personUsername;
+
     Uri picUri;
     String mypicUri, myname;
-
+    boolean parameterForSavingInfo = false;
 
     FirebaseAuth mAuth;
-    DatabaseReference databaseReference;
+    FirebaseFirestore database;
+
     StorageTask uploadTask;
     StorageReference storageProfilePicsRef;
-
+    ProgressDialog pd;
 
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
@@ -92,10 +97,11 @@ public class ProfileDetails extends Fragment {
         }
 
         //Intitialize database work
+        database = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("User");
         storageProfilePicsRef = FirebaseStorage.getInstance().getReference().child("Profile Pic");
         getSavedUserInfo();
+
 
     }
 
@@ -107,6 +113,8 @@ public class ProfileDetails extends Fragment {
 
         profilePic = itemView.findViewById(R.id.profile_image);
         saveButton = itemView.findViewById(R.id.savebtn);
+        mName = itemView.findViewById(R.id.mname);
+        personUsername = itemView.findViewById(R.id.pUsername);
 
         profilePic.setOnClickListener(v -> {
             //Step 1 implementation is used over here
@@ -119,31 +127,98 @@ public class ProfileDetails extends Fragment {
 
     private void getSavedUserInfo() {
 
-        try {
-            Log.d("tagger", "onCreate: " + "\n" +
-                    "FUID -->" + FirebaseAuth.getInstance().getUid() + "\n" +
-                    "CurrentUser FUID-->" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        pd = new ProgressDialog(getActivity());
+        pd.setTitle("Getting Info");
+        pd.setMessage("Acquiring user credentials info...");
+        loadFromCloudFirebase(pd);
 
-        databaseReference.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+    }
+
+    private void loadFromCloudFirebase(ProgressDialog progressDialog) {
+        database.collection("User").document(mAuth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
-                    if (snapshot.hasChild("image")) {
-                        String image = snapshot.child("image").getValue().toString();
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+
+                if (snapshot.exists() && snapshot != null) {
+                    progressDialog.show();
+                    if (snapshot.contains("image")) {
+                        String image = snapshot.get("image").toString();
                         Picasso.get().load(image).into(profilePic);
+                        progressDialog.dismiss();
+                    }
+                    if (snapshot.contains("name")) {
+                        parameterForSavingInfo = true;
+                        String savedName = snapshot.get("name").toString();
+                        personUsername.setText(savedName);
+                        progressDialog.dismiss();
                     }
 
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
+    }
+
+    private void savedToStorageDatabase() {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Saving Profile");
+        progressDialog.setMessage("Please wait... uploading your profile data");
+        progressDialog.show();
+
+        String nameTobeSaved = mName.getText().toString();
+
+        if (nameTobeSaved.length() > 0 || parameterForSavingInfo) {
+            final StorageReference fileRef = storageProfilePicsRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
+            HashMap<String, Object> userNAME = new HashMap<>();
+
+            if (nameTobeSaved.length() > 0) {
+                userNAME.put("name", nameTobeSaved);
+                personUsername.setText(nameTobeSaved);
+
+                database.collection("User").document(mAuth.getCurrentUser().getUid()).set(userNAME, SetOptions.merge());
+
+                progressDialog.dismiss();
+            }
+
+            if (picUri != null) {
+                progressDialog.show();
+                uploadTask = fileRef.putFile(picUri);
+                uploadTask.continueWithTask(new Continuation() {
+                    @Override
+                    public Object then(@NonNull Task task) throws Exception {
+
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        return fileRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            mypicUri = downloadUri.toString();
+
+                            HashMap<String, Object> uniqueUserData = new HashMap<>();
+                            uniqueUserData.put("image", mypicUri);
+
+                            database.collection("User").document(mAuth.getCurrentUser().getUid()).set(uniqueUserData, SetOptions.merge());
+                            progressDialog.dismiss();
+
+                        }
+                    }
+                });
+            }
+            if (nameTobeSaved.length() == 0) {
+                progressDialog.dismiss();
+            }
+
+
+        } else {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(), "No inputs", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -158,50 +233,6 @@ public class ProfileDetails extends Fragment {
 
         } else {
             Toast.makeText(getActivity(), "Error: Try again...", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void savedToStorageDatabase() {
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Saving Profile");
-        progressDialog.setMessage("Please wait... uploading your profile data");
-        progressDialog.show();
-
-
-        if (picUri != null) {
-            final StorageReference fileRef = storageProfilePicsRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
-            uploadTask = fileRef.putFile(picUri);
-            uploadTask.continueWithTask(new Continuation() {
-                @Override
-                public Object then(@NonNull Task task) throws Exception {
-
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        mypicUri = downloadUri.toString();
-
-
-                        HashMap<String, Object> uniqueUserData = new HashMap<>();
-                        uniqueUserData.put("image", mypicUri);
-
-                        databaseReference.child(mAuth.getCurrentUser().getUid()).updateChildren(uniqueUserData);
-                        progressDialog.dismiss();
-
-
-                    }
-                }
-            });
-        } else {
-            progressDialog.dismiss();
-            Toast.makeText(getActivity(), "Profile Picture not selected", Toast.LENGTH_SHORT).show();
         }
     }
 
