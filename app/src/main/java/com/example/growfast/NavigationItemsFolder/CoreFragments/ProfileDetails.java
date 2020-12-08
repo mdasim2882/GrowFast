@@ -10,6 +10,7 @@ package com.example.growfast.NavigationItemsFolder.CoreFragments;
  * */
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -86,7 +88,6 @@ public class ProfileDetails extends Fragment {
 
     StorageTask uploadTask;
     StorageReference storageProfilePicsRef;
-    ProgressDialog pd;
 
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
@@ -96,6 +97,10 @@ public class ProfileDetails extends Fragment {
     private String mParam1;
     private String mParam2;
     View itemView;
+
+    ProgressDialog progressDialog;
+    ProgressDialog pd;
+    AlertDialog.Builder alertDialog;
 
     public ProfileDetails() {
 
@@ -140,6 +145,9 @@ public class ProfileDetails extends Fragment {
         saveButton = itemView.findViewById(R.id.savebtn);
         initializeEditTextFields();
 
+
+        setDialogs();
+
         profilePic.setOnClickListener(v -> {
             //Step 1 implementation is used over here
             CropImage.activity().setAspectRatio(1, 1).start(getContext(), ProfileDetails.this);
@@ -148,6 +156,22 @@ public class ProfileDetails extends Fragment {
         // Inflate the layout for this fragment
         setUpToolbar(itemView);
         return itemView;
+    }
+
+    private void setDialogs() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Saving Profile");
+        progressDialog.setMessage("Please wait... uploading your profile data");
+
+        alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Done");
+        alertDialog.setMessage("Profile data saved.");
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void setUpToolbar(View view) {
@@ -290,14 +314,10 @@ public class ProfileDetails extends Fragment {
 
     private void savedToStorageDatabase() {
 
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Saving Profile");
-        progressDialog.setMessage("Please wait... uploading your profile data");
         progressDialog.show();
 
         //Extracting user inputs
         retrieveInputs();
-
 
         if (dataName.length() > 0 || parameterForSavingInfo) {
             final StorageReference fileRef = storageProfilePicsRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
@@ -374,8 +394,14 @@ public class ProfileDetails extends Fragment {
 
 
             if (userNAME.size() > 0) {
-                database.collection("User").document(mAuth.getCurrentUser().getUid()).set(userNAME, SetOptions.merge());
-                progressDialog.dismiss();
+                database.collection("User").document(mAuth.getCurrentUser().getUid()).set(userNAME, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        alertDialog.show();
+                    }
+                });
+
             }
 
 

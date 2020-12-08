@@ -64,7 +64,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/mclaren"
-                    android:text="User001"
+                    android:text=""
                     android:textColor="#575555"
                     android:textSize="20sp" />
             </RelativeLayout>
@@ -303,7 +303,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/mclaren"
         android:text="Save info"

@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BusinessManagement extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
+    private int STATUS_FRAGMENT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,6 @@ public class BusinessManagement extends AppCompatActivity {
     private void setBottomNavigationMenu() {
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setVisibility(View.VISIBLE);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             Fragment fragment = null;
@@ -60,14 +60,36 @@ public class BusinessManagement extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+
+        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                //TA -- DA
+            }
+        });
+
     }
 
     private boolean loadFromFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.my_container, fragment)
                     .commit();
+            STATUS_FRAGMENT = 1;
             return true;
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        if (STATUS_FRAGMENT == 1) {
+            bottomNavigationView.setSelectedItemId(R.id.action_home);
+            STATUS_FRAGMENT = 0;
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
 }
