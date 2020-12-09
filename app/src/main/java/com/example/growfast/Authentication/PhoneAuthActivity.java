@@ -39,8 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 public class PhoneAuthActivity extends AppCompatActivity {
     public final String LOGIN_STATS = "loginStats";
-
     public final String ISLOGIN = "islogin";
+
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String verificationCodeBySystem;
     private boolean codeSentStatus;

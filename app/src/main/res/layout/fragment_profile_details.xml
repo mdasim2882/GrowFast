@@ -64,7 +64,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/mclaren"
-                    android:text=""
                     android:textColor="#575555"
                     android:textSize="20sp" />
             </RelativeLayout>

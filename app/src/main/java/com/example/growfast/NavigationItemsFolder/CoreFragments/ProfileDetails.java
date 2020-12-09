@@ -10,8 +10,10 @@ package com.example.growfast.NavigationItemsFolder.CoreFragments;
  * */
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,6 +69,8 @@ public class ProfileDetails extends Fragment {
     public static final String ABOUT_US = "About Us";
     public static final String INSTAGRAM_ID = "InstagramID";
     public static final String IMAGE = "image";
+    public static final String PROFILE_PREF = "ProfilePref";
+    public static final String M_DP_URI = "mDPUri";
 
 
     CircleImageView profilePic;
@@ -82,6 +86,11 @@ public class ProfileDetails extends Fragment {
     Uri picUri;
     String mypicUri, myname;
     boolean parameterForSavingInfo = false;
+
+    //Preference files
+    SharedPreferences profilePreference;
+    SharedPreferences.Editor editor;
+
 
     FirebaseAuth mAuth;
     FirebaseFirestore database;
@@ -129,15 +138,19 @@ public class ProfileDetails extends Fragment {
         database = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         storageProfilePicsRef = FirebaseStorage.getInstance().getReference().child("Profile Pic");
-        getSavedUserInfo();
+
 
         ((BusinessManagement) getActivity()).bottomNavigationView.setVisibility(View.GONE);
+
+        profilePreference = this.getActivity().getSharedPreferences(PROFILE_PREF, Context.MODE_PRIVATE);
+        editor = profilePreference.edit();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getSavedUserInfo();
+
         // Inflate the layout for this fragment
         itemView = inflater.inflate(R.layout.fragment_profile_details, container, false);
 
@@ -147,7 +160,7 @@ public class ProfileDetails extends Fragment {
 
 
         setDialogs();
-
+        getSavedUserInfo();
         profilePic.setOnClickListener(v -> {
             //Step 1 implementation is used over here
             CropImage.activity().setAspectRatio(1, 1).start(getContext(), ProfileDetails.this);
@@ -222,6 +235,13 @@ public class ProfileDetails extends Fragment {
     }
 
     private void loadFromCloudFirebase(ProgressDialog progressDialog) {
+        String savdPicUri = profilePreference.getString(M_DP_URI, null);
+        String textname = profilePreference.getString(M_DP_URI, null);
+        /*if (savdPicUri != null) {
+            Uri value = Uri.parse(savdPicUri);
+            profilePic.setImageURI(value);
+            personUsername.setText(textname);
+        }*/
         database.collection("User").document(mAuth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
@@ -310,6 +330,7 @@ public class ProfileDetails extends Fragment {
                 }
             }
         });
+
     }
 
     private void savedToStorageDatabase() {
@@ -429,6 +450,7 @@ public class ProfileDetails extends Fragment {
                             uniqueUserData.put(IMAGE, mypicUri);
 
                             database.collection("User").document(mAuth.getCurrentUser().getUid()).set(uniqueUserData, SetOptions.merge());
+                            editor.commit();
                             progressDialog.dismiss();
 
                         }
@@ -476,6 +498,8 @@ public class ProfileDetails extends Fragment {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             picUri = result.getUri();
             profilePic.setImageURI(picUri);
+            editor.putString(M_DP_URI, picUri.toString());
+
 
         } else {
             Toast.makeText(getActivity(), "Error: Try again...", Toast.LENGTH_SHORT).show();
