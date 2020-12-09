@@ -7,4 +7,6 @@
     <dimen name="spacing_left">4dp</dimen>
     <dimen name="spacing_right">4dp</dimen>
     <dimen name="spacing_bottom">12dp</dimen>
+    <dimen name="updown_product_grid_spacing">3dp</dimen>
+    <dimen name="side_product_grid_spacing_small">2dp</dimen>
 </resources>

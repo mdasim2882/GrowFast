@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.growfast.InterfacesUsed.BannerLoadListener;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
 import com.example.growfast.Services.Banners;
@@ -137,6 +138,8 @@ public class Home extends Fragment implements BannerLoadListener {
     private void executeMethodforCardIndex(int finalI) {
         switch (finalI) {
             case 0: {
+                Intent i = new Intent(getActivity(), DigitalCardsActivity.class);
+                startActivity(i);
                 break;
             }
             case 1: {
@@ -209,7 +212,6 @@ public class Home extends Fragment implements BannerLoadListener {
     @Override
     public void onBannerLoadFailure(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-
     }
 
 }
