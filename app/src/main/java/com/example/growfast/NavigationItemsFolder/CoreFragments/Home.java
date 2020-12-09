@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.growfast.InterfacesUsed.BannerLoadListener;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
 import com.example.growfast.Services.Banners;
@@ -151,6 +152,8 @@ public class Home extends Fragment implements BannerLoadListener {
                 break;
             }
             case 3: {
+                Intent i = new Intent(getActivity(), WhatsappStatusVideoActivity.class);
+                startActivity(i);
                 break;
             }
             case 4: {

@@ -57,10 +57,10 @@ public class DigitalCardsActivity extends AppCompatActivity implements LoadMyTem
         templatesRef = FirebaseFirestore.getInstance().collection("Templates");
         loadMyTemplates = this;
         setUpToolbar();
-        loadBanner();
+        loadTemplates();
     }
 
-    private void loadBanner() {
+    private void loadTemplates() {
         templatesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
