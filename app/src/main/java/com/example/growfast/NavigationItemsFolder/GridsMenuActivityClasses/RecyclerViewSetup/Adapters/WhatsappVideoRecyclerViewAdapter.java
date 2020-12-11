@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.WhatsappVideoEntry;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.WhatsappVideoCardsHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -42,12 +43,14 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
 
     @Override
     public void onBindViewHolder(@NonNull WhatsappVideoCardsHolder holder, int position) {
-        // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
 
         Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
         holder.productPrice.setText(productList.get(position).getProductCost());
         holder.productTitle.setText(productList.get(position).getProductName());
+
+        //TODO: Put Recycler ViewHolder Cards binding video links in intents to fetch videos
+        Log.d(TAG, "onBindViewHolder: ViDEO LinK --> " + productList.get(position).getVideoProductLink());
 
 
         holder.productCard.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +62,9 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
                 //TODO: Perform card clicked working
                 Context c = v.getContext();
 
-                Intent i = new Intent(v.getContext(), ProductOverview.class);
+                Intent i = new Intent(v.getContext(), WhatsappVideos.class);
+                i.putExtra("statusVideo", true);
+                i.putExtra("videoUrl", productList.get(position).getVideoProductLink());
                 v.getContext().startActivity(i);
                 // NOTE: Remember the important feature of Activity typecasting in constructor of Adapter
                 // in order to use overridePendingTransition() method

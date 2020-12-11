@@ -8,12 +8,20 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/logo_digitaladvisor"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowFast">
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditLifeCard"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ConceptsActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ComboPostersActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.HealthActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.LifeActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsActivity" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity" />

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/productgreetscards"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:outlineAmbientShadowColor="@color/purple_500"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lifeview_card"
+                android:layout_width="180dp"
+                android:scaleType="fitXY"
+                android:layout_height="200dp"
+                android:background="?attr/colorBackgroundFloating"
+                android:src="@drawable/posterblue" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/greetimage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/lifeview_card"
+                android:layout_alignLeft="@id/lifeview_card"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/businessman"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/greet_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_title"
+                    android:fontFamily="@font/mclaren"
+                    android:textAlignment="textStart"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/greetingPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Free"
+                    android:fontFamily="@font/mclaren"
+                    android:textAlignment="textStart"
+                    android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

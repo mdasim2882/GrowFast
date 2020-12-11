@@ -42,7 +42,7 @@ public class Settings extends AppCompatActivity {
     }
 
     @SuppressLint("ValidFragment")
-    public class MyPrefenceFragment extends PreferenceFragment {
+    public static class MyPrefenceFragment extends PreferenceFragment {
 
         private String LOGOUT_FILE;
         private String ISLOGIN = "islogin";

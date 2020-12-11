@@ -7,7 +7,7 @@
     tools:context=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity">
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/myprofileAppBarLayout"
+        android:id="@+id/digiCardsAppLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp">

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NavigationItemsFolder.CoreFragments.ProfileDetails">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/myGreetingsAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/greetings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:title="Greetings"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/greetings_life_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myGreetingsAppBarLayout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myGreetingsAppBarLayout"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textlines"
+                android:fontFamily="@font/mclaren"
+                android:padding="5dp"
+                android:text="greetings"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/dark_skyblue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <GridLayout
+                android:id="@+id/greetingsGrid"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:padding="14dp">
+
+                <!-- Row 1 -->
+
+                <!-- Column 1 -->
+
+                <!-- Column 2 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/greet_combination"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginLeft="@dimen/spacing_left"
+                    android:layout_marginTop="@dimen/spacing_bottom"
+                    android:layout_marginRight="@dimen/spacing_right"
+                    android:layout_marginBottom="@dimen/spacing_bottom"
+                    app:cardCornerRadius="@dimen/spacing_left"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/ic_life"
+                            app:tint="@color/dark_skyblue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mclaren"
+                            android:text="Life"
+                            android:textAlignment="center"
+                            android:textColor="#5A5959"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Row 2 -->
+
+                <!-- Column 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/spacing_bottom"
+                    android:layout_marginBottom="@dimen/spacing_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginLeft="@dimen/spacing_left"
+                    android:layout_marginRight="@dimen/spacing_left"
+                    app:cardElevation="8dp"
+                    app:cardCornerRadius="@dimen/spacing_left">
+
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@drawable/ic_health"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:tint="@color/dark_skyblue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mclaren"
+                            android:text="Health"
+                            android:textAlignment="center"
+                            android:textColor="#5A5959"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Column 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/spacing_bottom"
+                    android:layout_marginBottom="@dimen/spacing_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginLeft="@dimen/spacing_left"
+                    android:layout_marginRight="@dimen/spacing_left"
+                    app:cardElevation="8dp"
+                    app:cardCornerRadius="@dimen/spacing_left">
+
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@drawable/ic_comboposters"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="40dp"
+                            app:tint="@color/dark_skyblue"
+                            android:layout_height="40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mclaren"
+                            android:text="Combo Posters"
+                            android:textAlignment="center"
+                            android:textColor="#5A5959"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </GridLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myGreetingsAppBarLayout"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textlines"
+                android:fontFamily="@font/mclaren"
+                android:padding="5dp"
+                android:text="fb cover pages"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/dark_skyblue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <GridLayout
+                android:id="@+id/coverpagesGrid"
+                android:columnCount="2"
+                android:rowCount="1"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:padding="14dp">
+
+                <!-- Row 1 -->
+
+                <!-- Column 1 -->
+
+                <!-- Column 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/spacing_bottom"
+                    android:layout_marginBottom="@dimen/spacing_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginLeft="@dimen/spacing_left"
+                    android:layout_marginRight="@dimen/spacing_right"
+                    app:cardElevation="8dp"
+                    app:cardCornerRadius="@dimen/spacing_left">
+
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@drawable/ic_combinations"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="40dp"
+                            app:tint="@color/dark_skyblue"
+                            android:layout_height="40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mclaren"
+                            android:text="Combination"
+                            android:textAlignment="center"
+                            android:textColor="#5A5959"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Row 2 -->
+
+                <!-- Column 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/spacing_bottom"
+                    android:layout_marginBottom="@dimen/spacing_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginLeft="@dimen/spacing_left"
+                    android:layout_marginRight="@dimen/spacing_left"
+                    app:cardElevation="8dp"
+                    app:cardCornerRadius="@dimen/spacing_left">
+
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@drawable/ic_concepts"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:tint="@color/dark_skyblue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mclaren"
+                            android:text="Concepts"
+                            android:textAlignment="center"
+                            android:textColor="#5A5959"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </GridLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

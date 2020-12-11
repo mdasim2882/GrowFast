@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/editLifeappbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/editLife_greets_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:title="Edit"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="#F4F4F0"
+        android:elevation="8dp"
+        android:paddingStart="@dimen/cardview_default_elevation"
+        android:paddingTop="5dp"
+        android:paddingEnd="@dimen/cardview_default_elevation">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F4F4F0"
+            android:paddingStart="@dimen/cardview_default_elevation"
+            android:paddingEnd="@dimen/cardview_default_elevation">
+
+            <FrameLayout
+                android:id="@+id/editLifeframetoPDF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/editLifeCardImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/posterblue"
+                        android:tag="https://www.google.com/" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/editGreetsLifeDP"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_alignLeft="@id/editLifeCardImage"
+                        android:layout_alignBottom="@id/editLifeCardImage"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="80dp"
+                        android:clickable="true"
+                        android:contextClickable="true"
+                        android:onClick="gotoLink"
+                        android:src="@drawable/businessman"
+                        android:tag="https://www.google.com/"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="1dp" />
+                </RelativeLayout>
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editLifeframetoPDF"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/addLogoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="2.5dp"
+                    android:backgroundTint="@color/black"
+                    android:fontFamily="@font/mclaren"
+                    android:onClick="addLogo"
+                    android:text="Add Logo" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sharePosterButton"
+                    android:layout_width="0dp"
+                    android:layout_margin="2.5dp"
+                    app:cornerRadius="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/black"
+                    android:fontFamily="@font/mclaren"
+                    android:onClick="saveAsPDF"
+                    android:text="Share Poster" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
