@@ -1,6 +1,7 @@
 package com.example.growfast.NavigationItemsFolder;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -18,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BusinessManagement extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
-    private int STATUS_FRAGMENT = 0;
+    public static int STATUS_FRAGMENT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,12 @@ public class BusinessManagement extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (STATUS_FRAGMENT == 1) {
+
+        Log.d("press", "onBackPressed: STATUS_PRESSED- > " + STATUS_FRAGMENT);
+
+        if (STATUS_FRAGMENT > 0) {
+            Fragment fragment = new Home();
+            loadFromFragment(fragment);
             bottomNavigationView.setSelectedItemId(R.id.action_home);
             STATUS_FRAGMENT = 0;
             bottomNavigationView.setVisibility(View.VISIBLE);

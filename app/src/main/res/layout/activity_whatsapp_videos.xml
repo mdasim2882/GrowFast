@@ -36,13 +36,32 @@
 
         <FrameLayout
             android:layout_width="match_parent"
+            android:padding="2dp"
+            android:background="@color/cardview_dark_background"
             android:layout_height="wrap_content">
 
-            <VideoView
-                android:id="@+id/videoWp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_centerHorizontal="true" />
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <VideoView
+                    android:id="@+id/videoWp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true" />
+
+                <ProgressBar
+                    android:id="@+id/statusprogressbar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/white"
+                    android:layout_centerInParent="true"
+
+                    />
+            </RelativeLayout>
         </FrameLayout>
 
     </RelativeLayout>

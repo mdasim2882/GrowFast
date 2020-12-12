@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.growfast.R;
 
 public class WhatsappVideoCardsHolder extends RecyclerView.ViewHolder {
-    public CardView productCard;
-    public ImageView imgCard;
-    public TextView productTitle;
-    public TextView productPrice;
+    public CardView videocardproductCard;
+    public ImageView videocardimgCard;
+    public TextView videocardproductTitle;
+    public TextView videocardproductPrice;
 
     public WhatsappVideoCardsHolder(@NonNull View itemView) {
         super(itemView);
-        imgCard = itemView.findViewById(R.id.product_image);
-        productTitle = itemView.findViewById(R.id.product_title);
-        productPrice = itemView.findViewById(R.id.product_price);
-        productCard = itemView.findViewById(R.id.cardofproducts);
+        videocardimgCard = itemView.findViewById(R.id.videocardproduct_image);
+        videocardproductTitle = itemView.findViewById(R.id.videocardproduct_title);
+        videocardproductPrice = itemView.findViewById(R.id.videocardproduct_price);
+        videocardproductCard = itemView.findViewById(R.id.videocardofproducts);
         // addtoCart=itemView.findViewById(R.id.addtoCartButton);
         // TODO: Find and store views from itemView
     }

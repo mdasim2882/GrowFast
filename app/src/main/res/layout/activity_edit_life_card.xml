@@ -27,7 +27,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
@@ -44,19 +44,20 @@
             android:paddingStart="@dimen/cardview_default_elevation"
             android:paddingEnd="@dimen/cardview_default_elevation">
 
-            <FrameLayout
+            <RelativeLayout
                 android:id="@+id/editLifeframetoPDF"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_above="@+id/btnPanel">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/editLifeCardImage"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:src="@drawable/posterblue"
                         android:tag="https://www.google.com/" />
@@ -71,21 +72,23 @@
                         android:layout_marginBottom="80dp"
                         android:clickable="true"
                         android:contextClickable="true"
-                        android:onClick="gotoLink"
+                        android:onClick="showMe"
                         android:src="@drawable/businessman"
                         android:tag="https://www.google.com/"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="1dp" />
+
+
                 </RelativeLayout>
-            </FrameLayout>
+            </RelativeLayout>
 
 
             <LinearLayout
+                android:id="@+id/btnPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editLifeframetoPDF"
+                android:layout_alignParentBottom="true"
                 android:orientation="horizontal"
-
                 android:weightSum="2">
 
 
@@ -117,6 +120,6 @@
 
 
         </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

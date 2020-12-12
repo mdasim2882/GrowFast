@@ -158,7 +158,7 @@ public class ProfileDetails extends Fragment {
         saveButton = itemView.findViewById(R.id.savebtn);
         initializeEditTextFields();
 
-
+        setUpToolbar(itemView);
         setDialogs();
         getSavedUserInfo();
         profilePic.setOnClickListener(v -> {
@@ -167,8 +167,19 @@ public class ProfileDetails extends Fragment {
         });
         saveButton.setOnClickListener(v -> savedToStorageDatabase());
         // Inflate the layout for this fragment
-        setUpToolbar(itemView);
+
         return itemView;
+    }
+
+    private boolean loadFromFragment(Fragment fragment) {
+        if (fragment != null) {
+            ((BusinessManagement) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.my_container, fragment)
+                    .commit();
+            BusinessManagement.STATUS_FRAGMENT = 1;
+            ((BusinessManagement) getActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
+            return true;
+        }
+        return false;
     }
 
     private void setDialogs() {
@@ -195,7 +206,10 @@ public class ProfileDetails extends Fragment {
             activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
             toolbar.setNavigationOnClickListener(v -> {
                 ((BusinessManagement) getActivity()).bottomNavigationView.setSelectedItemId(R.id.action_home);
-                ((BusinessManagement) getActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
+                Fragment fragment = new Home();
+                loadFromFragment(fragment);
+                BusinessManagement.STATUS_FRAGMENT = 0;
+
             });
         }
     }

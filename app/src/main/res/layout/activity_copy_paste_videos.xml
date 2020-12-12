@@ -4,23 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity">
+    tools:context=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity">
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/myprofileAppBarLayout"
+        android:id="@+id/copypasteAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/wpcards_details_toolbar"
+            android:id="@+id/copypaste_details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textAlignment="center"
             app:navigationIcon="@drawable/ic_round_arrow_back_24"
-            app:title="Whatsapp Status Videos"
             app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
             app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
 
@@ -37,7 +36,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/whatsappRecyclerView"
+            android:id="@+id/copypasteRecyclerView"
             android:layout_width="match_parent"
             android:layoutAnimation="@anim/layout_animation"
             android:layout_height="match_parent" />

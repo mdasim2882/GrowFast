@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.growfast.HelperMethods.WhatsappVideoEntry;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.WhatsappVideoCardsHolder;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.VideoCardsHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<WhatsappVideoCardsHolder> {
+public class UiProRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHolder> {
 
 
     public final String TAG = getClass().getSimpleName();
@@ -28,7 +28,7 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
     private List<WhatsappVideoEntry> productList;
     Activity activity;
 
-    public WhatsappVideoRecyclerViewAdapter(Context context, List<WhatsappVideoEntry> actualCards) {
+    public UiProRecyclerViewAdapter(Context context, List<WhatsappVideoEntry> actualCards) {
         this.productList = actualCards;
         this.context = context;
         activity = (Activity) context;
@@ -36,25 +36,25 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
 
     @NonNull
     @Override
-    public WhatsappVideoCardsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VideoCardsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_card_videos, parent, false);
 
-        return new WhatsappVideoCardsHolder(layoutView);
+        return new VideoCardsHolder(layoutView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WhatsappVideoCardsHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VideoCardsHolder holder, int position) {
 
 
-        Picasso.get().load(productList.get(position).getProductImage()).into(holder.videocardimgCard);
-        holder.videocardproductPrice.setText(productList.get(position).getProductCost());
-        holder.videocardproductTitle.setText(productList.get(position).getProductName());
+        Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
+        holder.productPrice.setText(productList.get(position).getProductCost());
+        holder.productTitle.setText(productList.get(position).getProductName());
 
         //TODO: Put Recycler ViewHolder Cards binding video links in intents to fetch videos
         Log.d(TAG, "onBindViewHolder: ViDEO LinK --> " + productList.get(position).getVideoProductLink());
 
 
-        holder.videocardproductCard.setOnClickListener(new View.OnClickListener() {
+        holder.productCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Material Card clicked " + productList.get(position).getProductName() + " : " +

@@ -1,4 +1,6 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards;
+// To use Crop Image Activity from Activity you can simply pass this as parameter
+
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,11 +9,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,14 +24,18 @@ import com.gkemon.XMLtoPDF.PdfGeneratorListener;
 import com.gkemon.XMLtoPDF.model.FailureResponse;
 import com.gkemon.XMLtoPDF.model.SuccessResponse;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditLifeCard extends AppCompatActivity {
 
+    Uri picUri;
+    String mypicUri, myname;
+
 
     Button sharePoster;
-    FrameLayout convertEditLifetoPdf;
+    RelativeLayout convertEditLifetoPdf;
     CircleImageView dpeditLife;
 
     ImageButton sharepos;
@@ -39,6 +46,7 @@ public class EditLifeCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_life_card);
 
+        //Initialize view here
         initializeViews();
         setUpToolbar();
 
@@ -50,10 +58,6 @@ public class EditLifeCard extends AppCompatActivity {
     }
 
     public void saveAsPDF(View view) {
-        Integer ht_len = cardActual.getHeight();
-        Integer width_len = cardActual.getWidth();
-        int h = dpToPx(ht_len);
-        int w = dpToPx(width_len);
 
         PdfGenerator.getBuilder()
                 .setContext(this)
@@ -109,13 +113,6 @@ public class EditLifeCard extends AppCompatActivity {
 
     }
 
-    public void gotoLink(View view) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse("https://www.google.com/"));
-        startActivity(intent);
-    }
 
     private void setUpToolbar() {
         Toolbar toolbar = findViewById(R.id.editLife_greets_details_toolbar);
@@ -129,13 +126,25 @@ public class EditLifeCard extends AppCompatActivity {
     }
 
     public void showMe(View view) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse("https://www.google.com/"));
-        startActivity(intent);
+
+        CropImage.activity().setAspectRatio(1, 1).start(this);
     }
 
     public void addLogo(View view) {
+
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+                && data != null) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            picUri = result.getUri();
+            dpeditLife.setImageURI(picUri);
+
+        }
+    }
+
 }

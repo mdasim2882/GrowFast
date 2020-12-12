@@ -1,14 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NavigationItemsFolder.CoreFragments.HelpDesk">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/editLifeappbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/helpdesk_greets_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:title="Help Desk"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="56dp"
+        android:elevation="8dp"
+        android:paddingStart="@dimen/cardview_default_elevation"
+        android:paddingTop="5dp"
+        android:paddingEnd="@dimen/cardview_default_elevation">
 
-</FrameLayout>
+        <FrameLayout
+            android:id="@+id/framehelpVideo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="2dp"
+            android:background="@color/cardview_dark_background"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <VideoView
+                    android:id="@+id/videoHelpDesk"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <ProgressBar
+                    android:id="@+id/videoprogressbar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/white"
+                    android:layout_centerInParent="true"
+
+                    />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/framehelpVideo">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Call Us"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/helpcontacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="9580130679 / 8294704666"
+                android:textAlignment="center"
+                android:textColor="@color/dark_skyblue"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Email Id"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/supportEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="career@utechcpl.com"
+                android:textAlignment="center"
+                android:textColor="@color/dark_skyblue"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/descriptiondesk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="5dp"
+                android:clickable="true"
+                android:text="@string/helpdeskDescription"
+                android:textAlignment="center"
+                android:textColor="#6A6767"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="300dp"
+                    android:id="@+id/buyNowbtn"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
+                    android:text="Buy Now" />
+
+                <TextView
+                    android:id="@+id/referandearn_linkText"
+                    style="@style/TextAppearance.Compat.Notification.Line2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buyNowbtn"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/textlines"
+                    app:tint="@color/black"
+                    android:text="Refer and Earn" />
+
+
+                <TextView
+                    android:id="@+id/privacyPolicyText"
+                    android:layout_width="match_parent"
+                    android:textAlignment="center"
+                    android:text="@string/policyLink"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="6dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

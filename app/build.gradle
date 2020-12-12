@@ -56,6 +56,7 @@ dependencies {
 
     // XML to PDF Library
     implementation 'com.github.Gkemon:XML-to-PDF-generator:1.0'
+    implementation 'com.itextpdf:itext7-core:7.1.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

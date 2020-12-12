@@ -12,14 +12,17 @@ import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.growfast.InterfacesUsed.BannerLoadListener;
+import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsActivity;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
@@ -53,6 +56,7 @@ public class Home extends Fragment implements BannerLoadListener {
     BannerLoadListener bannerLoadListener;
     Slider bannerSlider;
     CollectionReference bannerRef;
+    private AlertDialog.Builder alertDialog;
 
     public Home() {
         bannerRef = FirebaseFirestore.getInstance().collection("Banners");
@@ -90,11 +94,16 @@ public class Home extends Fragment implements BannerLoadListener {
         setSingleEvent(mainGrid);
         // Inflate the layout for this fragment
         setUpToolbar(view);
+        setUpAlertDialog();
 
+        try {
+            bannerSlider = view.findViewById(R.id.layout_banner);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //Load banner using service
         Slider.init(new PicassoImageLoadingService());
         bannerLoadListener = this;
-        bannerSlider = view.findViewById(R.id.layout_banner);
 
 
         loadBanner();
@@ -102,6 +111,8 @@ public class Home extends Fragment implements BannerLoadListener {
     }
 
     private void loadBanner() {
+
+
         bannerRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -111,7 +122,11 @@ public class Home extends Fragment implements BannerLoadListener {
                         Banners banner = bannerSnapshot.toObject(Banners.class);
                         banners.add(banner);
                     }
-                    bannerLoadListener.onBannerLoadSuccess(banners);
+                    try {
+                        bannerLoadListener.onBannerLoadSuccess(banners);
+                    } catch (Exception e) {
+                        alertDialog.show();
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -161,15 +176,31 @@ public class Home extends Fragment implements BannerLoadListener {
                 break;
             }
             case 4: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "uiPro");
+                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                startActivity(i);
                 break;
             }
             case 5: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "detailedVideos");
+                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                startActivity(i);
                 break;
             }
             case 6: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "copyPaste");
+                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                startActivity(i);
                 break;
             }
             case 7: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "agentIntroVideos");
+                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                startActivity(i);
                 break;
             }
             case 8: {
@@ -179,11 +210,23 @@ public class Home extends Fragment implements BannerLoadListener {
                 break;
             }
             case 10: {
+                Fragment fragment = new HelpDesk();
+                loadFromFragment(fragment);
                 break;
             }
 
 
         }
+    }
+
+    private boolean loadFromFragment(Fragment fragment) {
+        if (fragment != null) {
+            ((BusinessManagement) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.my_container, fragment)
+                    .commit();
+            BusinessManagement.STATUS_FRAGMENT = 1;
+            return true;
+        }
+        return false;
     }
 
     private void setUpToolbar(View view) {
@@ -193,6 +236,14 @@ public class Home extends Fragment implements BannerLoadListener {
             activity.setSupportActionBar(toolbar);
             activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
+    }
+
+
+    private void setUpAlertDialog() {
+        alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Error:");
+        alertDialog.setMessage("No Internet Connection");
+        alertDialog.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
     }
 
     @Override
@@ -213,7 +264,7 @@ public class Home extends Fragment implements BannerLoadListener {
     @Override
     public void onBannerLoadSuccess(List<Banners> banners) {
         bannerSlider.setAdapter(new HomeSliderAdapter(banners));
-
+        bannerSlider.setInterval(3000);
     }
 
     @Override

@@ -55,11 +55,10 @@
                         android:id="@+id/layout_banner"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="@color/white"
+                        android:background="@drawable/ic_refresh_24"
                         android:layout_margin="10dp"
                         android:scaleType="fitXY"
                         app:slider_animateIndicators="true"
-                        app:slider_interval="3000"
                         app:slider_loopSlides="true" />
 
                 </RelativeLayout>
