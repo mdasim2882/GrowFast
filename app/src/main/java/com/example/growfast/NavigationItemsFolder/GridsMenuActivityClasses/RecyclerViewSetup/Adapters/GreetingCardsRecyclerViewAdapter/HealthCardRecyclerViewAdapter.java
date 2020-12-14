@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.ProductEntry;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditLifeCard;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.HealthCardItemsViewHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -56,7 +56,7 @@ public class HealthCardRecyclerViewAdapter extends RecyclerView.Adapter<HealthCa
                     "\nCost: " + productList.get(position).getProductCost() + "!!!" + context.getClass());
             //TODO: Perform card clicked working
             Context c = v.getContext();
-            Intent i = new Intent(v.getContext(), EditLifeCard.class);
+            Intent i = new Intent(v.getContext(), EditsDifferentGreetingsCards.class);
             i.putExtra("cardUri", uricards);
             Toast.makeText(c, "Working :" + position, Toast.LENGTH_SHORT).show();
             v.getContext().startActivity(i);

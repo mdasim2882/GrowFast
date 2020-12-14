@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowFast">
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity"></activity>
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditLifeCard" />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ConceptsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity" />

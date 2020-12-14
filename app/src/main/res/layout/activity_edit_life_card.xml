@@ -51,6 +51,7 @@
                 android:layout_above="@+id/btnPanel">
 
                 <RelativeLayout
+                    android:id="@+id/view_root"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -64,8 +65,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/editGreetsLifeDP"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignLeft="@id/editLifeCardImage"
                         android:layout_alignBottom="@id/editLifeCardImage"
                         android:layout_marginLeft="5dp"
@@ -74,7 +75,21 @@
                         android:contextClickable="true"
                         android:onClick="showMe"
                         android:src="@drawable/businessman"
-                        android:tag="https://www.google.com/"
+                        android:tag="mdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="1dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/editGreetsLifeLOGOICON"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:clickable="true"
+                        android:contextClickable="true"
+                        android:onClick="showMe"
+                        android:src="@drawable/businessman"
+                        android:tag="icondp"
+                        android:visibility="gone"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="1dp" />
 
@@ -96,25 +111,25 @@
                     android:id="@+id/addLogoButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cornerRadius="0dp"
-                    android:layout_weight="1"
                     android:layout_margin="2.5dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     android:fontFamily="@font/mclaren"
-                    android:onClick="addLogo"
-                    android:text="Add Logo" />
+                    android:onClick="convertButton"
+                    android:text="Add Logo"
+                    app:cornerRadius="0dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sharePosterButton"
                     android:layout_width="0dp"
-                    android:layout_margin="2.5dp"
-                    app:cornerRadius="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="2.5dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     android:fontFamily="@font/mclaren"
                     android:onClick="saveAsPDF"
-                    android:text="Share Poster" />
+                    android:text="Share Poster"
+                    app:cornerRadius="0dp" />
 
             </LinearLayout>
 
