@@ -376,6 +376,11 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
         if (item.getItemId() == R.id.edilogoiconclick) {
             image_name = "icon";
             CropImage.activity().setAspectRatio(1, 1).start(EditsDifferentGreetingsCards.this);
+            int isShown = mLogoiconEditLife.getVisibility();
+            if (isShown == View.GONE) {
+                mLogoiconEditLife.setVisibility(View.VISIBLE);
+                addLogo.setText("DELETE LOGO");
+            }
         }
         return super.onOptionsItemSelected(item);
     }

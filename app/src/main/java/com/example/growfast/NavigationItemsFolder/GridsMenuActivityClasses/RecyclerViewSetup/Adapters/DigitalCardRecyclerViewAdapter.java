@@ -45,7 +45,8 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
 
-        Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
+        String getCardsUri = productList.get(position).getProductImage();
+        Picasso.get().load(getCardsUri).into(holder.imgCard);
         holder.productPrice.setText(productList.get(position).getProductCost());
         holder.productTitle.setText(productList.get(position).getProductName());
 
@@ -60,6 +61,7 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                 Context c = v.getContext();
 
                 Intent i = new Intent(v.getContext(), ProductOverview.class);
+                i.putExtra("digiCardUri", getCardsUri);
                 v.getContext().startActivity(i);
                 // NOTE: Remember the important feature of Activity typecasting in constructor of Adapter
                 // in order to use overridePendingTransition() method
