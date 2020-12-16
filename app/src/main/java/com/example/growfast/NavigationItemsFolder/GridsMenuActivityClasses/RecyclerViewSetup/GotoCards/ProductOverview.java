@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -170,8 +171,16 @@ public class ProductOverview extends AppCompatActivity {
 
         Picasso.get().load(imageSetter).into(cardActual);
 
-        // Obtain table cells
-        obtainsTableCells();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                // Obtain table cells
+                obtainsTableCells();
+            }
+        };
+        Handler h = new Handler();
+        h.post(r);
+
 
     }
 
@@ -248,7 +257,7 @@ public class ProductOverview extends AppCompatActivity {
 
         Log.d("checkStatus", "createPDFDocument: Called for NewPDF Creation...");
         // Find images in Drawable like whatsapp,facebook,instagram,etc
-        whatsapp = getImageFromDrawable(R.drawable.wptransparent, 0);
+        whatsapp = getImageFromDrawable(R.drawable.newwp, 0);
         whatsapp.scalePercent(15, 15);
 
         facebook = getImageFromDrawable(R.drawable.fbtransparent, 0);
@@ -459,13 +468,14 @@ public class ProductOverview extends AppCompatActivity {
 
         if (dataMobile != null) {
 //            counter++;
-            cell5.addElement(new Chunk(contactno, 0, 0, true).setAnchor("https://voterportal.eci.gov.in"));
+            cell5.addElement(new Chunk(contactno, 0, 0, true).setAnchor("tel:" + dataMobile));
         } else {
             cell5.addElement(new Chunk(contactno, 0, 0, true));
         }
         if (dataEmailId != null) {
 //            counter++;
-            cell7.addElement(new Chunk(messaging, 0, 0, true).setAnchor(dataEmailId));
+
+            cell7.addElement(new Chunk(messaging, 0, 0, true).setAnchor("mailto:" + dataEmailId));
         } else {
             cell7.addElement(new Chunk(messaging, 0, 0, true));
         }
@@ -474,7 +484,7 @@ public class ProductOverview extends AppCompatActivity {
 
         }
         if (dataWhatsappNo != null) {
-            cell1.addElement(new Chunk(whatsapp, 0, 0, true).setAnchor(dataWhatsappNo));
+            cell1.addElement(new Chunk(whatsapp, 0, 0, true).setAnchor("https://api.whatsapp.com/send?phone=+91" + dataWhatsappNo));
         } else {
             cell1.addElement(new Chunk(whatsapp, 0, 0, true));
         }
@@ -535,7 +545,6 @@ public class ProductOverview extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            document = new Document();
 
             progressDialog = new ProgressDialog(ProductOverview.this);
             progressDialog.setTitle("Creating PDF");
