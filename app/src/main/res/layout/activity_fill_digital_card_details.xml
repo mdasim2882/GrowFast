@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fillCardsAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="6dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fillCards_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:title="Share Digital Card"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:elevation="6dp"
+        android:layout_above="@id/createCardBtn"
+        android:orientation="vertical">
+
+
+        <ScrollView
+            android:id="@+id/backView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/userInfodigiCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/mclaren"
+                        android:padding="5dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Cards Details"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/pno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Phone number"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/eid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Email Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/weburl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Website Url"
+
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/wpappno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Whatsapp Number"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/fbid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Facebook Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/lnkdid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Linked Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/ytbid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mclaren"
+                        android:hint="Youtube Channel Link"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/createCardBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:onClick="createCard"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/mclaren"
+        android:text="Create Card"
+        android:textSize="15sp" />
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
