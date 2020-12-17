@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="Call Us"
+
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textStyle="bold"
@@ -87,8 +88,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+
+                android:textColorLink="@color/dark_skyblue"
                 android:fontFamily="sans-serif-smallcaps"
-                android:text="9580130679 / 8294704666"
+                android:text="@string/contactsInfo"
                 android:textAlignment="center"
                 android:textColor="@color/dark_skyblue"
                 android:textSize="15sp" />
@@ -110,7 +113,9 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:text="career@utechcpl.com"
+
                 android:textAlignment="center"
+                android:textColorLink="@color/dark_skyblue"
                 android:textColor="@color/dark_skyblue"
                 android:textSize="15sp" />
 
@@ -146,8 +151,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/buyNowbtn"
                     android:layout_centerHorizontal="true"
+                    android:textColorLink="@color/dark_skyblue"
                     android:background="@drawable/textlines"
-                    app:tint="@color/black"
+                    app:tint="@color/dark_skyblue"
                     android:text="Refer and Earn" />
 
 
@@ -156,6 +162,8 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:text="@string/policyLink"
+
+                    android:textColorLink="@color/dark_skyblue"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="6dp" />

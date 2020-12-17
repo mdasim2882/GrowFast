@@ -347,7 +347,7 @@ public class ProductOverview extends AppCompatActivity {
             paragraph.add(table);
 
             Paragraph p = new Paragraph(" ");
-            int position = (int) (document.getPageSize().getHeight() - 160); //Document best fit size 140 for scaling of image=20;
+            int position = (int) (document.getPageSize().getHeight() - 175); //Document best fit size 140 for scaling of image=20;
             paragraph.setAlignment(Element.ALIGN_CENTER);
             p.setSpacingAfter(position);
 
@@ -578,7 +578,7 @@ public class ProductOverview extends AppCompatActivity {
             //showToaster("Done: " + directory);
 
 
-            showToaster("Created Successfully: " + sdCard.getAbsolutePath());
+            showToaster("Created Successfully");
             viewPdf(fname);
             finish();
         }

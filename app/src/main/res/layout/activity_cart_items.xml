@@ -21,7 +21,7 @@
             android:layout_marginLeft="10dp"
             app:navigationIcon="@drawable/ic_round_arrow_back_24"
             android:textAlignment="center"
-            app:title="My Cart"
+            app:title="My Orders"
             app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
             app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
 
@@ -51,6 +51,7 @@
                 <LinearLayout
                     android:id="@+id/order_details_box"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
@@ -71,7 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:background="#F3F3E993"
+                        android:background="@color/white"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -127,6 +128,7 @@
 
     <LinearLayout
         android:id="@+id/cartTotal_details_box"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_above="@id/placeorderbtn"
         android:layout_height="wrap_content"

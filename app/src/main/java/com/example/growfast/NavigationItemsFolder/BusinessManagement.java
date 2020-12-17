@@ -1,25 +1,32 @@
 package com.example.growfast.NavigationItemsFolder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.growfast.NavigationItemsFolder.CoreFragments.Cart;
 import com.example.growfast.NavigationItemsFolder.CoreFragments.HelpDesk;
 import com.example.growfast.NavigationItemsFolder.CoreFragments.Home;
 import com.example.growfast.NavigationItemsFolder.CoreFragments.ProfileDetails;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
 import com.example.growfast.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BusinessManagement extends AppCompatActivity {
-
+    public static final String COME_FROM = "comeFrom";
+    public static final String PRODUCT_NAME = "productName";
+    public static final String PRODUCT_PRICE = "productPrice";
     public BottomNavigationView bottomNavigationView;
     public static int STATUS_FRAGMENT = 0;
+    public int price;
+    public String productName;
+    public String getFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,8 @@ public class BusinessManagement extends AppCompatActivity {
                         fragment = new ProfileDetails();
                         break;
                     case R.id.action_cart:
-                        fragment = new Cart();
+                        Intent i = new Intent(BusinessManagement.this, CartItemsActivity.class);
+                        startActivity(i);
                         break;
                     case R.id.action_favourites_menu:
                         fragment = new HelpDesk();
@@ -60,7 +68,15 @@ public class BusinessManagement extends AppCompatActivity {
 
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
+
+        getFrom = getIntent().getStringExtra(COME_FROM);
+        productName = getIntent().getStringExtra(PRODUCT_NAME);
+        price = getIntent().getIntExtra(PRODUCT_PRICE, 0);
+        if (getFrom == null) {
+            bottomNavigationView.setSelectedItemId(R.id.action_home);
+        } else if (getFrom != null && getFrom.equals("digiPurchase")) {
+            bottomNavigationView.setSelectedItemId(R.id.action_cart);
+        }
 
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
@@ -75,7 +91,11 @@ public class BusinessManagement extends AppCompatActivity {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.my_container, fragment)
                     .commit();
-            STATUS_FRAGMENT = 1;
+            if (getFrom == null) {
+                STATUS_FRAGMENT = 1;
+            } else {
+                STATUS_FRAGMENT = 0;
+            }
             return true;
         }
         return false;
@@ -85,6 +105,7 @@ public class BusinessManagement extends AppCompatActivity {
     public void onBackPressed() {
 
         Log.d("press", "onBackPressed: STATUS_PRESSED- > " + STATUS_FRAGMENT);
+        Toast.makeText(this, "Tap again to exit", Toast.LENGTH_SHORT).show();
 
         if (STATUS_FRAGMENT > 0) {
             Fragment fragment = new Home();

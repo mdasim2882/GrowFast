@@ -2,7 +2,9 @@ package com.example.growfast.NavigationItemsFolder.CoreFragments;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,13 +28,10 @@ import com.example.growfast.HelperMethods.HelpEntry;
 import com.example.growfast.InterfacesUsed.LoadMyHelpDeskData;
 import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,26 +103,23 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
     }
 
     private void startHelpDeskLoading() {
-        loadMyHelpDeskRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<HelpEntry> products = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
-                        HelpEntry product = bannerSnapshot.toObject(HelpEntry.class);
-                        products.add(product);
-                    }
-                    try {
-                        loadMyHelpDeskData.onHelpDeskLoadSuccess(products);
-                    } catch (Exception e) {
-                        //TODO: Integrate a no internet connection dialog here
-                        alertDialog = new AlertDialog.Builder(getActivity());
-                        alertDialog.setTitle("Error:");
-                        alertDialog.setMessage("No Internet Connection");
-                        alertDialog.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-                        alertDialog.show();
-                        progressBar.setVisibility(View.GONE);
-                    }
+        loadMyHelpDeskRef.get().addOnCompleteListener(task -> {
+            List<HelpEntry> products = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
+                    HelpEntry product = bannerSnapshot.toObject(HelpEntry.class);
+                    products.add(product);
+                }
+                try {
+                    loadMyHelpDeskData.onHelpDeskLoadSuccess(products);
+                } catch (Exception e) {
+                    //TODO: Integrate a no internet connection dialog here
+                    alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle("Error:");
+                    alertDialog.setMessage("No Internet Connection");
+                    alertDialog.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                    alertDialog.show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -214,13 +210,30 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
 
         //Load and change numbers here
         if (phoneNo1.length() > 0 && phoneNo2.length() > 0) {
-            helpContacts.setText(phoneNo1 + " / " + phoneNo2);
+            helpContacts.setMovementMethod(LinkMovementMethod.getInstance());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                helpContacts.setText(Html.fromHtml("<a href=\"tel:" + phoneNo1 + "\" style=\"color:blue;\" >" +
+                        phoneNo1 + "</a> / <a href=\"tel:" + phoneNo2 + "\" >" + phoneNo2 + "</a>", Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                helpContacts.setText(Html.fromHtml("<a href=\"tel:" + phoneNo1 + "\" style=\"color:blue;\" >" +
+                        phoneNo1 + "</a> / <a href=\"tel:" + phoneNo2 + "\" >" + phoneNo2 + "</a>"));
+            }
+
         }
 
 
         //Load Support Email Id Here
-        if (emailHelp.length() > 0)
-            supportEmails.setText(emailHelp);
+        if (emailHelp.length() > 0) {
+            supportEmails.setMovementMethod(LinkMovementMethod.getInstance());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                supportEmails.setText(Html.fromHtml("<a href=mailto:" + emailHelp + " style=\"color:blue;\" >" +
+                        emailHelp + "</a>", Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                supportEmails.setText(Html.fromHtml("<a href=mailto:" + emailHelp + "style=\"color:blue;\" >" + emailHelp + "</a>"));
+            }
+        }
 
         // Load description for Offers
         if (description.length() > 0) {

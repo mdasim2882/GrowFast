@@ -15,5 +15,6 @@
     <string name="helpdeskDescription">Buy full subscription and get unlimited upcoming videos, posters and greetings free for 365 days.  Pay ₹1000/- to get full subscription.Pay ₹700/- only to renew the full subscription after 1 year. </string>
 
     <string name="policyLink">You agree to our <a href="https://stackoverflow.com/questions/2734270/how-to-make-links-in-a-textview-clickable">Privacy Policy</a> and <a href="https://www.google.com/">Refund Policy.</a></string>
+    <string name="contactsInfo"> <a style="color:blue;" href="tel:9580130679">9580130679</a> / <a href="tel:8181884212">8181884212</a></string>
 
 </resources>
