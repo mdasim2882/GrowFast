@@ -4,12 +4,12 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recy
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,10 +28,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.example.growfast.R;
-import com.gkemon.XMLtoPDF.PdfGenerator;
-import com.gkemon.XMLtoPDF.PdfGeneratorListener;
-import com.gkemon.XMLtoPDF.model.FailureResponse;
-import com.gkemon.XMLtoPDF.model.SuccessResponse;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -66,7 +62,7 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
     RelativeLayout convertEditLifetoPdf;
     CircleImageView dpeditLife, mLogoiconEditLife;
 
-
+    private File sdCard = Environment.getExternalStorageDirectory();
     ImageView cardActual;
     private String imageSetter;
     private PdfDocument pdfDocument;
@@ -202,44 +198,66 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
         }
     }
 
-    public void saveAsPDF(View view) {
+    public void saveAsPDF(View view) throws IOException {
 
-        PdfGenerator.getBuilder()
-                .setContext(this)
-                .fromViewIDSource()
-                .fromViewID(this, R.id.editLifeframetoPDF)
-                /* "fromViewID()" takes array of view ids those MUST BE and MUST BE contained in the inserted "activity" .
-                 * You can also invoke "fromViewIDList()" method here which takes list of view ids instead of array. */
-                .setCustomPageSize(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight())
-                /* Here I used ".setCustomPageSize(3000,3000)" to set custom page size.*/
-                .setFileName("LifeFrame-PDF")
-                .setFolderName("Test-PDF-folder/PDFs")
-                .openPDFafterGeneration(true)
-                .build(new PdfGeneratorListener() {
-                    @Override
-                    public void onFailure(FailureResponse failureResponse) {
-                        super.onFailure(failureResponse);
-                        Toast.makeText(EditsDifferentGreetingsCards.this, "Failed to convert", Toast.LENGTH_SHORT).show();
-                        Log.d("STATUS:", "onFailure: \"Failed to convert\"");
 
-                    }
+        File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/Images");
+// create this directory if not already created
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
-                    @Override
-                    public void showLog(String log) {
-                        super.showLog(log);
-                        Toast.makeText(EditsDifferentGreetingsCards.this, "In Progress...", Toast.LENGTH_SHORT).show();
-                        Log.d("STATUS:", "onFailure: \"In Progress...\"");
+        Bitmap bitmap = Bitmap.createBitmap(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        convertEditLifetoPdf.draw(c);
+        File outputFile; // Where to save it
+        outputFile = new File(dir, "Greeting" + System.currentTimeMillis() + ".png");
+        try {
 
-                    }
+            FileOutputStream out = new FileOutputStream(outputFile);
+            boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+        } catch (IOException e) {
+            showToaster(e.getMessage());
+        }
 
-                    @Override
-                    public void onSuccess(SuccessResponse response) {
-                        super.onSuccess(response);
-                        Toast.makeText(EditsDifferentGreetingsCards.this, "Created Successfully...", Toast.LENGTH_SHORT).show();
 
-                        Log.d("STATUS:", "onFailure: \"Successfully Converted...\"");
-                    }
-                });
+//        PdfGenerator.getBuilder()
+//                .setContext(this)
+//                .fromViewIDSource()
+//                .fromViewID(this, R.id.editLifeframetoPDF)
+//                /* "fromViewID()" takes array of view ids those MUST BE and MUST BE contained in the inserted "activity" .
+//                 * You can also invoke "fromViewIDList()" method here which takes list of view ids instead of array. */
+//                .setCustomPageSize(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight())
+//                /* Here I used ".setCustomPageSize(3000,3000)" to set custom page size.*/
+//                .setFileName("LifeFrame-PDF")
+//                .setFolderName("Test-PDF-folder/PDFs")
+//                .openPDFafterGeneration(true)
+//                .build(new PdfGeneratorListener() {
+//                    @Override
+//                    public void onFailure(FailureResponse failureResponse) {
+//                        super.onFailure(failureResponse);
+//                        Toast.makeText(EditsDifferentGreetingsCards.this, "Failed to convert", Toast.LENGTH_SHORT).show();
+//                        Log.d("STATUS:", "onFailure: \"Failed to convert\"");
+//
+//                    }
+//
+//                    @Override
+//                    public void showLog(String log) {
+//                        super.showLog(log);
+//                        Toast.makeText(EditsDifferentGreetingsCards.this, "In Progress...", Toast.LENGTH_SHORT).show();
+//                        Log.d("STATUS:", "onFailure: \"In Progress...\"");
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(SuccessResponse response) {
+//                        super.onSuccess(response);
+//                        Toast.makeText(EditsDifferentGreetingsCards.this, "Created Successfully...", Toast.LENGTH_SHORT).show();
+//
+//                        Log.d("STATUS:", "onFailure: \"Successfully Converted...\"");
+//                    }
+//                });
     }
 
     public void convertButton(View view) {

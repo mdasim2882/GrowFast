@@ -26,109 +26,38 @@
             app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg"
-        android:layout_marginTop="56dp"
-        android:elevation="4dp"
         android:layout_above="@id/cartTotal_details_box"
+        android:background="@drawable/bg"
+        android:paddingTop="5dp"
+        android:layout_marginTop="56dp"
         android:orientation="vertical">
 
-
-        <ScrollView
-            android:id="@+id/ordersScroller"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/textlines"
+            android:fontFamily="@font/mclaren"
+            android:padding="5dp"
+            android:text="Order Details"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_skyblue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/order_details_box"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/textlines"
-                        android:fontFamily="@font/mclaren"
-                        android:padding="5dp"
-                        android:text="Order Details"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textColor="@color/dark_skyblue"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:background="@color/white"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="5">
-
-                            <TextView
-                                android:id="@+id/pdname"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3.2"
-                                android:fontFamily="@font/mclaren"
-                                android:text="Product Name :"
-                                android:textColor="@color/cardview_dark_background"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:id="@+id/pd_price"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.8"
-                                android:fontFamily="@font/mclaren"
-                                android:text="Rs 500"
-                                android:textColor="@color/cardview_dark_background"
-                                android:textSize="20sp" />
-                        </LinearLayout>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/removebtn"
-                            android:layout_width="match_parent"
-                            android:layout_gravity="center"
-                            app:cornerRadius="3dp"
-                            android:layout_height="wrap_content"
-                            android:text="REMOVE"
-                            android:layout_marginTop="8dp"
-                            android:backgroundTint="@color/design_default_color_primary"
-
-                            />
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-        </ScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cartItemsRecyclerView"
+            android:layout_width="match_parent"
+            android:layoutAnimation="@anim/layout_animation"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/cartTotal_details_box"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_above="@id/placeorderbtn"
         android:layout_height="wrap_content"
@@ -168,7 +97,7 @@
                     android:textColor="@color/cardview_dark_background"
                     android:text="Subtotal :"
                     android:textSize="18sp"
-                    android:fontFamily="@font/mclaren" />
+                    android:fontFamily="@font/andika" />
 
                 <TextView
                     android:id="@+id/subtotal_price"
@@ -176,8 +105,8 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:layout_weight="1.8"
-                    android:fontFamily="@font/mclaren"
-                    android:text="Rs 500"
+                    android:fontFamily="@font/andika"
+                    android:text="Rs 0"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -197,7 +126,7 @@
                     android:textColor="@color/cardview_dark_background"
                     android:text="Transaction Fee :"
                     android:textSize="18sp"
-                    android:fontFamily="@font/mclaren" />
+                    android:fontFamily="@font/andika" />
 
                 <TextView
                     android:id="@+id/transaction_fee"
@@ -205,8 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.8"
                     android:padding="5dp"
-                    android:fontFamily="@font/mclaren"
-                    android:text="Rs 10.0"
+                    android:fontFamily="@font/andika"
+                    android:text="Rs 0.0"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -226,7 +155,7 @@
                     android:text="Total Amount : "
                     android:textStyle="bold"
                     android:textSize="24sp"
-                    android:fontFamily="@font/mclaren" />
+                    android:fontFamily="@font/andika" />
 
                 <TextView
                     android:id="@+id/totalPriceOrder"
@@ -235,8 +164,8 @@
                     android:layout_weight="1.8"
                     android:textStyle="bold"
                     android:padding="5dp"
-                    android:fontFamily="@font/mclaren"
-                    android:text="Rs 10.0"
+                    android:fontFamily="@font/andika"
+                    android:text="Rs 0.0"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="24sp" />
             </LinearLayout>

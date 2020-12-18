@@ -1,6 +1,10 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,9 +34,10 @@ public class DigitalCardsActivity extends AppCompatActivity implements LoadMyTem
 
     private RecyclerView recyclerView;
     LoadMyTemplates loadMyTemplates;
-
+    List<ProductEntry> refreshList;
 
     CollectionReference templatesRef;
+    private DigitalCardRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +104,8 @@ public class DigitalCardsActivity extends AppCompatActivity implements LoadMyTem
 
     @Override
     public void onTemplateLoadSuccess(List<ProductEntry> templates) {
-        DigitalCardRecyclerViewAdapter adapter = new DigitalCardRecyclerViewAdapter(this, templates);
+        refreshList = templates;
+        adapter = new DigitalCardRecyclerViewAdapter(this, templates);
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.updown_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.side_product_grid_spacing_small);
@@ -110,5 +116,21 @@ public class DigitalCardsActivity extends AppCompatActivity implements LoadMyTem
     public void onTemplatedLoadFailure(String message) {
         Toast.makeText(this, "No response:", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refreshiconclick) {
+            Log.d("products", "onOptionsItemSelected: List--> " + refreshList);
+            recreate();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_desk_menu, menu);
+        return true;
     }
 }

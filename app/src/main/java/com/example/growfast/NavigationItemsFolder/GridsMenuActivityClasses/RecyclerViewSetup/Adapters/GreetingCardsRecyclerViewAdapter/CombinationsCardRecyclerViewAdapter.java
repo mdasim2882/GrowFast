@@ -2,17 +2,19 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recy
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.ProductEntry;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.CombinationsCardItemsViewHolder;
 import com.example.growfast.R;
@@ -21,7 +23,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class CombinationsCardRecyclerViewAdapter extends RecyclerView.Adapter<CombinationsCardItemsViewHolder> {
-
+    public static final String COME_FROM = "comeFrom";
+    public static final String PRODUCT_NAME = "productName";
+    public static final String PRODUCT_PRICE = "productPrice";
+    public static final String CART_BADGE = "CART_BADGE";
+    public static final String UNIQUE_ID = "uniqueID";
+    public static final String ITEM_TYPE = "itemType";
     public final String TAG = getClass().getSimpleName();
     Context context;
     private List<ProductEntry> productList;
@@ -33,6 +40,35 @@ public class CombinationsCardRecyclerViewAdapter extends RecyclerView.Adapter<Co
         activity = (Activity) context;
     }
 
+    private DialogInterface.OnClickListener performDialogOperations(String productName, String productCost) {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        Intent i = new Intent(context, CartItemsActivity.class);
+                        i.putExtra(COME_FROM, "combicards");
+                        i.putExtra(PRODUCT_NAME, productName);
+                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
+                        i.putExtra(ITEM_TYPE, "Combination Card");
+
+                        i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
+
+                        context.startActivity(i);
+                        ((CombinationActivity) context).finish();
+
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+    }
     @NonNull
     @Override
     public CombinationsCardItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,21 +81,44 @@ public class CombinationsCardRecyclerViewAdapter extends RecyclerView.Adapter<Co
     public void onBindViewHolder(@NonNull CombinationsCardItemsViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
+        String getCardsUri = productList.get(position).getProductImage();
 
         Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
-        holder.productPrice.setText(productList.get(position).getProductCost());
+
+        String productCost = productList.get(position).getProductCost();
+        String extPurchasd;
+        try {
+            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+        } catch (Exception e) {
+            extPurchasd = productCost;
+        }
+        if (extPurchasd.equals("Purchased")) {
+            holder.productPrice.setText(extPurchasd);
+        } else {
+            holder.productPrice.setText(productCost);
+        }
         holder.productTitle.setText(productList.get(position).getProductName());
 
 
         holder.productCard.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: Material Card clicked " + productList.get(position).getProductName() + " : " +
-                    "\nCost: " + productList.get(position).getProductCost() + "!!!" + context.getClass());
+
+            String productName = productList.get(position).getProductName();
+
+            DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
             //TODO: Perform card clicked working
             Context c = v.getContext();
-            Intent i = new Intent(v.getContext(), ProductOverview.class);
-            Toast.makeText(c, "Working :" + position, Toast.LENGTH_SHORT).show();
-            v.getContext().startActivity(i);
+            AlertDialog.Builder builder = new AlertDialog.Builder(c);
+            builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
+
+            if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                Intent i = new Intent(v.getContext(), ProductOverview.class);
+                i.putExtra("cardsUri", getCardsUri);
+                v.getContext().startActivity(i);
+            } else {
+                builder.show();
+            }
         });
 
 

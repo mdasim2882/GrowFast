@@ -31,6 +31,8 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
     public static final String PRODUCT_NAME = "productName";
     public static final String PRODUCT_PRICE = "productPrice";
     public static final String CART_BADGE = "CART_BADGE";
+    public static final String UNIQUE_ID = "uniqueID";
+    public static final String ITEM_TYPE = "itemType";
     public final String TAG = getClass().getSimpleName();
     Context context;
     private List<ProductEntry> productList;
@@ -62,7 +64,12 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
         String getCardsUri = productList.get(position).getProductImage();
         Picasso.get().load(getCardsUri).into(holder.imgCard);
         final String productCost = productList.get(position).getProductCost();
-        String extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+        String extPurchasd;
+        try {
+            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+        } catch (Exception e) {
+            extPurchasd = productCost;
+        }
         if (extPurchasd.equals("Purchased")) {
             holder.productPrice.setText(extPurchasd);
         } else {
@@ -87,7 +94,7 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                         .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
 
-                if (paymentDone == true || productCost.equals("Free") || extPurchasd.equals("Purchased")) {
+                if (paymentDone == true || productCost.equals("Free") || productCost.charAt(0) == 'P') {
                     Intent i = new Intent(v.getContext(), ProductOverview.class);
                     i.putExtra("digiCardUri", getCardsUri);
                     v.getContext().startActivity(i);
@@ -111,10 +118,12 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        startMyItemAddedBroadCast();
+//                        startMyItemAddedBroadCast();
                         Intent i = new Intent(context, CartItemsActivity.class);
                         i.putExtra(COME_FROM, "digiRec");
                         i.putExtra(PRODUCT_NAME, productName);
+                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
+                        i.putExtra(ITEM_TYPE, "Digital Card");
 
                         i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 

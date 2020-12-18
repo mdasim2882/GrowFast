@@ -16,42 +16,97 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.growfast.HelperMethods.CartHelp;
+import com.example.growfast.InterfacesUsed.LoadCartItems;
 import com.example.growfast.NavigationItemsFolder.BusinessManagement;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.GreetingCardsRecyclerViewAdapter.CartitemCardRecyclerViewAdapter;
 import com.example.growfast.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class CartItemsActivity extends AppCompatActivity {
+public class CartItemsActivity extends AppCompatActivity implements LoadCartItems {
     String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
-
+    private RecyclerView recyclerView;
     public static final int UPI_PAYMENT = 1234;
+    public static final String UNIQUE_ID = "uniqueID";
     public static final String COME_FROM = "comeFrom";
     public static final String PRODUCT_NAME = "productName";
     public static final String PRODUCT_PRICE = "productPrice";
+    public static final String ITEM_TYPE = "itemType";
 
-    TextView productname, prductprice, priceSubtotal, feeTransaction, priceTotalOrder;
+    static TextView productname, prductprice, priceSubtotal, feeTransaction, priceTotalOrder;
     Button placeOrderButton;
     LinearLayout upper, lower;
     private String getFrom;
-    private String productName;
+    private String productName, productID, productType;
     private int price;
 
     FirebaseFirestore database;
+    CollectionReference loadMyCartItems;
+    LoadCartItems loadCartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_items);
         chekOwner();
+        database = FirebaseFirestore.getInstance();
         initialTextFields();
         setUpToolbar();
+        setRecyclerView();
 
-        database = FirebaseFirestore.getInstance();
+
+    }
+
+    private void loadCartItems() {
+        loadMyCartItems.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<CartHelp> products = new ArrayList<>();
+                if (task.isSuccessful()) {
+
+                    for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
+                        CartHelp product = bannerSnapshot.toObject(CartHelp.class);
+                        products.add(product);
+                    }
+                    loadCartItems.onCartItemsLoadSuccess(products);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                loadCartItems.onCartItemsLoadFailure(e.getMessage());
+            }
+        });
+    }
+
+    private void setRecyclerView() {
+
+        // Set up the RecyclerView
+        recyclerView = findViewById(R.id.cartItemsRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
+        /*
+         * Pass parameter as list of type ProductEntry
+         * Must be retrieved from database to here only
+         * ProductEntry contains three fields:
+         * ImageView productImage
+         * TextView productName, productCost;
+         * */
 
     }
 
@@ -63,18 +118,42 @@ public class CartItemsActivity extends AppCompatActivity {
         priceTotalOrder = findViewById(R.id.totalPriceOrder);
 
         placeOrderButton = findViewById(R.id.placeorderbtn);
+        loadMyCartItems = FirebaseFirestore.getInstance().collection("Cart Products").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("My Cart");
 
         upper = findViewById(R.id.order_details_box);
         lower = findViewById(R.id.cartTotal_details_box);
-        if (getFrom != null && getFrom.equals("digiRec")) {
-            setupBadge();
+        if (getFrom != null) {
+//            setupBadge();
+            addToDatabaseCart();
+        }
+        // Load cart items
+        else {
+            loadCartItems();
         }
         placeOrderButton.setOnClickListener(v -> {
 
             paymentUri(null, null, null, null);
 
         });
+        loadCartItems = this;
+    }
 
+    private void addToDatabaseCart() {
+        HashMap<String, String> itemData = new HashMap<>();
+        itemData.put("itemName", productName);
+        itemData.put("itemType", productType);
+        itemData.put("itemID", productID);
+        itemData.put("itemprice", "Rs " + price);
+
+
+        database.collection("Cart Products").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("My Cart").document(productID).set(itemData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(CartItemsActivity.this, "Add to Cart Done", Toast.LENGTH_SHORT).show();
+                loadCartItems();
+            }
+
+        });
     }
 
     private void paymentUri(String name, String upiId, String note, String amount) {
@@ -211,6 +290,8 @@ public class CartItemsActivity extends AppCompatActivity {
 
     private void chekOwner() {
 
+        productID = getIntent().getStringExtra(UNIQUE_ID);
+        productType = getIntent().getStringExtra(ITEM_TYPE);
         productName = getIntent().getStringExtra(PRODUCT_NAME);
         getFrom = getIntent().getStringExtra(COME_FROM);
         price = getIntent().getIntExtra(PRODUCT_PRICE, 0);
@@ -221,24 +302,15 @@ public class CartItemsActivity extends AppCompatActivity {
 
     }
 
-    private void setupBadge() {
+    public static void setupBadge(int price, double fee) {
         Log.d("bdcst", "setupBadge: Received");
 
-        lower.setVisibility(View.VISIBLE);
-        upper.setVisibility(View.VISIBLE);
 
-        if (productName != null) {
-            productname.setText(" " + productName);
-        } else {
-            productname.setText("No items yet");
-        }
-
-        prductprice.setText("Rs " + price);
         priceSubtotal.setText("Rs " + price);
 
-        feeTransaction.setText("Rs " + setFeePercent(price));
+        feeTransaction.setText("Rs " + fee);
 
-        double totalSum = setFeePercent(price) + price;
+        double totalSum = fee + price;
         priceTotalOrder.setText("Rs " + totalSum);
 
     }
@@ -262,5 +334,19 @@ public class CartItemsActivity extends AppCompatActivity {
         Intent i = new Intent(this, BusinessManagement.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+    }
+
+    @Override
+    public void onCartItemsLoadSuccess(List<CartHelp> templates) {
+        CartitemCardRecyclerViewAdapter adapter = new CartitemCardRecyclerViewAdapter(this, templates);
+        recyclerView.setAdapter(adapter);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.updown_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.side_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
+    }
+
+    @Override
+    public void onCartItemsLoadFailure(String message) {
+        Toast.makeText(this, "Something went wrong: " + message, Toast.LENGTH_SHORT).show();
     }
 }

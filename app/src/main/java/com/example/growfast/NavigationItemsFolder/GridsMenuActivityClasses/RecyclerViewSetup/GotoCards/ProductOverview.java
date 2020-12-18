@@ -298,7 +298,7 @@ public class ProductOverview extends AppCompatActivity {
         document.setPageSize(size);
 
         // Assign some name to PDF
-        File dir = new File(sdCard.getAbsolutePath() + "/DigitalAdvisor/PDFs");
+        File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/PDFs");
 // create this directory if not already created
         if (!dir.exists()) {
             dir.mkdirs();

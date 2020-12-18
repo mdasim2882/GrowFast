@@ -429,6 +429,7 @@ public class ProfileDetails extends Fragment {
 
 
             if (userNAME.size() > 0) {
+                // If not exists then create collection And then merge that data
                 database.collection("User").document(mAuth.getCurrentUser().getUid()).set(userNAME, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

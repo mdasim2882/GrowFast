@@ -2,6 +2,7 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Gree
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,6 +107,6 @@ public class CombinationActivity extends AppCompatActivity implements LoadMyComb
 
     @Override
     public void onCombinationsLoadFailure(String message) {
-
+        Toast.makeText(this, "Something went wrong: " + message, Toast.LENGTH_SHORT).show();
     }
 }
