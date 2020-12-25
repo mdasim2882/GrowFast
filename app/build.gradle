@@ -61,4 +61,12 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //Magical Exo Player
+    implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:1.0.16'
+    implementation 'com.google.android.exoplayer:exoplayer:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
 }

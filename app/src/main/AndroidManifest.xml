@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowFast">
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity"></activity>
+        <activity
+            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
