@@ -198,7 +198,7 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
         }
     }
 
-    public void saveAsPDF(View view) throws IOException {
+    public void saveAsPNG(View view) throws IOException {
 
 
         File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/Images");

@@ -125,7 +125,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     android:fontFamily="@font/mclaren"
-                    android:onClick="saveAsPDF"
+                    android:onClick="saveAsPNG"
                     android:text="Share Poster"
                     app:cornerRadius="0dp" />
 

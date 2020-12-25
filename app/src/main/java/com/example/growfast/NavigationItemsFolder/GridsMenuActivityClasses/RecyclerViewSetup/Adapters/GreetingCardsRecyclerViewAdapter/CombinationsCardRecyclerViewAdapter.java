@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.growfast.HelperMethods.ProductEntry;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.CombinationsCardItemsViewHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -113,8 +113,8 @@ public class CombinationsCardRecyclerViewAdapter extends RecyclerView.Adapter<Co
 
 
             if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
-                Intent i = new Intent(v.getContext(), ProductOverview.class);
-                i.putExtra("cardsUri", getCardsUri);
+                Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
+                i.putExtra("fbcardsUri", getCardsUri);
                 v.getContext().startActivity(i);
             } else {
                 builder.show();

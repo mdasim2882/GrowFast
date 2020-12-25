@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.growfast.HelperMethods.ProductEntry;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ConceptsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.ConceptsCardItemsViewHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -117,8 +117,9 @@ public class ConceptsCardRecyclerViewAdapter extends RecyclerView.Adapter<Concep
 
 
             if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
-                Intent i = new Intent(v.getContext(), ProductOverview.class);
-                i.putExtra("cardUri", getCardsUri);
+                Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
+                i.putExtra("fbcardsUri", getCardsUri);
+                Log.d(TAG, "onBindViewHolder: URI Intent" + getCardsUri);
                 v.getContext().startActivity(i);
             } else {
                 builder.show();

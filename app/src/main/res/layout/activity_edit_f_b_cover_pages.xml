@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/editFBCovrerappbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/editFbCover_greets_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:title="Edit"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="#F4F4F0"
+        android:elevation="8dp"
+        android:paddingStart="@dimen/cardview_default_elevation"
+        android:paddingTop="5dp"
+        android:paddingEnd="@dimen/cardview_default_elevation">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F4F4F0"
+            android:paddingStart="@dimen/cardview_default_elevation"
+            android:paddingEnd="@dimen/cardview_default_elevation">
+
+            <RelativeLayout
+                android:id="@+id/editFbCovertoPDF"
+                android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp">
+
+                <RelativeLayout
+                    android:id="@+id/FbCoverview_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@drawable/bg"
+                        android:id="@+id/editFbCoverImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/posterblue" />
+
+                    <LinearLayout
+                        android:id="@+id/Watermark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="75dp"
+                        android:padding="5dp"
+                        android:rotation="-8"
+                        android:rotationX="0"
+                        android:weightSum="4">
+
+                        <TextView
+                            android:id="@+id/usernameWatermark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/andika"
+                            android:gravity="left"
+                            android:paddingLeft="5dp"
+                            android:text="Asim"
+                            android:textColor="#59000000"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/mobileWatermark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:fontFamily="@font/mclaren"
+                            android:gravity="center"
+                            android:text="+919580130679"
+                            android:textColor="#59000000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:weightSum="4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/white"
+                        android:layout_below="@id/editFbCoverImage">
+
+                        <TextView
+                            android:id="@+id/editFBCoverDPUsername"
+                            android:layout_width="0dp"
+                            android:paddingLeft="5dp"
+                            android:gravity="left"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/andika"
+                            android:layout_weight="2.5"
+                            android:layout_height="wrap_content"
+                            android:text="Md Asim" />
+
+                        <TextView
+                            android:id="@+id/editFBCoverMobile"
+                            android:layout_width="0dp"
+                            android:layout_weight="1.5"
+                            android:fontFamily="@font/mclaren"
+                            android:textColor="@color/black"
+                            android:layout_height="wrap_content"
+                            android:text="+919580130679"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/FbCoverbtnPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/FbCoveraddLogoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/black"
+                    android:fontFamily="@font/mclaren"
+                    android:onClick="convertPNGButton"
+                    android:text="Add Bookmark"
+                    app:cornerRadius="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/FbCoversharePosterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/black"
+                    android:fontFamily="@font/mclaren"
+                    android:onClick="saveAsFbCoverPNG"
+                    android:text="Create Card"
+                    app:cornerRadius="0dp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
