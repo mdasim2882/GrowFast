@@ -28,6 +28,19 @@ import com.example.growfast.HelperMethods.HelpEntry;
 import com.example.growfast.InterfacesUsed.LoadMyHelpDeskData;
 import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.R;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,8 +63,8 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
     LoadMyHelpDeskData loadMyHelpDeskData;
     ProgressBar progressBar;
     AlertDialog.Builder alertDialog;
-
-
+    private PlayerView andExoPlayerView;
+    private SimpleExoPlayer exoPlayer;
     CollectionReference loadMyHelpDeskRef;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -119,7 +132,7 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
                     alertDialog.setMessage("No Internet Connection");
                     alertDialog.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
                     alertDialog.show();
-                    progressBar.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -140,13 +153,18 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
         supportEmails = view.findViewById(R.id.supportEmail);
         mDescriptions = view.findViewById(R.id.descriptiondesk);
         referAndEarnLink = view.findViewById(R.id.referandearn_linkText);
-        progressBar = view.findViewById(R.id.videoprogressbar);
-
+//        progressBar = view.findViewById(R.id.videoprogressbar);
+        andExoPlayerView = view.findViewById(R.id.helpExoPlayerView);
         privacyPolicyText.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-        startVideo = view.findViewById(R.id.videoHelpDesk);
+//        startVideo = view.findViewById(R.id.videoHelpDesk);
         mediaController = new MediaController(getContext());
+
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+
+        exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector);
 
 
     }
@@ -195,16 +213,25 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
 
         // Load Video Here
         Uri uri = Uri.parse(uriHelp);
-        startVideo.setVideoURI(uri);
-        startVideo.setMediaController(mediaController);
-        mediaController.setAnchorView(startVideo);
+//        startVideo.setVideoURI(uri);
+//        startVideo.setMediaController(mediaController);
+//        mediaController.setAnchorView(startVideo);
 
         if (uri != null) {
-            startVideo.setOnPreparedListener(mp -> {
-                mp.setLooping(false);
-                progressBar.setVisibility(View.GONE);
-                startVideo.start();
-            });
+//            startVideo.setOnPreparedListener(mp -> {
+//                mp.setLooping(false);
+//                progressBar.setVisibility(View.GONE);
+//                startVideo.start();
+//            });
+
+            DefaultHttpDataSourceFactory defdataSourceFactory = new DefaultHttpDataSourceFactory("exoplaye_video");
+            ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+            MediaSource mediaSource = new ExtractorMediaSource(uri, defdataSourceFactory, extractorsFactory, null, null);
+            andExoPlayerView.setPlayer(exoPlayer);
+            exoPlayer.prepare(mediaSource);
+            exoPlayer.setPlayWhenReady(true);
+
+
         }
 
 
@@ -283,9 +310,21 @@ public class HelpDesk extends Fragment implements LoadMyHelpDeskData {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.refreshiconclick) {
             // Call this function in toolbar menu
-            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
             startHelpDeskLoading();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void stopPlayer(PlayerView pv, SimpleExoPlayer absPlayer) {
+        pv.setPlayer(null);
+        absPlayer.release();
+        absPlayer = null;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopPlayer(andExoPlayerView, exoPlayer);
     }
 }

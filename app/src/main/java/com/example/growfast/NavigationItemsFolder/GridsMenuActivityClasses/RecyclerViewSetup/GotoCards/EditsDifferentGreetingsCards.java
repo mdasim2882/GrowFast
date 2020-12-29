@@ -216,6 +216,11 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
 
             FileOutputStream out = new FileOutputStream(outputFile);
             boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+//            Intent galleryIntent = new Intent(Intent.ACTION_VIEW, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            galleryIntent.setDataAndType(Uri.fromFile(outputFile), "image/*");
+//            galleryIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(galleryIntent);
             out.close();
         } catch (IOException e) {
             showToaster(e.getMessage());

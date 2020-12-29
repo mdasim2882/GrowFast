@@ -55,7 +55,7 @@
                         android:id="@+id/layout_banner"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="@drawable/ic_refresh_24"
+                        android:background="@color/white"
                         android:layout_margin="10dp"
                         android:scaleType="fitXY"
                         app:slider_animateIndicators="true"

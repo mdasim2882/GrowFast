@@ -1,6 +1,9 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -108,5 +111,20 @@ public class ComboPostersActivity extends AppCompatActivity implements LoadMyCom
     @Override
     public void onComboPostersLoadFailure(String message) {
         Toast.makeText(this, "No response:", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refreshiconclick) {
+            recreate();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_desk_menu, menu);
+        return true;
     }
 }

@@ -34,7 +34,9 @@
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity" />
         <activity android:name=".NavigationItemsFolder.Settings" />
-        <activity android:name=".NavigationItemsFolder.BusinessManagement" />
+        <activity
+            android:name=".NavigationItemsFolder.BusinessManagement"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".StructureBaseActivity" />
         <activity android:name=".WelcomePagesActivity" />
         <activity android:name=".Authentication.PhoneAuthActivity" />

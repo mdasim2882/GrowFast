@@ -1,6 +1,9 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,5 +105,20 @@ public class ConceptsActivity extends AppCompatActivity implements LoadMyConcept
     @Override
     public void onConceptsLoadFailure(String message) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refreshiconclick) {
+            recreate();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_desk_menu, menu);
+        return true;
     }
 }

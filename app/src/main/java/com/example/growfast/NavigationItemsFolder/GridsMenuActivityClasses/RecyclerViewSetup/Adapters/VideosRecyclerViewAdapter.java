@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.WhatsappVideoEntry;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.VideoCardsHolder;
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -60,7 +60,8 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
             //TODO: Perform card clicked working
             Context c = v.getContext();
 
-            Intent i = new Intent(v.getContext(), WhatsappVideos.class);
+//            Intent i = new Intent(v.getContext(), WhatsappVideos.class);
+            Intent i = new Intent(v.getContext(), ExoVideosWpActivity.class);
             i.putExtra("statusVideo", true);
             i.putExtra("videoUrl", productList.get(position).getVideoProductLink());
             v.getContext().startActivity(i);

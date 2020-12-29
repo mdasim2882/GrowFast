@@ -2,6 +2,9 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses;
 //Try it with multiple Access to Cards
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -89,6 +92,15 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
                 setUpToolbar("UiPro Creativity Videos");
                 break;
             }
+            case "greetingsVideos": {
+                setUpToolbar("Greetings Videos");
+                break;
+            }
+            case "ownVideos": {
+                setUpToolbar("Own Videos");
+                break;
+            }
+
 
         }
     }
@@ -148,5 +160,20 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refreshiconclick) {
+            recreate();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_desk_menu, menu);
+        return true;
     }
 }

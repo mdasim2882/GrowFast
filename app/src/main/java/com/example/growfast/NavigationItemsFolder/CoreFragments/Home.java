@@ -178,35 +178,44 @@ public class Home extends Fragment implements BannerLoadListener {
             case 4: {
                 Intent i = new Intent(getActivity(), VideosCardsActivity.class);
                 i.putExtra("from", "uiPro");
-                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                i.putExtra("collectionName", "UiPro Creativity Videos");
                 startActivity(i);
                 break;
             }
             case 5: {
                 Intent i = new Intent(getActivity(), VideosCardsActivity.class);
                 i.putExtra("from", "detailedVideos");
-                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                i.putExtra("collectionName", "In-Detailed Long Videos");
                 startActivity(i);
                 break;
             }
             case 6: {
                 Intent i = new Intent(getActivity(), VideosCardsActivity.class);
                 i.putExtra("from", "copyPaste");
-                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                i.putExtra("collectionName", "Copy Paste Videos");
                 startActivity(i);
                 break;
             }
             case 7: {
                 Intent i = new Intent(getActivity(), VideosCardsActivity.class);
                 i.putExtra("from", "agentIntroVideos");
-                i.putExtra("collectionName", "WhatsAppStatusVideos");
+                i.putExtra("collectionName", "Agent Intro Videos");
                 startActivity(i);
                 break;
             }
             case 8: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "greetingsVideos");
+                i.putExtra("collectionName", "Agent Intro Videos");
+                startActivity(i);
                 break;
+
             }
             case 9: {
+                Intent i = new Intent(getActivity(), VideosCardsActivity.class);
+                i.putExtra("from", "ownVideos");
+                i.putExtra("collectionName", "Own Videos");
+                startActivity(i);
                 break;
             }
             case 10: {
