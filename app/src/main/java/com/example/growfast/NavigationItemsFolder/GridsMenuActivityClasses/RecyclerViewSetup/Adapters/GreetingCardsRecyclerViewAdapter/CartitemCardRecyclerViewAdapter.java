@@ -99,6 +99,8 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
             CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
             actualSumprice = 0;
 //            super.onCreateViewHolder(holder,position);
+
+            //TODO: Error occurs due to late binding of view holder o.e.; from bottom to top
         });
         if (!press) {
             CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
