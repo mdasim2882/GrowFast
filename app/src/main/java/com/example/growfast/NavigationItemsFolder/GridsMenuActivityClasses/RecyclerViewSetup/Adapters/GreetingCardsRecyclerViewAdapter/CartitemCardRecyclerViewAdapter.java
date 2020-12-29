@@ -2,9 +2,11 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recy
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +37,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
     Context context;
     private List<CartHelp> productList;
     Activity activity;
+    private boolean press = false;
 
     public CartitemCardRecyclerViewAdapter(Context context, List<CartHelp> actualCards) {
         this.productList = actualCards;
@@ -55,7 +58,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
     public void onBindViewHolder(@NonNull CartItemsCardViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
-
+//actualSumprice=0;
         String itemprice = productList.get(position).getItemprice();
         holder.productPrice.setText(itemprice);
         holder.productTitle.setText(productList.get(position).getItemName());
@@ -76,7 +79,6 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
 //            v.getContext().startActivity(i);
 //
 //        });
-
         holder.removeButton.setOnClickListener(v -> {
             //Remove this card
             notifyItemRemoved(position);
@@ -84,16 +86,26 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
             removeProductDocumentFromFirestore(position);
             notifyItemRangeChanged(position, productList.size());
             productList.remove(position);
-
+            String a = "Before: " + actualSumprice;
             actualSumprice = actualSumprice - (Integer.parseInt(selectedPrice.substring(3)));
+            a += "\nAfter: " + actualSumprice;
+            Toast.makeText(context, "Value sum= " + a, Toast.LENGTH_LONG).show();
+
+            Log.d("MAGGY", "onBindViewHolder: SUM OF RUPEES===>" + a);
             actualSumprice = roundOFF(actualSumprice);
             actualTransactionFee = actualTransactionFee - setFeePercent(Integer.parseInt(selectedPrice.substring(3))) + setFeePercent(0);
             actualTransactionFee = roundOFF(actualTransactionFee);
-
+            press = true;
             CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
+            actualSumprice = 0;
+//            super.onCreateViewHolder(holder,position);
         });
+        if (!press) {
+            CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
+        }
+        Log.d("MAGGY", "onBindViewHolder: WITHOUT REMOVe PRESS===>" + actualSumprice);
 
-        CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
+
     }
 
 

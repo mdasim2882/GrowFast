@@ -1,9 +1,13 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -17,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.growfast.R;
 import com.squareup.picasso.Picasso;
@@ -28,6 +34,7 @@ import java.io.IOException;
 public class EditFBCoverPagesActivity extends AppCompatActivity {
 
 
+    public static final String MAGGY = "MAGGY";
     private int _xDelta;
     private int _yDelta;
     Uri picUri;
@@ -96,31 +103,71 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
         });
     }
 
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(MAGGY, "Permission is granted");
+                return true;
+            } else {
+
+                Log.v(MAGGY, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(MAGGY, "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v(MAGGY, "Permission: " + permissions[0] + "was " + grantResults[0]);
+            //resume tasks needing this permission
+        }
+    }
 
     public void saveAsFbCoverPNG(View view) throws IOException {
 
 
-        File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/FBCover");
+        if (isStoragePermissionGranted()) {
+            File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/FBCover");
 // create this directory if not already created
-        if (!dir.exists()) {
-            dir.mkdirs();
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            convertEditLifetoPdf.draw(c);
+            File outputFile; // Where to save it
+            outputFile = new File(dir, "FbCoverGreeting" + System.currentTimeMillis() + ".png");
+            try {
+
+                FileOutputStream out = new FileOutputStream(outputFile);
+                boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                viewInGallery(outputFile);
+                out.close();
+            } catch (IOException e) {
+                showToaster(e.getMessage());
+            }
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
-        convertEditLifetoPdf.draw(c);
-        File outputFile; // Where to save it
-        outputFile = new File(dir, "FbCoverGreeting" + System.currentTimeMillis() + ".png");
-        try {
 
-            FileOutputStream out = new FileOutputStream(outputFile);
-            boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.close();
-        } catch (IOException e) {
-            showToaster(e.getMessage());
-        }
+    }
 
+    private void viewInGallery(File outputFile) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setDataAndType(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
+                                FileProvider.getUriForFile(this, getPackageName() + ".provider", outputFile) : Uri.fromFile(outputFile),
+                        "image/*")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
+        startActivity(intent);
     }
 
     public void convertPNGButton(View view) {

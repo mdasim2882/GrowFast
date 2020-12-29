@@ -2,14 +2,18 @@ package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recy
 // To use Crop Image Activity from Activity you can simply pass this as parameter
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +29,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.growfast.R;
 import com.itextpdf.text.Chunk;
@@ -47,6 +53,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity.MAGGY;
 
 public class EditsDifferentGreetingsCards extends AppCompatActivity {
     private ViewGroup rootLayout;
@@ -198,32 +206,60 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
         }
     }
 
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(MAGGY, "Permission is granted");
+                return true;
+            } else {
+
+                Log.v(MAGGY, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(MAGGY, "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v(MAGGY, "Permission: " + permissions[0] + "was " + grantResults[0]);
+            //resume tasks needing this permission
+        }
+    }
+
     public void saveAsPNG(View view) throws IOException {
 
 
-        File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/Images");
+        if (isStoragePermissionGranted()) {
+            File dir = new File(sdCard.getAbsolutePath() + "/Digital Advisor/Images");
 // create this directory if not already created
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
 
-        Bitmap bitmap = Bitmap.createBitmap(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
-        convertEditLifetoPdf.draw(c);
-        File outputFile; // Where to save it
-        outputFile = new File(dir, "Greeting" + System.currentTimeMillis() + ".png");
-        try {
+            Bitmap bitmap = Bitmap.createBitmap(convertEditLifetoPdf.getWidth(), convertEditLifetoPdf.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            convertEditLifetoPdf.draw(c);
+            File outputFile; // Where to save it
+            outputFile = new File(dir, "Greeting " + System.currentTimeMillis() + ".png");
+            try {
 
-            FileOutputStream out = new FileOutputStream(outputFile);
-            boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                FileOutputStream out = new FileOutputStream(outputFile);
+                boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-//            Intent galleryIntent = new Intent(Intent.ACTION_VIEW, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            galleryIntent.setDataAndType(Uri.fromFile(outputFile), "image/*");
-//            galleryIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(galleryIntent);
-            out.close();
-        } catch (IOException e) {
-            showToaster(e.getMessage());
+
+                viewInGallery(outputFile);
+                out.close();
+            } catch (IOException e) {
+                showToaster(e.getMessage());
+                Log.d("ShowPhoto", "saveAsPNG: MESSAGE =========>" + e.getMessage());
+            }
         }
 
 
@@ -263,6 +299,17 @@ public class EditsDifferentGreetingsCards extends AppCompatActivity {
 //                        Log.d("STATUS:", "onFailure: \"Successfully Converted...\"");
 //                    }
 //                });
+    }
+
+    private void viewInGallery(File outputFile) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setDataAndType(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
+                                FileProvider.getUriForFile(this, getPackageName() + ".provider", outputFile) : Uri.fromFile(outputFile),
+                        "image/*")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        startActivity(intent);
     }
 
     public void convertButton(View view) {

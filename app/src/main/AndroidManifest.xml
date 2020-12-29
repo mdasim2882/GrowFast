@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.growfast">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MANAGE_DOCUMENTS"
+        tools:ignore="ProtectedPermissions" />
+
 
     <application
         android:allowBackup="true"
@@ -19,7 +24,9 @@
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity" />
+        <activity
+            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
@@ -54,6 +61,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

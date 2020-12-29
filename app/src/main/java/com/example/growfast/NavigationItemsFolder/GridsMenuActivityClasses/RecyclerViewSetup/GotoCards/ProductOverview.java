@@ -1,13 +1,16 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -18,7 +21,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.growfast.R;
@@ -56,6 +60,8 @@ import java.io.IOException;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity.MAGGY;
 
 public class ProductOverview extends AppCompatActivity {
     // Pdf Card Details
@@ -507,6 +513,7 @@ public class ProductOverview extends AppCompatActivity {
 
         runner.execute(counter);
 
+
     }
 
 
@@ -531,8 +538,10 @@ public class ProductOverview extends AppCompatActivity {
 
 
     public void movetonext(View view) {
-        Intent addLinksCard = new Intent(this, FillDigitalCardDetailsActivity.class);
-        startActivityForResult(addLinksCard, CARD_DETAILS);
+        if (isStoragePermissionGranted()) {
+            Intent addLinksCard = new Intent(this, FillDigitalCardDetailsActivity.class);
+            startActivityForResult(addLinksCard, CARD_DETAILS);
+        }
 
     }
 
@@ -557,7 +566,9 @@ public class ProductOverview extends AppCompatActivity {
         @Override
         protected Integer doInBackground(Integer... integers) {
             try {
+
                 createPDFDocument(integers[0]);
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (BadElementException e) {
@@ -584,16 +595,52 @@ public class ProductOverview extends AppCompatActivity {
         }
     }
 
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(MAGGY, "Permission is granted");
+                return true;
+            } else {
+
+                Log.v(MAGGY, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(MAGGY, "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v(MAGGY, "Permission: " + permissions[0] + " was " + grantResults[0]);
+            //resume tasks needing this permission
+        }
+    }
+
     private void viewPdf(String mfname) {
-        String url = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DigitalAdvisor/PDFs/" + mfname;
+        String url = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Digital Advisor/PDFs/" + mfname;
         File file = new File(url);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-
-        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url));
-        intent.setDataAndType(Uri.fromFile(file), mimeType);
+        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url));
+        intent.setDataAndType(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ? FileProvider.getUriForFile(this, getPackageName() + ".provider", file) : Uri.fromFile(file), "application/pdf");
 
         Intent start = Intent.createChooser(intent, "Open With");
-        startActivity(start);
+
+        startActivity(intent);
+
+        Log.d("MAGGY", "viewPdf: \nURI : " + Uri.fromFile(file).toString() +
+                "\n Folder Path: " + file.getPath() +
+                "\n Url String: " + url
+                + "\nLESS THAN NOUGAT: " + FileProvider.getUriForFile(this, getPackageName() + ".provider", file));
+
+
     }
 
 }
