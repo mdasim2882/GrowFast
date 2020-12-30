@@ -64,11 +64,14 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
         holder.productTitle.setText(productList.get(position).getItemName());
         holder.productType.setText(productList.get(position).getItemType());
 
-        actualSumprice = actualSumprice + Integer.parseInt(itemprice.substring(3));
-        actualTransactionFee = actualTransactionFee + setFeePercent(Integer.parseInt(itemprice.substring(3))) + setFeePercent(0);
+        if (!press) {
+            actualSumprice = actualSumprice + Integer.parseInt(itemprice.substring(3));
+            actualTransactionFee = actualTransactionFee + setFeePercent(Integer.parseInt(itemprice.substring(3))) + setFeePercent(0);
+            actualSumprice = roundOFF(actualSumprice);
+            actualTransactionFee = roundOFF(actualTransactionFee);
+        }
 
-        actualSumprice = roundOFF(actualSumprice);
-        actualTransactionFee = roundOFF(actualTransactionFee);
+
 //        holder.productCard.setOnClickListener(v -> {
 //            Log.d(TAG, "onClick: Material Card clicked " + productList.get(position).getItemName() + " : " +
 //                    "\nCost: " + productList.get(position).getItemprice() + "!!!" + context.getClass());
@@ -97,7 +100,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
             actualTransactionFee = roundOFF(actualTransactionFee);
             press = true;
             CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
-            actualSumprice = 0;
+//            actualSumprice = 0;
 //            super.onCreateViewHolder(holder,position);
 
             //TODO: Error occurs due to late binding of view holder o.e.; from bottom to top
