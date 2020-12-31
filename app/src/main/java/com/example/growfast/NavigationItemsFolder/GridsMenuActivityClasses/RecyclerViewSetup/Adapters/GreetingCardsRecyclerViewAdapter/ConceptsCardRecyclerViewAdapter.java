@@ -85,48 +85,55 @@ public class ConceptsCardRecyclerViewAdapter extends RecyclerView.Adapter<Concep
     @Override
     public void onBindViewHolder(@NonNull ConceptsCardItemsViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
+        String productImage = productList.get(position).getProductImage();
+        String getCardsUri = productImage;
         String productName = productList.get(position).getProductName();
-        String getCardsUri = productList.get(position).getProductImage();
-        Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
         String productCost = productList.get(position).getProductCost();
-        String extPurchasd;
-        try {
-            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-        } catch (Exception e) {
-            extPurchasd = productCost;
-        }
-        if (extPurchasd.equals("Purchased")) {
-            holder.productPrice.setText(extPurchasd);
-        } else {
-            holder.productPrice.setText(productCost);
-        }
-        holder.productTitle.setText(productName);
+
+        if (productImage != null && productCost != null && productName != null
+                && productCost != "" && productImage != "" && productName != "") {
 
 
-        holder.productCard.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: Material Card clicked " + productList.get(position).getProductName() + " : " +
-                    "\nCost: " + productList.get(position).getProductCost() + "!!!" + context.getClass());
-
-
-            DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
-            //TODO: Perform card clicked working
-            Context c = v.getContext();
-            AlertDialog.Builder builder = new AlertDialog.Builder(c);
-            builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).setCancelable(false);
-
-
-            if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
-                Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
-                i.putExtra("fbcardsUri", getCardsUri);
-                Log.d(TAG, "onBindViewHolder: URI Intent" + getCardsUri);
-                v.getContext().startActivity(i);
-            } else {
-                builder.show();
+            Picasso.get().load(productImage).into(holder.imgCard);
+            String extPurchasd;
+            try {
+                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+            } catch (Exception e) {
+                extPurchasd = productCost;
             }
-        });
+            if (extPurchasd.equals("Purchased")) {
+                holder.productPrice.setText(extPurchasd);
+            } else {
+                holder.productPrice.setText(productCost);
+            }
+            holder.productTitle.setText(productName);
 
 
+            holder.productCard.setOnClickListener(v -> {
+                Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
+                        "\nCost: " + productCost + "!!!" + context.getClass());
+
+
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
+                //TODO: Perform card clicked working
+                Context c = v.getContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).setCancelable(false);
+
+
+                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                    Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
+                    i.putExtra("fbcardsUri", getCardsUri);
+                    Log.d(TAG, "onBindViewHolder: URI Intent" + getCardsUri);
+                    v.getContext().startActivity(i);
+                } else {
+                    builder.show();
+                }
+            });
+
+
+        }
     }
 
 

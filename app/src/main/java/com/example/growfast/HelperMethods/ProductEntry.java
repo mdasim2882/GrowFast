@@ -1,11 +1,31 @@
 package com.example.growfast.HelperMethods;
 
+import java.util.List;
+
 public class ProductEntry {
+    String productID;
     String productImage;
     String productName;
     String productCost;
+    List<String> boughtBy;
 
     public ProductEntry() {
+    }
+
+    public List<String> getBoughtBy() {
+        return boughtBy;
+    }
+
+    public void setBoughtBy(List<String> boughtBy) {
+        this.boughtBy = boughtBy;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     public ProductEntry(String productImage, String productName, String productCost) {

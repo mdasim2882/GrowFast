@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.growfast">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission
         android:name="android.permission.MANAGE_DOCUMENTS"
         tools:ignore="ProtectedPermissions" />
@@ -88,6 +90,11 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/dark_skyblue" />
 
+        <!--        <meta-data-->
+        <!--            android:name="com.razorpay."-->
+        <!--            android:value="rzp_test_PWXNtHUD6Un5Yo"/>-->
+
+        <service android:name=".Services.MyDownloadingService" />
     </application>
 
 </manifest>

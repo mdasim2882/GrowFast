@@ -54,7 +54,7 @@
                     android:id="@+id/videocardproduct_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Free"
+                    android:text=""
                     android:fontFamily="@font/mclaren"
                     android:textAlignment="textStart"
                     android:textAppearance="?attr/textAppearanceSubtitle1" />

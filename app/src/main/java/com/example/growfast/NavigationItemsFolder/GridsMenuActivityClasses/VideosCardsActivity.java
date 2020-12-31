@@ -146,6 +146,12 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
     public void onVideosImageLoadSuccess(List<WhatsappVideoEntry> templates) {
         VideosRecyclerViewAdapter adapter = new VideosRecyclerViewAdapter(this, templates);
         recyclerView.setAdapter(adapter);
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
         int largePadding = getResources().getDimensionPixelSize(R.dimen.updown_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.side_product_grid_spacing_small);
         recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));

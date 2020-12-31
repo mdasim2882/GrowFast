@@ -20,7 +20,6 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.LifeCardItemsViewHolder;
 import com.example.growfast.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -86,47 +85,49 @@ public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardIt
     @Override
     public void onBindViewHolder(@NonNull LifeCardItemsViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
-        String uricards = productList.get(position).getProductImage();
-        String getCardsUri = productList.get(position).getProductImage();
-        Picasso.get().load(uricards).into(holder.imgCard);
-        String productCost = productList.get(position).getProductCost();
-        String extPurchasd;
+        String productImage = productList.get(position).getProductImage();
+        String uricards = productImage;
         String productName = productList.get(position).getProductName();
-        try {
-            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-        } catch (Exception e) {
-            extPurchasd = productCost;
-        }
-        if (extPurchasd.equals("Purchased")) {
-            holder.productPrice.setText(extPurchasd);
-        } else {
-            holder.productPrice.setText(productCost);
-        }
-        holder.productTitle.setText(productList.get(position).getProductName());
+        String productCost = productList.get(position).getProductCost();
 
-
-        holder.productCard.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: Material Card clicked " + productList.get(position).getProductName() + " : " +
-                    "\nCost: " + productList.get(position).getProductCost() + "!!!" + context.getClass());
-
-
-            DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
-            //TODO: Perform card clicked working
-            Context c = v.getContext();
-            AlertDialog.Builder builder = new AlertDialog.Builder(c);
-            builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).setCancelable(false);
-
-
-            if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
-                Intent i = new Intent(v.getContext(), EditsDifferentGreetingsCards.class);
-                i.putExtra("cardUri", uricards);
-                v.getContext().startActivity(i);
-            } else {
-                builder.show();
+        if (productImage != null && productCost != null && productName != null
+                && productCost != "" && productImage != "" && productName != "") {
+            String extPurchasd;
+            try {
+                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+            } catch (Exception e) {
+                extPurchasd = productCost;
             }
-        });
+            if (extPurchasd.equals("Purchased")) {
+                holder.productPrice.setText(extPurchasd);
+            } else {
+                holder.productPrice.setText(productCost);
+            }
+            holder.productTitle.setText(productName);
 
+
+            holder.productCard.setOnClickListener(v -> {
+                Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
+                        "\nCost: " + productCost + "!!!" + context.getClass());
+
+
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
+                //TODO: Perform card clicked working
+                Context c = v.getContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).setCancelable(false);
+
+
+                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                    Intent i = new Intent(v.getContext(), EditsDifferentGreetingsCards.class);
+                    i.putExtra("cardUri", uricards);
+                    v.getContext().startActivity(i);
+                } else {
+                    builder.show();
+                }
+            });
+        }
 
     }
 

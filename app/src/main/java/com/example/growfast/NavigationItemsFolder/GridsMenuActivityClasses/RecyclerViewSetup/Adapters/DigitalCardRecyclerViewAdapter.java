@@ -60,37 +60,51 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
     public void onBindViewHolder(@NonNull DigitalCardItemsViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
+        String productImage = productList.get(position).getProductImage();
+        String getCardsUri = productImage;
+        String productName = productList.get(position).getProductName();
+        String productCost = productList.get(position).getProductCost();
 
-        String getCardsUri = productList.get(position).getProductImage();
-        Picasso.get().load(getCardsUri).into(holder.imgCard);
-        final String productCost = productList.get(position).getProductCost();
-        String extPurchasd;
-        try {
-            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-        } catch (Exception e) {
-            extPurchasd = productCost;
+        if (productList.get(position).getBoughtBy() != null) {
+            String firstPurchasedUsers = productList.get(position).getBoughtBy().get(0);
+            String secondPurchasedUser = productList.get(position).getBoughtBy().get(1);
+            Log.e(TAG, "onBindViewHolder: Purchased by: \n" + firstPurchasedUsers + "\n" + secondPurchasedUser);
         }
-        if (extPurchasd.equals("Purchased")) {
-            holder.productPrice.setText(extPurchasd);
-        } else {
-            holder.productPrice.setText(productCost);
-        }
-        final String productName = productList.get(position).getProductName();
-        holder.productTitle.setText(productName);
 
 
-        // Alert Dialog to confirm
+        if (productImage != null && productCost != null && productName != null
+                && productCost != "" && productImage != "" && productName != "") {
 
-        holder.productCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Picasso.get().load(getCardsUri).into(holder.imgCard);
+            String extPurchasd;
+            try {
+                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+            } catch (Exception e) {
+                extPurchasd = productCost;
+            }
+            if (extPurchasd.equals("Purchased")) {
+                holder.productPrice.setText(extPurchasd);
+            } else {
+                holder.productPrice.setText(productCost);
+            }
+            holder.productTitle.setText(productName);
+
+
+            // Alert Dialog to confirm
+
+            holder.productCard.setOnClickListener(v -> {
+
                 Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
                         "\nCost: " + productCost + "!!!--> " + productCost.substring(3));
-                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
+                String productID = productName + System.currentTimeMillis();
+                if (productList.get(position).getProductID() != null && !productList.get(position).getProductID().equals("")) {
+                    productID = productList.get(position).getProductID();
+                }
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productID, productName, productCost);
                 //TODO: Perform card clicked working
                 Context c = v.getContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                builder.setMessage("Do you really want to add to Cart?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
 
@@ -105,41 +119,37 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                 } else {
                     builder.show();
                 }
-            }
-        });
+            });
 
-
+        }
     }
 
-    private DialogInterface.OnClickListener performDialogOperations(String productName, String productCost) {
-        return new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
+    private DialogInterface.OnClickListener performDialogOperations(String productID, String productName, String productCost) {
+        return (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
 //                        startMyItemAddedBroadCast();
-                        Intent i = new Intent(context, CartItemsActivity.class);
-                        i.putExtra(COME_FROM, "digiRec");
-                        i.putExtra(PRODUCT_NAME, productName);
-                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
-                        i.putExtra(ITEM_TYPE, "Digital Card");
+                    Intent i = new Intent(context, CartItemsActivity.class);
+                    i.putExtra(COME_FROM, "digiRec");
+                    i.putExtra(PRODUCT_NAME, productName);
+                    i.putExtra(UNIQUE_ID, productID);
+                    i.putExtra(ITEM_TYPE, "Digital Card");
 
-                        i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
+                    i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 
-                        context.startActivity(i);
-                        ((DigitalCardsActivity) context).finish();
+                    context.startActivity(i);
+                    ((DigitalCardsActivity) context).finish();
 
 
-                        Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
-                        break;
+                    Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
+                    break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        break;
-                }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    break;
             }
         };
     }

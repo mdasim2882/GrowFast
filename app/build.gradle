@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,6 +34,7 @@ android {
 }
 
 dependencies {
+
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -70,4 +75,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
     implementation 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
+
+    //Implementing RazorPay SDK
+    implementation 'com.razorpay:checkout:1.5.16'
+
 }

@@ -81,45 +81,49 @@ public class CombinationsCardRecyclerViewAdapter extends RecyclerView.Adapter<Co
     public void onBindViewHolder(@NonNull CombinationsCardItemsViewHolder holder, int position) {
         // TODO: Put Recycler ViewHolder Cards binding code here in MDC-102
 
-        String getCardsUri = productList.get(position).getProductImage();
-
-        Picasso.get().load(productList.get(position).getProductImage()).into(holder.imgCard);
-
+        String productImage = productList.get(position).getProductImage();
+        String getCardsUri = productImage;
+        String productName = productList.get(position).getProductName();
         String productCost = productList.get(position).getProductCost();
-        String extPurchasd;
-        try {
-            extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-        } catch (Exception e) {
-            extPurchasd = productCost;
-        }
-        if (extPurchasd.equals("Purchased")) {
-            holder.productPrice.setText(extPurchasd);
-        } else {
-            holder.productPrice.setText(productCost);
-        }
-        holder.productTitle.setText(productList.get(position).getProductName());
 
+        if (productCost != null && productImage != null && productCost != null && productName != null
+                && productCost != "" && productImage != "" && productCost != "" && productName != "") {
+            Picasso.get().load(productImage).into(holder.imgCard);
 
-        holder.productCard.setOnClickListener(v -> {
-
-            String productName = productList.get(position).getProductName();
-
-            DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
-            //TODO: Perform card clicked working
-            Context c = v.getContext();
-            AlertDialog.Builder builder = new AlertDialog.Builder(c);
-            builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).setCancelable(false);
-
-
-            if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
-                Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
-                i.putExtra("fbcardsUri", getCardsUri);
-                v.getContext().startActivity(i);
-            } else {
-                builder.show();
+            String extPurchasd;
+            try {
+                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
+            } catch (Exception e) {
+                extPurchasd = productCost;
             }
-        });
+            if (extPurchasd.equals("Purchased")) {
+                holder.productPrice.setText(extPurchasd);
+            } else {
+                holder.productPrice.setText(productCost);
+            }
+            holder.productTitle.setText(productName);
+
+
+            holder.productCard.setOnClickListener(v -> {
+
+
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
+                //TODO: Perform card clicked working
+                Context c = v.getContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                builder.setMessage("Do you want to really add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).setCancelable(false);
+
+
+                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                    Intent i = new Intent(v.getContext(), EditFBCoverPagesActivity.class);
+                    i.putExtra("fbcardsUri", getCardsUri);
+                    v.getContext().startActivity(i);
+                } else {
+                    builder.show();
+                }
+            });
+        }
 
 
     }

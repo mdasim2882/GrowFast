@@ -1,5 +1,6 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.CartHelp;
+import com.example.growfast.HelperMethods.CartManager;
 import com.example.growfast.InterfacesUsed.LoadCartItems;
 import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.GreetingCardsRecyclerViewAdapter.CartitemCardRecyclerViewAdapter;
@@ -29,16 +31,23 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CartItemsActivity extends AppCompatActivity implements LoadCartItems {
+public class CartItemsActivity extends AppCompatActivity implements LoadCartItems, PaymentResultListener {
+    public final String TAG = getClass().getSimpleName();
     String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
     private RecyclerView recyclerView;
     public static final int UPI_PAYMENT = 1234;
@@ -58,11 +67,14 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
     FirebaseFirestore database;
     CollectionReference loadMyCartItems;
     LoadCartItems loadCartItems;
+    private CartManager doneAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_items);
+        Checkout.preload(getApplicationContext());
+
         chekOwner();
         database = FirebaseFirestore.getInstance();
         initialTextFields();
@@ -116,7 +128,7 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
         priceSubtotal = findViewById(R.id.subtotal_price);
         feeTransaction = findViewById(R.id.transaction_fee);
         priceTotalOrder = findViewById(R.id.totalPriceOrder);
-
+        doneAdd = new CartManager();
         placeOrderButton = findViewById(R.id.placeorderbtn);
         loadMyCartItems = FirebaseFirestore.getInstance().collection("Cart Products").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("My Cart");
 
@@ -131,19 +143,22 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
             loadCartItems();
         }
         placeOrderButton.setOnClickListener(v -> {
-
-            paymentUri(null, null, null, null);
+            startPayment();
+            //paymentUri(null, null, null, null);
 
         });
         loadCartItems = this;
     }
 
     private void addToDatabaseCart() {
+
+
         HashMap<String, String> itemData = new HashMap<>();
         itemData.put("itemName", productName);
         itemData.put("itemType", productType);
         itemData.put("itemID", productID);
         itemData.put("itemprice", "Rs " + price);
+        doneAdd.additemId(productID);
 
 
         database.collection("Cart Products").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("My Cart").document(productID).set(itemData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -328,6 +343,53 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
         });
     }
 
+    //-----------------------------------------------RAZOR PAY API METHODS----------------------------//
+    public void startPayment() {
+//    checkout.setKeyID("<YOUR_KEY_ID>");
+        /**
+         * Instantiate Checkout
+         */
+        Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_test_eqsQIw7DUEqkDB");
+        /**
+         * Set your logo here
+         */
+        checkout.setImage(R.drawable.logo_digitaladvisor);
+
+        /**
+         * Reference to current activity
+         */
+        final Activity activity = this;
+
+        /**
+         * Pass your payment options to the Razorpay Checkout as a JSONObject
+         */
+        try {
+            JSONObject options = new JSONObject();
+
+            options.put("name", "Digital Advisor");
+            options.put("description", "Purchasing Digital Cards/Videos");
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+//        options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
+            options.put("theme.color", "#3399cc");
+            options.put("currency", "INR");
+            options.put("amount", "50000");//pass amount in currency subunits
+
+//        JSONObject prefill=new JSONObject();
+//        prefill.put("email", "mohdasim2882@gmail.com");
+//        prefill.put("contact","+919580130679");
+            options.put("prefill.email", "mohdasim2882@gmail.com");
+            options.put("prefill.contact", "919580130679");
+
+//        options.put("prefill", prefill);
+            checkout.open(activity, options);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Error in starting Razorpay Checkout", e);
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -348,5 +410,34 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
     @Override
     public void onCartItemsLoadFailure(String message) {
         Toast.makeText(this, "Something went wrong: " + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+        Log.e(TAG, " Payment successfull " + s + "\n UIDs: " + FirebaseAuth.getInstance().getUid() + "\n User Id: " + FirebaseAuth.getInstance().getCurrentUser().getUid() + "\n Product Id that is set: " + CartManager.managedProductId);
+        Toast.makeText(this, "Payment successfully done! " + s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Transaction successful.", Toast.LENGTH_SHORT).show();
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("boughtBy", FieldValue.arrayUnion(FirebaseAuth.getInstance().getUid()));
+        // TODO: Start Here...
+
+        for (String a : CartManager.managedProductId) {
+            database.collection("Templates").document(a.trim()).set(itemData, SetOptions.merge()).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Log.e(TAG, "onComplete: QUERY EXECUTED_--------------> " + task.getResult());
+                }
+            }).addOnFailureListener(e -> Log.e(TAG, "onFailure: ----------FAILED---------------> " + e.getMessage()));
+        }
+
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Log.e(TAG, "Error code " + i + " -- Payment failed " + s);
+        try {
+            Toast.makeText(this, "Payment error please try again", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in onPaymentError", e);
+        }
     }
 }

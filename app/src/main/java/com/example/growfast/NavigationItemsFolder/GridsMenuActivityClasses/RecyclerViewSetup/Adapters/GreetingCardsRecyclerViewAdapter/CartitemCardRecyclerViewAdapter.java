@@ -6,12 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.CartHelp;
+import com.example.growfast.HelperMethods.CartManager;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.CartItemsCardViewHolder;
 import com.example.growfast.R;
@@ -22,6 +22,7 @@ import java.util.List;
 
 public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartItemsCardViewHolder> {
 
+    public static final String CART_MANAGER = "Cart Manager";
     double actualSumprice = 0;
     double actualTransactionFee = 0;
 
@@ -60,9 +61,12 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
 
 //actualSumprice=0;
         String itemprice = productList.get(position).getItemprice();
+        String itemName = productList.get(position).getItemName();
+        String itemType = productList.get(position).getItemType();
+
         holder.productPrice.setText(itemprice);
-        holder.productTitle.setText(productList.get(position).getItemName());
-        holder.productType.setText(productList.get(position).getItemType());
+        holder.productTitle.setText(itemName);
+        holder.productType.setText(itemType);
 
         if (!press) {
             actualSumprice = actualSumprice + Integer.parseInt(itemprice.substring(3));
@@ -83,6 +87,11 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
 //
 //        });
         holder.removeButton.setOnClickListener(v -> {
+            CartManager remover = new CartManager();
+            String itemID = productList.get(position).getItemID();
+            remover.deleteitemId(itemID);
+            Log.e(CART_MANAGER, "Cart Manager: " + itemID);
+
             //Remove this card
             notifyItemRemoved(position);
             String selectedPrice = productList.get(position).getItemprice();
@@ -92,7 +101,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
             String a = "Before: " + actualSumprice;
             actualSumprice = actualSumprice - (Integer.parseInt(selectedPrice.substring(3)));
             a += "\nAfter: " + actualSumprice;
-            Toast.makeText(context, "Value sum= " + a, Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, "Value sum= " + a, Toast.LENGTH_LONG).show();
 
             Log.d("MAGGY", "onBindViewHolder: SUM OF RUPEES===>" + a);
             actualSumprice = roundOFF(actualSumprice);
