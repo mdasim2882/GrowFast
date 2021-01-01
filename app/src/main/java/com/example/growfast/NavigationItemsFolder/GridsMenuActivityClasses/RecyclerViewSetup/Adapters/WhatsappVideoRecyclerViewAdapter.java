@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,11 +67,13 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
 
 
         if (productCost != null && productImage != null && productCost != null && videoProductLink != null
-                && productCost != "" && productImage != "" && productCost != "" && videoProductLink != "") {
+                && !productCost.equals("") && !productImage.equals("") && !productName.equals("") && !videoProductLink.equals("")) {
+
             Picasso.get().load(productList.get(position).getProductImage()).into(holder.videocardimgCard);
 
             if (extPurchase.equals("Purchased")) {
                 holder.videocardproductPrice.setText(extPurchase);
+                holder.videocardproductPrice.setTextColor(Color.GREEN);
             } else {
                 holder.videocardproductPrice.setText(productCost);
             }

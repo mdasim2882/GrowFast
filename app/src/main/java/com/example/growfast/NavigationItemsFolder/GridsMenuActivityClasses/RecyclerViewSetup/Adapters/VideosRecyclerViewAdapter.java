@@ -98,6 +98,7 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
         String productName = productList.get(position).getProductName();
         String videoProductLink = productList.get(position).getVideoProductLink();
         String extPurchase = "None";
+
         if (productList.get(position).getBoughtBy() != null) {
             List<String> boughtBy = productList.get(position).getBoughtBy();
             boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -107,8 +108,9 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
 
             Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
         }
+
         if (productImage != null && productCost != null && videoProductLink != null && productName != null
-                && productImage != "" && productCost != "" && videoProductLink != "" && productName != "") {
+                && !productCost.equals("") && !productImage.equals("") && !productName.equals("") && !videoProductLink.equals("")) {
 
             Picasso.get().load(productImage).into(holder.imgCard);
             if (extPurchase.equals("Purchased")) {
@@ -117,10 +119,6 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
                 holder.productPrice.setText(productCost);
             }
             holder.productTitle.setText(productName);
-
-
-            // Alert Dialog to confirm
-
             String finalExtPurchase = extPurchase;
 
             holder.productCard.setOnClickListener(v -> {

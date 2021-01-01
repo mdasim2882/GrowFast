@@ -120,6 +120,7 @@ public class ExoVideosWpActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        super.onBackPressed();
         Log.d(TAG, "onKeyDown: Called");
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mProgressDialog.cancel();
@@ -127,6 +128,7 @@ public class ExoVideosWpActivity extends AppCompatActivity {
             return true;
 
         }
+
         return super.onKeyDown(keyCode, event);
     }
 
