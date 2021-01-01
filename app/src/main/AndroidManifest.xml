@@ -28,7 +28,7 @@
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
         <activity
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity"
-            android:windowSoftInputMode="adjustNothing" />
+           />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />

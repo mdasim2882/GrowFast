@@ -278,7 +278,7 @@ public class ProductOverview extends AppCompatActivity {
         contactno = getImageFromDrawable(R.drawable.bgtransparentphone, 0);
         contactno.scalePercent(15, 15);
 
-        youtube = getImageFromDrawable(R.drawable.growfast, 1);
+        youtube = getImageFromDrawable(R.drawable.logo_digitaladvisor, 1);
         youtube.scalePercent(15, 15);
 
         messaging = getImageFromDrawable(R.drawable.messagetransparent, 0);
@@ -335,18 +335,26 @@ public class ProductOverview extends AppCompatActivity {
 
             cell2.addElement(new Chunk(facebook, 0, 0, true).setAnchor(dataFacebookId));
             cell3.addElement(new Chunk(linkedIn, 0, 0, true).setAnchor(dataLinkedIn));
-            cell4.addElement(new Chunk(website, 0, 0, true).setAnchor("https://voterportal.eci.gov.in"));
+            cell4.addElement(new Chunk(website, 0, 0, true).setAnchor(dataWebsiteUrl));
             cell6.addElement(new Chunk(youtube, 0, 0, true).setAnchor(dataYoutube));
 
             table.addCell(cell1);
             table.addCell(cell5);
             table.addCell(cell7);
             if (counter > 3) {
-
-                table.addCell(cell4);
-                table.addCell(cell3);
-                table.addCell(cell6);
-                table.addCell(cell2);
+                Log.e("TAG", "createPDFDocument: " + counter);
+                if (dataWebsiteUrl != null) {
+                    table.addCell(cell4);
+                }
+                if (dataLinkedIn != null) {
+                    table.addCell(cell3);
+                }
+                if (dataYoutube != null) {
+                    table.addCell(cell6);
+                }
+                if (dataFacebookId != null) {
+                    table.addCell(cell2);
+                }
 
             }
 
