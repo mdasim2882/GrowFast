@@ -2,9 +2,18 @@ package com.example.growfast.HelperMethods;
 
 public class CartHelp {
     String itemName;
+    String itemCollection;
     String itemprice, itemType, itemID;
 
     public CartHelp() {
+    }
+
+    public String getItemCollection() {
+        return itemCollection;
+    }
+
+    public void setItemCollection(String itemCollection) {
+        this.itemCollection = itemCollection;
     }
 
     public String getItemID() {

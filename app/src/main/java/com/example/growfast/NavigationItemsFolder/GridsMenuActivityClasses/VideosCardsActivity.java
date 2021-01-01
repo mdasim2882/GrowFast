@@ -33,6 +33,7 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
     private RecyclerView recyclerView;
     LoadMyVideos loadMyVideoImages;
 
+    String variety;
 
     CollectionReference templatesRef;
 
@@ -76,28 +77,34 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
     private void peformWhereToWork(String whereTo) {
         switch (whereTo) {
             case "agentIntroVideos": {
-                setUpToolbar("Agent Intro Videos");
+                variety = "Agent Intro Videos";
+                setUpToolbar(variety);
                 break;
             }
             case "copyPaste": {
-                setUpToolbar("Copy Paste Videos");
+                variety = "Copy Paste Videos";
+                setUpToolbar(variety);
                 break;
             }
             case "detailedVideos": {
-                setUpToolbar("In-Detailed Videos");
+                variety = "In-Detailed Long Videos";
+                setUpToolbar(variety);
                 break;
             }
 
             case "uiPro": {
-                setUpToolbar("UiPro Creativity Videos");
+                variety = "UiPro Creativity Videos";
+                setUpToolbar(variety);
                 break;
             }
             case "greetingsVideos": {
-                setUpToolbar("Greetings Videos");
+                variety = "Greetings Videos";
+                setUpToolbar(variety);
                 break;
             }
             case "ownVideos": {
-                setUpToolbar("Own Videos");
+                variety = "Own Videos";
+                setUpToolbar(variety);
                 break;
             }
 
@@ -144,7 +151,7 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
 
     @Override
     public void onVideosImageLoadSuccess(List<WhatsappVideoEntry> templates) {
-        VideosRecyclerViewAdapter adapter = new VideosRecyclerViewAdapter(this, templates);
+        VideosRecyclerViewAdapter adapter = new VideosRecyclerViewAdapter(this, templates, variety);
         recyclerView.setAdapter(adapter);
         recyclerView.post(new Runnable() {
             @Override
@@ -163,10 +170,6 @@ public class VideosCardsActivity extends AppCompatActivity implements LoadMyVide
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

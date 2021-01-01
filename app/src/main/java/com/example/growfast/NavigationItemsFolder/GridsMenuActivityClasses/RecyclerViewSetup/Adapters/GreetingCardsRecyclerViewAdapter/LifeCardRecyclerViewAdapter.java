@@ -20,8 +20,12 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.GreetingCardsHolder.LifeCardItemsViewHolder;
 import com.example.growfast.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
 
 public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardItemsViewHolder> {
     public static final String COME_FROM = "comeFrom";
@@ -43,7 +47,7 @@ public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardIt
         activity = (Activity) context;
     }
 
-    private DialogInterface.OnClickListener performDialogOperations(String productName, String productCost) {
+    private DialogInterface.OnClickListener performDialogOperations(String productID, String productName, String productCost) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -53,8 +57,9 @@ public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardIt
                         Intent i = new Intent(context, CartItemsActivity.class);
                         i.putExtra(COME_FROM, "lifeCard");
                         i.putExtra(PRODUCT_NAME, productName);
-                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
-                        i.putExtra(ITEM_TYPE, "Life Card");
+                        i.putExtra(UNIQUE_ID, productID);
+                        i.putExtra(ITEM_TYPE, "Life Greetings");
+                        i.putExtra(CATEGORY, "Life Greetings");
 
                         i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 
@@ -89,29 +94,46 @@ public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardIt
         String uricards = productImage;
         String productName = productList.get(position).getProductName();
         String productCost = productList.get(position).getProductCost();
-
-        if (productImage != null && productCost != null && productName != null
-                && productCost != "" && productImage != "" && productName != "") {
-            String extPurchasd;
-            try {
-                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-            } catch (Exception e) {
-                extPurchasd = productCost;
+        String extPurchase = "None";
+        if (productList.get(position).getBoughtBy() != null) {
+            List<String> boughtBy = productList.get(position).getBoughtBy();
+            boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//            for (String bought:boughtBy) {
+//
+//                members+= bought+"\n";
+//            }
+            if (members) {
+                extPurchase = "Purchased";
             }
-            if (extPurchasd.equals("Purchased")) {
-                holder.productPrice.setText(extPurchasd);
+
+            Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
+        }
+        if (productImage != null && productCost != null && productName != null
+                && !productCost.equals("") && !productImage.equals("") && !productName.equals("")) {
+
+            Picasso.get().load(uricards).into(holder.imgCard);
+            if (extPurchase.equals("Purchased")) {
+                holder.productPrice.setText(extPurchase);
             } else {
                 holder.productPrice.setText(productCost);
             }
             holder.productTitle.setText(productName);
 
 
+            // Alert Dialog to confirm
+
+            String finalExtPurchase = extPurchase;
+            Log.e(TAG, "onBindViewHolder: " + productImage);
+
+
             holder.productCard.setOnClickListener(v -> {
                 Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
-                        "\nCost: " + productCost + "!!!" + context.getClass());
-
-
-                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
+                        "\nCost: " + productCost + "!!!--> " + productCost.substring(3));
+                String productID = productName + System.currentTimeMillis();
+                if (productList.get(position).getProductID() != null && !productList.get(position).getProductID().equals("")) {
+                    productID = productList.get(position).getProductID();
+                }
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productID, productName, productCost);
                 //TODO: Perform card clicked working
                 Context c = v.getContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -119,7 +141,7 @@ public class LifeCardRecyclerViewAdapter extends RecyclerView.Adapter<LifeCardIt
                         .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
 
-                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                if (productCost.equals("Free") || finalExtPurchase.charAt(0) == 'P') {
                     Intent i = new Intent(v.getContext(), EditsDifferentGreetingsCards.class);
                     i.putExtra("cardUri", uricards);
                     v.getContext().startActivity(i);

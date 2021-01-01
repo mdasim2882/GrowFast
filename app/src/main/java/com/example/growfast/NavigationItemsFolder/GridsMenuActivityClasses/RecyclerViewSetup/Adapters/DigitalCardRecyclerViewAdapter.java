@@ -21,9 +21,12 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.DigitalCardItemsViewHolder;
 import com.example.growfast.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
 
 public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<DigitalCardItemsViewHolder> {
 
@@ -64,11 +67,21 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
         String getCardsUri = productImage;
         String productName = productList.get(position).getProductName();
         String productCost = productList.get(position).getProductCost();
-
+        String extPurchase = "None";
         if (productList.get(position).getBoughtBy() != null) {
-            String firstPurchasedUsers = productList.get(position).getBoughtBy().get(0);
-            String secondPurchasedUser = productList.get(position).getBoughtBy().get(1);
-            Log.e(TAG, "onBindViewHolder: Purchased by: \n" + firstPurchasedUsers + "\n" + secondPurchasedUser);
+            List<String> boughtBy = productList.get(position).getBoughtBy();
+            boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//            for (String bought:boughtBy) {
+//
+//                members+= bought+"\n";
+//            }
+
+
+            if (members) {
+                extPurchase = "Purchased";
+            }
+
+            Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
         }
 
 
@@ -76,14 +89,9 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                 && productCost != "" && productImage != "" && productName != "") {
 
             Picasso.get().load(getCardsUri).into(holder.imgCard);
-            String extPurchasd;
-            try {
-                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-            } catch (Exception e) {
-                extPurchasd = productCost;
-            }
-            if (extPurchasd.equals("Purchased")) {
-                holder.productPrice.setText(extPurchasd);
+
+            if (extPurchase.equals("Purchased")) {
+                holder.productPrice.setText(extPurchase);
             } else {
                 holder.productPrice.setText(productCost);
             }
@@ -92,6 +100,7 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
 
             // Alert Dialog to confirm
 
+            String finalExtPurchase = extPurchase;
             holder.productCard.setOnClickListener(v -> {
 
                 Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
@@ -108,7 +117,7 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                         .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
 
-                if (paymentDone == true || productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                if (finalExtPurchase.charAt(0) == 'P' || productCost.equals("Free")) {
                     Intent i = new Intent(v.getContext(), ProductOverview.class);
                     i.putExtra("digiCardUri", getCardsUri);
                     v.getContext().startActivity(i);
@@ -134,7 +143,8 @@ public class DigitalCardRecyclerViewAdapter extends RecyclerView.Adapter<Digital
                     i.putExtra(COME_FROM, "digiRec");
                     i.putExtra(PRODUCT_NAME, productName);
                     i.putExtra(UNIQUE_ID, productID);
-                    i.putExtra(ITEM_TYPE, "Digital Card");
+                    i.putExtra(ITEM_TYPE, "Templates");
+                    i.putExtra(CATEGORY, "Digital Card");
 
                     i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 

@@ -19,6 +19,7 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.WhatsappVideoCardsHolder;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity;
 import com.example.growfast.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasse
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.PRODUCT_NAME;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.PRODUCT_PRICE;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.UNIQUE_ID;
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
 
 public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<WhatsappVideoCardsHolder> {
 
@@ -59,36 +61,36 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
         String productName = productList.get(position).getProductName();
         String videoProductLink = productList.get(position).getVideoProductLink();
 
+        String extPurchase = "None";
+        extPurchase = conditionChecker(position, productName, extPurchase);
+
+
         if (productCost != null && productImage != null && productCost != null && videoProductLink != null
                 && productCost != "" && productImage != "" && productCost != "" && videoProductLink != "") {
             Picasso.get().load(productList.get(position).getProductImage()).into(holder.videocardimgCard);
-            holder.videocardproductPrice.setText(productCost);
 
-
-            //TODO: Put Recycler ViewHolder Cards binding video links in intents to fetch videos
-            Log.d(TAG, "onBindViewHolder: ViDEO LinK --> " + productList.get(position).getVideoProductLink());
-
-            String extPurchasd;
-            try {
-                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-            } catch (Exception e) {
-                extPurchasd = productCost;
-            }
-            if (extPurchasd.equals("Purchased")) {
-                holder.videocardproductPrice.setText(extPurchasd);
+            if (extPurchase.equals("Purchased")) {
+                holder.videocardproductPrice.setText(extPurchase);
             } else {
                 holder.videocardproductPrice.setText(productCost);
             }
+
             holder.videocardproductTitle.setText(productName);
 
+            // Alert Dialog to confirm
+
+            String finalExtPurchase = extPurchase;
             holder.videocardproductCard.setOnClickListener(v -> {
                 Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
-                        "\nCost: " + productCost + "!!!" + context.getClass());
+                        "\nCost: " + productCost + "!!!--> " + productCost.substring(3));
+                String productID = productName + System.currentTimeMillis();
+                if (productList.get(position).getProductID() != null && !productList.get(position).getProductID().equals("")) {
+                    productID = productList.get(position).getProductID();
+                }
 
-                //TODO: Perform card clicked working
+                Log.e(TAG, "onBindViewHolder: PRODUCT ID WHATSsApp CARD: " + productID);
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productID, productName, productCost);
 
-
-                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
                 //TODO: Perform card clicked working
                 Context c = v.getContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -96,7 +98,7 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
                         .setNegativeButton("No", dialogClickListener).setCancelable(false);
 
 
-                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                if (productCost.equals("Free") || finalExtPurchase.charAt(0) == 'P') {
 
                     Intent i = new Intent(v.getContext(), ExoVideosWpActivity.class);
                     i.putExtra("statusVideo", true);
@@ -115,7 +117,22 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
 
     }
 
-    private DialogInterface.OnClickListener performDialogOperations(String productName, String productCost) {
+    private String conditionChecker(int position, String productName, String extPurchase) {
+        if (productList.get(position).getBoughtBy() != null) {
+            List<String> boughtBy = productList.get(position).getBoughtBy();
+            boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            if (members) {
+                extPurchase = "Purchased";
+            }
+
+            Log.e("Credentials", "onBindViewHolder: Card Name: " + productName +
+                    " \nPurchased by: \n"
+                    + members + "\n" + "LIST: " + boughtBy + "\n");
+        }
+        return extPurchase;
+    }
+
+    private DialogInterface.OnClickListener performDialogOperations(String productID, String productName, String productCost) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -126,8 +143,9 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
                         Intent i = new Intent(context, CartItemsActivity.class);
                         i.putExtra(COME_FROM, "wpstats");
                         i.putExtra(PRODUCT_NAME, productName);
-                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
-                        i.putExtra(ITEM_TYPE, "Whatsapp Status Videos");
+                        i.putExtra(UNIQUE_ID, productID);
+                        i.putExtra(ITEM_TYPE, "WhatsAppStatusVideos");
+                        i.putExtra(CATEGORY, "Whatsapp Status Videos");
 
                         i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 

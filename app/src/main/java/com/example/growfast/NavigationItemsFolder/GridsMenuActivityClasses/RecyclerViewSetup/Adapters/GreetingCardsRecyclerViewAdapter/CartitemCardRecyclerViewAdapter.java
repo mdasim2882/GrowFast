@@ -18,6 +18,7 @@ import com.example.growfast.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartItemsCardViewHolder> {
@@ -37,6 +38,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
     public final String TAG = getClass().getSimpleName();
     Context context;
     private List<CartHelp> productList;
+
     Activity activity;
     private boolean press = false;
 
@@ -45,6 +47,8 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
         this.context = context;
         activity = (Activity) context;
         database = FirebaseFirestore.getInstance();
+        CartManager.managedProductId = new LinkedList<>();
+        CartManager.managedCollectionName = new LinkedList<>();
     }
 
     @NonNull
@@ -63,6 +67,8 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
         String itemprice = productList.get(position).getItemprice();
         String itemName = productList.get(position).getItemName();
         String itemType = productList.get(position).getItemType();
+        String itemID = productList.get(position).getItemID();
+        String itemCollection = productList.get(position).getItemCollection();
 
         holder.productPrice.setText(itemprice);
         holder.productTitle.setText(itemName);
@@ -73,6 +79,10 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
             actualTransactionFee = actualTransactionFee + setFeePercent(Integer.parseInt(itemprice.substring(3))) + setFeePercent(0);
             actualSumprice = roundOFF(actualSumprice);
             actualTransactionFee = roundOFF(actualTransactionFee);
+        }
+        if (!CartManager.managedProductId.contains(itemID)) {
+            CartManager.managedProductId.add(itemID);
+            CartManager.managedCollectionName.add(itemCollection);
         }
 
 
@@ -88,9 +98,12 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
 //        });
         holder.removeButton.setOnClickListener(v -> {
             CartManager remover = new CartManager();
-            String itemID = productList.get(position).getItemID();
             remover.deleteitemId(itemID);
             Log.e(CART_MANAGER, "Cart Manager: " + itemID);
+
+            CartManager.managedProductId.remove(new String(itemID));
+            CartManager.managedCollectionName.remove(new String(itemCollection));
+
 
             //Remove this card
             notifyItemRemoved(position);

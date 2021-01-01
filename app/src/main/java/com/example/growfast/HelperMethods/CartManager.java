@@ -5,9 +5,15 @@ import java.util.List;
 
 public class CartManager {
     public static List<String> managedProductId = new LinkedList<>();
+    public static List<String> managedCollectionName = new LinkedList<>();
 
     public void additemId(String titleno) {
-        CartManager.managedProductId.add(titleno);
+        String t = titleno.trim();
+
+        if (!CartManager.managedProductId.contains(t)) {
+            CartManager.managedProductId.add(t);
+        }
+
     }
 
     public void deleteitemId(String itemId) {

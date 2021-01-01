@@ -19,6 +19,7 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.VideoCardsHolder;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity;
 import com.example.growfast.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -33,14 +34,17 @@ import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasse
 public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHolder> {
 
 
+    public static final String CATEGORY = "CATEGORY";
     public final String TAG = getClass().getSimpleName();
     Context context;
     private List<WhatsappVideoEntry> productList;
     private List<Integer> values;
     Activity activity;
+    private String collectionName;
 
-    public VideosRecyclerViewAdapter(Context context, List<WhatsappVideoEntry> actualCards) {
+    public VideosRecyclerViewAdapter(Context context, List<WhatsappVideoEntry> actualCards, String collectionName) {
         this.productList = actualCards;
+        this.collectionName = collectionName;
         this.context = context;
         activity = (Activity) context;
         values = new LinkedList<>();
@@ -54,35 +58,33 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
         return new VideoCardsHolder(layoutView);
     }
 
-    private DialogInterface.OnClickListener performDialogOperations(String productName, String productCost) {
-        return new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
+    private DialogInterface.OnClickListener performDialogOperations(String productID, String productName, String productCost) {
+        return (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
 //                        startMyItemAddedBroadCast();
-                        Intent i = new Intent(context, CartItemsActivity.class);
-                        i.putExtra(COME_FROM, "videos");
-                        i.putExtra(PRODUCT_NAME, productName);
-                        i.putExtra(UNIQUE_ID, productName + System.currentTimeMillis());
-                        i.putExtra(ITEM_TYPE, "Videos");
+                    Intent i = new Intent(context, CartItemsActivity.class);
+                    i.putExtra(COME_FROM, "videos");
+                    i.putExtra(PRODUCT_NAME, productName);
+                    i.putExtra(UNIQUE_ID, productID);
+                    i.putExtra(ITEM_TYPE, collectionName);
+                    i.putExtra(CATEGORY, collectionName);
 
-                        i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
+                    i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 
-                        context.startActivity(i);
-                        ((VideosCardsActivity) context).finish();
+                    context.startActivity(i);
+                    ((VideosCardsActivity) context).finish();
 
 
-                        //  Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
-                        break;
+                    //  Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
+                    break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        //  Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        break;
-                }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    //  Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    break;
             }
         };
     }
@@ -95,42 +97,47 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
         String productCost = productList.get(position).getProductCost();
         String productName = productList.get(position).getProductName();
         String videoProductLink = productList.get(position).getVideoProductLink();
+        String extPurchase = "None";
+        if (productList.get(position).getBoughtBy() != null) {
+            List<String> boughtBy = productList.get(position).getBoughtBy();
+            boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            if (members) {
+                extPurchase = "Purchased";
+            }
 
+            Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
+        }
         if (productImage != null && productCost != null && videoProductLink != null && productName != null
                 && productImage != "" && productCost != "" && videoProductLink != "" && productName != "") {
 
             Picasso.get().load(productImage).into(holder.imgCard);
-            holder.productPrice.setText(productCost);
-
-            //TODO: Put Recycler ViewHolder Cards binding video links in intents to fetch videos
-            Log.d(TAG, "onBindViewHolder: ViDEO LinK --> " + videoProductLink);
-            String extPurchasd;
-            try {
-                extPurchasd = productCost.substring(0, productCost.indexOf(' '));
-            } catch (Exception e) {
-                extPurchasd = productCost;
-            }
-            if (extPurchasd.equals("Purchased")) {
-                holder.productPrice.setText(extPurchasd);
+            if (extPurchase.equals("Purchased")) {
+                holder.productPrice.setText(extPurchase);
             } else {
                 holder.productPrice.setText(productCost);
             }
             holder.productTitle.setText(productName);
 
+
+            // Alert Dialog to confirm
+
+            String finalExtPurchase = extPurchase;
+
             holder.productCard.setOnClickListener(v -> {
                 Log.d(TAG, "onClick: Material Card clicked " + productName + " : " +
-                        "\nCost: " + productCost + "!!!" + context.getClass());
+                        "\nCost: " + productCost + "!!!--> " + productCost.substring(3));
+                String productID = productName + System.currentTimeMillis();
+                if (productList.get(position).getProductID() != null && !productList.get(position).getProductID().equals("")) {
+                    productID = productList.get(position).getProductID();
+                }
+                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productID, productName, productCost);
 
+                //TODO: Perform card clicked working
                 Context c = v.getContext();
-                //TODO: Perform card clicked working
-                DialogInterface.OnClickListener dialogClickListener = performDialogOperations(productName, productCost);
-                //TODO: Perform card clicked working
-                AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                builder.setMessage("Do you really want to add to Cart?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).setCancelable(false);
+                AlertDialog.Builder builder = getBuilder(dialogClickListener, c);
 
 
-                if (productCost.equals("Free") || productCost.charAt(0) == 'P') {
+                if (productCost.equals("Free") || finalExtPurchase.charAt(0) == 'P') {
 
                     //Intent i = new Intent(v.getContext(), WhatsappVideos.class);
                     Intent i = new Intent(v.getContext(), ExoVideosWpActivity.class);
@@ -147,6 +154,12 @@ public class VideosRecyclerViewAdapter extends RecyclerView.Adapter<VideoCardsHo
         }
     }
 
+    private AlertDialog.Builder getBuilder(DialogInterface.OnClickListener dialogClickListener, Context c) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setMessage("Do you really want to add to Cart?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).setCancelable(false);
+        return builder;
+    }
 
 
     @Override

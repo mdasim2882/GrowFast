@@ -1,12 +1,32 @@
 package com.example.growfast.HelperMethods;
 
+import java.util.List;
+
 public class WhatsappVideoEntry {
+    String productID;
     String productImage;
     String videoProductLink;
     String productName;
     String productCost;
+    List<String> boughtBy;
+
+    public List<String> getBoughtBy() {
+        return boughtBy;
+    }
+
+    public void setBoughtBy(List<String> boughtBy) {
+        this.boughtBy = boughtBy;
+    }
 
     public WhatsappVideoEntry() {
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     public WhatsappVideoEntry(String productImage, String videoProductLink, String productName, String productCost) {
