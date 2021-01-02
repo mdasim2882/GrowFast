@@ -1,14 +1,33 @@
 package com.example.growfast.HelperMethods;
 
 import java.util.List;
+import java.util.Map;
 
 public class WhatsappVideoEntry {
-    String productID;
+    String productID, expiryDaysLimit;
+
+    public String getExpiryDaysLimit() {
+        return expiryDaysLimit;
+    }
+
+    public void setExpiryDaysLimit(String expiryDaysLimit) {
+        this.expiryDaysLimit = expiryDaysLimit;
+    }
+
     String productImage;
     String videoProductLink;
     String productName;
     String productCost;
     List<String> boughtBy;
+    private Map<String, Object> purchaseTime;
+
+    public Map<String, Object> getPurchaseTime() {
+        return purchaseTime;
+    }
+
+    public void setPurchaseTime(Map<String, Object> purchaseTime) {
+        this.purchaseTime = purchaseTime;
+    }
 
     public List<String> getBoughtBy() {
         return boughtBy;

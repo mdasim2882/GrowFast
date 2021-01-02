@@ -16,12 +16,14 @@ public class HealthCardItemsViewHolder extends RecyclerView.ViewHolder {
     public ImageView imgCard;
     public TextView productTitle;
     public TextView productPrice;
+    public TextView productValidity;
 
     public HealthCardItemsViewHolder(@NonNull View itemView) {
         super(itemView);
         imgCard = itemView.findViewById(R.id.lifeview_card);
         productTitle = itemView.findViewById(R.id.greet_title);
         productPrice = itemView.findViewById(R.id.greetingPrice);
+        productValidity = itemView.findViewById(R.id.product_validity);
         productCard = itemView.findViewById(R.id.productgreetscards);
         // addtoCart=itemView.findViewById(R.id.addtoCartButton);
         // TODO: Find and store views from itemView

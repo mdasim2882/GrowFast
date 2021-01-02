@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,13 @@ import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.Recyc
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.WhatsappVideoCardsHolder;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity;
 import com.example.growfast.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.COME_FROM;
@@ -31,6 +34,7 @@ import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasse
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.PRODUCT_PRICE;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter.UNIQUE_ID;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
+import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity.UID;
 
 public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<WhatsappVideoCardsHolder> {
 
@@ -61,9 +65,51 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
         String productCost = productList.get(position).getProductCost();
         String productName = productList.get(position).getProductName();
         String videoProductLink = productList.get(position).getVideoProductLink();
-
+        String expiryDaysLimit = productList.get(position).getExpiryDaysLimit();
         String extPurchase = "None";
-        extPurchase = conditionChecker(position, productName, extPurchase);
+        String validity = "Validity: Lifetime";
+        if (expiryDaysLimit != null && !expiryDaysLimit.equals("")) {
+            validity = "Validity: " + expiryDaysLimit + " Days";
+        }
+
+        if (productList.get(position).getBoughtBy() != null) {
+            List<String> boughtBy = productList.get(position).getBoughtBy();
+            boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            //Converting timeStamp to Date and then format using Simple date format object
+            Timestamp timestamp = (Timestamp) productList.get(position).getPurchaseTime().get(UID);
+            Date creationDate = timestamp.toDate();
+
+            SimpleDateFormat simpleDateFormat
+                    = new SimpleDateFormat(
+                    "dd-MM-yyyy HH:mm:ss");
+            Date d1 = new Date();
+            String todaysDate = simpleDateFormat.format(d1);
+            String buyingDate = simpleDateFormat.format(creationDate);
+
+            Log.e(TAG, "onBindViewHolder: \n+" +
+                    "DATE of Purchase: " + creationDate.toString()
+                    + "\n Timestamp: " + timestamp
+                    + "\n Todays Date: " + todaysDate
+                    + "\n Purchase Date: " + buyingDate
+
+            );
+            long differenceInDays = findDifference(buyingDate, todaysDate);
+
+            if (differenceInDays > Long.parseLong(expiryDaysLimit)) {
+
+                validity = "Validity: " + expiryDaysLimit + " Days";
+
+            } else {
+                long val = Math.abs(differenceInDays - Long.parseLong(expiryDaysLimit));
+                validity = "Validity: " + val + " Days Left";
+                if (members) {
+                    extPurchase = "Purchased";
+                }
+            }
+
+
+            Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
+        }
 
 
         if (productCost != null && productImage != null && productCost != null && videoProductLink != null
@@ -73,12 +119,12 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
 
             if (extPurchase.equals("Purchased")) {
                 holder.videocardproductPrice.setText(extPurchase);
-                holder.videocardproductPrice.setTextColor(Color.GREEN);
             } else {
                 holder.videocardproductPrice.setText(productCost);
             }
 
             holder.videocardproductTitle.setText(productName);
+            holder.productvalidity.setText(validity);
 
             // Alert Dialog to confirm
 
@@ -118,6 +164,83 @@ public class WhatsappVideoRecyclerViewAdapter extends RecyclerView.Adapter<Whats
         }
 
 
+    }
+
+    static long findDifference(String start_date, String end_date) {
+
+        // SimpleDateFormat converts the
+        // string format to date object
+        SimpleDateFormat sdf
+                = new SimpleDateFormat(
+                "dd-MM-yyyy HH:mm:ss");
+
+        // Try Block
+        try {
+
+            // parse method is used to parse
+            // the text from a string to
+            // produce the date
+            Date d1 = sdf.parse(start_date);
+            Date d2 = sdf.parse(end_date);
+
+            // Calucalte time difference
+            // in milliseconds
+            long difference_In_Time
+                    = d2.getTime() - d1.getTime();
+
+            // Calucalte time difference in
+            // seconds, minutes, hours, years,
+            // and days
+            long difference_In_Seconds
+                    = (difference_In_Time
+                    / 1000)
+                    % 60;
+
+            long difference_In_Minutes
+                    = (difference_In_Time
+                    / (1000 * 60))
+                    % 60;
+
+            long difference_In_Hours
+                    = (difference_In_Time
+                    / (1000 * 60 * 60))
+                    % 24;
+
+            long difference_In_Years
+                    = (difference_In_Time
+                    / (1000l * 60 * 60 * 24 * 365));
+
+            long difference_In_Days
+                    = (difference_In_Time
+                    / (1000 * 60 * 60 * 24))
+                    % 365;
+
+            // Print the date difference in
+            // years, in days, in hours, in
+            // minutes, and in seconds
+
+            System.out.print(
+                    "Difference "
+                            + "between two dates is: ");
+
+            Log.e("DigitalCard", "findDifference: +" + difference_In_Years
+                    + " years, "
+                    + difference_In_Days
+                    + " days, "
+                    + difference_In_Hours
+                    + " hours, "
+                    + difference_In_Minutes
+                    + " minutes, "
+                    + difference_In_Seconds
+                    + " seconds");
+            return difference_In_Days;
+        }
+
+        // Catch the Exception
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private String conditionChecker(int position, String productName, String extPurchase) {

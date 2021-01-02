@@ -16,12 +16,14 @@ public class ConceptsCardItemsViewHolder extends RecyclerView.ViewHolder {
     public ImageView imgCard;
     public TextView productTitle;
     public TextView productPrice;
+    public TextView productValidity;
 
     public ConceptsCardItemsViewHolder(@NonNull View itemView) {
         super(itemView);
         imgCard = itemView.findViewById(R.id.combinationImage);
         productTitle = itemView.findViewById(R.id.combination_title);
         productPrice = itemView.findViewById(R.id.combinationPrice);
+        productValidity = itemView.findViewById(R.id.product_validity);
         productCard = itemView.findViewById(R.id.productcombinations);
         // addtoCart=itemView.findViewById(R.id.addtoCartButton);
         // TODO: Find and store views from itemView

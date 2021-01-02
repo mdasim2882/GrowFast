@@ -51,6 +51,16 @@
                     android:textSize="13dp" />
 
                 <TextView
+                    android:id="@+id/product_validity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fetching info..."
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/mclaren"
+                    android:textAlignment="textStart"
+                    android:textSize="13dp" />
+
+                <TextView
                     android:id="@+id/videocardproduct_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

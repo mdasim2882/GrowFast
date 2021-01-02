@@ -14,12 +14,14 @@ public class WhatsappVideoCardsHolder extends RecyclerView.ViewHolder {
     public CardView videocardproductCard;
     public ImageView videocardimgCard;
     public TextView videocardproductTitle;
+    public TextView productvalidity;
     public TextView videocardproductPrice;
 
     public WhatsappVideoCardsHolder(@NonNull View itemView) {
         super(itemView);
         videocardimgCard = itemView.findViewById(R.id.videocardproduct_image);
         videocardproductTitle = itemView.findViewById(R.id.videocardproduct_title);
+        productvalidity = itemView.findViewById(R.id.product_validity);
         videocardproductPrice = itemView.findViewById(R.id.videocardproduct_price);
         videocardproductCard = itemView.findViewById(R.id.videocardofproducts);
         // addtoCart=itemView.findViewById(R.id.addtoCartButton);

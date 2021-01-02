@@ -50,6 +50,7 @@ import java.util.Map;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
 
 public class CartItemsActivity extends AppCompatActivity implements LoadCartItems, PaymentResultListener {
+    public static final String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public final String TAG = getClass().getSimpleName();
     String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
     private RecyclerView recyclerView;
@@ -66,6 +67,8 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
     private String getFrom;
     private String productName, productID, productCollection, productType;
     private int price;
+
+    private static int payableAmount;
 
     FirebaseFirestore database;
     CollectionReference loadMyCartItems;
@@ -158,6 +161,7 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
         Log.e(TAG + " DataCart", "initialTextFields: Linked List of Products: " + CartManager.managedProductId);
         Log.e(TAG + " DataCart", "initialTextFields: Linked List of Collections: " + CartManager.managedCollectionName);
     }
+
     private void addToDatabaseCart() {
 
 
@@ -337,6 +341,7 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
         feeTransaction.setText("Rs " + fee);
 
         double totalSum = fee + price;
+        payableAmount = (int) (totalSum * 100);
         priceTotalOrder.setText("Rs " + totalSum);
 
     }
@@ -377,14 +382,15 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
          */
         try {
             JSONObject options = new JSONObject();
-
+            Log.e(TAG, "Payment: Amount " + String.valueOf(payableAmount));
             options.put("name", "Digital Advisor");
             options.put("description", "Purchasing Digital Cards/Videos");
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
 //        options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
             options.put("theme.color", "#3399cc");
             options.put("currency", "INR");
-            options.put("amount", "50000");//pass amount in currency subunits
+            options.put("amount", String.valueOf(payableAmount));//pass amount in currency subunits
+
 
 //        JSONObject prefill=new JSONObject();
 //        prefill.put("email", "mohdasim2882@gmail.com");
@@ -425,35 +431,48 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
 
     @Override
     public void onPaymentSuccess(String s) {
-        Log.e(TAG, " Payment successfull " + s + "\n UIDs: " + FirebaseAuth.getInstance().getUid() + "\n User Id: " + FirebaseAuth.getInstance().getCurrentUser().getUid() + "\n Product Id that is set: " + CartManager.managedProductId);
-        Toast.makeText(this, "Payment successfully done! " + s, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Transaction successful.", Toast.LENGTH_SHORT).show();
+        try {
+            Log.e(TAG, " Payment successfull " + s + "\n UIDs: " + FirebaseAuth.getInstance().getUid() + "\n User Id: " + UID + "\n Product Id that is set: " + CartManager.managedProductId);
 
-        Map<String, Object> itemData = new HashMap<>();
-        itemData.put("boughtBy", FieldValue.arrayUnion(FirebaseAuth.getInstance().getUid()));
-        // TODO: Start Here...
-        ProgressDialog p = new ProgressDialog(this);
-        p.setMessage("Updating info...");
-        p.setCanceledOnTouchOutside(false);
-        p.show();
-        for (int i = 0; i < CartManager.managedProductId.size(); i++) {
-            // Remove Particular Card
-            database.collection(CartManager.managedCollectionName.get(i).trim()).document(CartManager.managedProductId.get(i).trim()).set(itemData, SetOptions.merge())
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.e(TAG, "onComplete: QUERY EXECUTED_--------------> " + task.getResult());
-                        }
-                    })
-                    .addOnFailureListener(e -> Log.e(TAG, "onFailure: ----------FAILED---------------> " + e.getMessage()));
-            //Make user cart Empty here
-            database.collection("Cart Products")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .collection("My Cart")
-                    .document(CartManager.managedProductId.get(i).trim())
-                    .delete().addOnCompleteListener(task -> Log.e(TAG, "onPaymentSuccess: Cart Empty Success"))
-                    .addOnFailureListener(e -> Log.e(TAG, "onPaymentSuccess: Cart Empty Failed " + e.getMessage()));
+            Toast.makeText(this, "Payment ID: " + s, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Transaction successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cart updates after 5 minutes", Toast.LENGTH_SHORT).show();
+            Map<String, Object> purchseInfo = new HashMap<>();
+            purchseInfo.put(UID, FieldValue.serverTimestamp());
+//            purchseInfo.put("purcahseItems",
+//                    CartManager.managedCollectionName);
+//            purchseInfo.put("purchaseItemID",CartManager
+//            .managedProductId);
+
+            Map<String, Object> itemData = new HashMap<>();
+            itemData.put("boughtBy", FieldValue.arrayUnion(FirebaseAuth.getInstance().getUid()));
+            itemData.put("purchaseTime", purchseInfo);
+            // TODO: Start Here...
+            ProgressDialog p = new ProgressDialog(this);
+            p.setMessage("Updating info...");
+            p.setCanceledOnTouchOutside(false);
+//        p.show();
+            for (int i = 0; i < CartManager.managedProductId.size(); i++) {
+                // Remove Particular Card
+                database.collection(CartManager.managedCollectionName.get(i).trim()).document(CartManager.managedProductId.get(i).trim()).set(itemData, SetOptions.merge())
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.e(TAG, "onComplete: QUERY EXECUTED_--------------> " + task.getResult());
+                            }
+                        })
+                        .addOnFailureListener(e -> Log.e(TAG, "onFailure: ----------FAILED---------------> " + e.getMessage()));
+                //Make user cart Empty here
+                database.collection("Cart Products")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .collection("My Cart")
+                        .document(CartManager.managedProductId.get(i).trim())
+                        .delete().addOnCompleteListener(task -> Log.e(TAG, "onPaymentSuccess: Cart Empty Success"))
+                        .addOnFailureListener(e -> Log.e(TAG, "onPaymentSuccess: Cart Empty Failed " + e.getMessage()));
+            }
+            p.dismiss();
+        } catch (Exception e) {
+            Log.e(TAG, "onPaymentSuccess: ErrorMessage " + e.getMessage());
         }
-        p.dismiss();
     }
 
     @Override
@@ -462,7 +481,7 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
         try {
             Toast.makeText(this, "Payment error please try again", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.e(TAG, "Exception in onPaymentError", e);
+            Log.e(TAG, "Exception in onPaymentError" + e.getMessage());
         }
     }
 }

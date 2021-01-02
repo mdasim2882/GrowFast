@@ -18,6 +18,7 @@ import com.example.growfast.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
         activity = (Activity) context;
         database = FirebaseFirestore.getInstance();
         CartManager.managedProductId = new LinkedList<>();
-        CartManager.managedCollectionName = new LinkedList<>();
+        CartManager.managedCollectionName = new ArrayList<>();
     }
 
     @NonNull
@@ -130,7 +131,7 @@ public class CartitemCardRecyclerViewAdapter extends RecyclerView.Adapter<CartIt
         if (!press) {
             CartItemsActivity.setupBadge((int) actualSumprice, actualTransactionFee);
         }
-        Log.d("MAGGY", "onBindViewHolder: WITHOUT REMOVe PRESS===>" + actualSumprice);
+        Log.d("MAGGY", "onBindViewHolder: WITHOUT REMOVE PRESS===>" + actualSumprice);
 
 
     }
