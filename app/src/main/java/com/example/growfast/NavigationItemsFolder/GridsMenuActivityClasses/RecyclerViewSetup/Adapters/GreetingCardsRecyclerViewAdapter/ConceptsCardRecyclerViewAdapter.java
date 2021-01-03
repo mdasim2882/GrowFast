@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.VideosRecyclerViewAdapter.CATEGORY;
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity.UID;
@@ -185,34 +186,39 @@ public class ConceptsCardRecyclerViewAdapter extends RecyclerView.Adapter<Concep
             List<String> boughtBy = productList.get(position).getBoughtBy();
             boolean members = boughtBy.contains(FirebaseAuth.getInstance().getCurrentUser().getUid());
             //Converting timeStamp to Date and then format using Simple date format object
-            Timestamp timestamp = (Timestamp) productList.get(position).getPurchaseTime().get(UID);
-            Date creationDate = timestamp.toDate();
+            Map<String, Object> purchaseTime = productList.get(position).getPurchaseTime();
+            if (purchaseTime != null) {
+                Timestamp timestamp = (Timestamp) purchaseTime.get(UID);
+                if (timestamp != null) {
+                    Date creationDate = timestamp.toDate();
 
-            SimpleDateFormat simpleDateFormat
-                    = new SimpleDateFormat(
-                    "dd-MM-yyyy HH:mm:ss");
-            Date d1 = new Date();
-            String todaysDate = simpleDateFormat.format(d1);
-            String buyingDate = simpleDateFormat.format(creationDate);
+                    SimpleDateFormat simpleDateFormat
+                            = new SimpleDateFormat(
+                            "dd-MM-yyyy HH:mm:ss");
+                    Date d1 = new Date();
+                    String todaysDate = simpleDateFormat.format(d1);
+                    String buyingDate = simpleDateFormat.format(creationDate);
 
-            Log.e(TAG, "onBindViewHolder: \n+" +
-                    "DATE of Purchase: " + creationDate.toString()
-                    + "\n Timestamp: " + timestamp
-                    + "\n Todays Date: " + todaysDate
-                    + "\n Purchase Date: " + buyingDate
+                    Log.e(TAG, "onBindViewHolder: \n+" +
+                            "DATE of Purchase: " + creationDate.toString()
+                            + "\n Timestamp: " + timestamp
+                            + "\n Todays Date: " + todaysDate
+                            + "\n Purchase Date: " + buyingDate
 
-            );
-            long differenceInDays = findDifference(buyingDate, todaysDate);
+                    );
+                    long differenceInDays = findDifference(buyingDate, todaysDate);
 
-            if (differenceInDays > Long.parseLong(expiryDaysLimit)) {
+                    if (differenceInDays > Long.parseLong(expiryDaysLimit)) {
 
-                validity = "Validity: " + expiryDaysLimit + " Days";
+                        validity = "Validity: " + expiryDaysLimit + " Days";
 
-            } else {
-                long val = Math.abs(differenceInDays - Long.parseLong(expiryDaysLimit));
-                validity = "Validity: " + val + " Days Left";
-                if (members) {
-                    extPurchase = "Purchased";
+                    } else {
+                        long val = Math.abs(differenceInDays - Long.parseLong(expiryDaysLimit));
+                        validity = "Validity: " + val + " Days Left";
+                        if (members) {
+                            extPurchase = "Purchased";
+                        }
+                    }
                 }
             }
             Log.e("Credentials", "onBindViewHolder: Card Name: " + productName + " \nPurchased by: \n" + members + "\nLIST: " + boughtBy + "\n");
