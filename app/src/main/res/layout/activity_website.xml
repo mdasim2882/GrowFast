@@ -1,14 +1,379 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity">
+    tools:context=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity">
 
-    <WebView
-        android:id="@+id/webview"
-        android:background="@drawable/bg"
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/myWebsiteAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/website_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"
+            app:title="Create Website"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
+            app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        android:layout_marginTop="56dp"
+        android:elevation="4dp"
+        android:layout_above="@id/createWebsitebtn"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="4dp"
+            android:elevation="0dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/businessman"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:id="@+id/pUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/mclaren"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scroller"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/personal_info_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/catamaran"
+                        android:padding="5dp"
+                        android:text="Business Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/mweb_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Full Name"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/mweb_designation_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Designation"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/mweb_businessAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Business Address"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+
+                    <EditText
+                        android:id="@+id/mweb_refwebAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Reference Website"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/mweb_moblie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Mobile Number"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/m_emailID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Email Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/referenceProducts_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/catamaran"
+                        android:padding="5dp"
+                        android:text="Product Images(If any)"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/webPicRefrecycler_view"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layoutAnimation="@anim/layout_animation"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/social_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/catamaran"
+                        android:padding="5dp"
+                        android:text="Social Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/s_facebookId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Facebook Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/s_linkedId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Linked In"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/s_whatsappNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Whatsapp Number"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+
+                    <EditText
+                        android:id="@+id/s_twitterID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Twitter Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/s_telegramID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Telegram Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/s_instagramID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Instagram Id"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/additional_info_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textlines"
+                        android:fontFamily="@font/catamaran"
+                        android:padding="5dp"
+                        android:text="Additional Info"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/dark_skyblue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/b_workAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/catamaran"
+                        android:hint="Google Map Location link"
+                        android:maxLines="1"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/city_ll"
+                        style="@style/Widget.GrowFast.TextInputLayout."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/purple_200"
+                        app:hintAnimationEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mabout_edt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/catamaran"
+                            android:hint="About Us"
+                            android:maxLines="3"
+
+                            android:textColor="@color/purple_700" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/createWebsitebtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:onClick="addtoRealtimeDatabase"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/mclaren"
+        android:text="Create"
+        android:textSize="15sp" />
 </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+

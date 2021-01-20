@@ -395,8 +395,8 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
 //        JSONObject prefill=new JSONObject();
 //        prefill.put("email", "mohdasim2882@gmail.com");
 //        prefill.put("contact","+919580130679");
-            options.put("prefill.email", "mohdasim2882@gmail.com");
-            options.put("prefill.contact", "919580130679");
+//            options.put("prefill.email", "mohdasim2882@gmail.com");
+            options.put("prefill.contact", FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
 
 //        options.put("prefill", prefill);
             checkout.open(activity, options);

@@ -23,6 +23,7 @@ import com.example.growfast.NavigationItemsFolder.BusinessManagement;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity;
 import com.example.growfast.NavigationItemsFolder.Settings;
 import com.example.growfast.R;
@@ -160,8 +161,8 @@ public class Home extends Fragment implements BannerLoadListener {
                 break;
             }
             case 1: {
-//                Intent i = new Intent(getActivity(), WebsiteActivity.class);
-//                startActivity(i);
+                Intent i = new Intent(getActivity(), WebsiteActivity.class);
+                startActivity(i);
 
                 break;
             }

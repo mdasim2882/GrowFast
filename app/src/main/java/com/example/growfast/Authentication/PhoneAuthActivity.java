@@ -133,7 +133,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(this, "Error occured: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
-
         }
     }
 

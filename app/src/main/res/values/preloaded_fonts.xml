@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/andika</item>
+        <item>@font/catamaran</item>
         <item>@font/mclaren</item>
     </array>
 </resources>
