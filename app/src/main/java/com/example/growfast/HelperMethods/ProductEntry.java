@@ -83,9 +83,13 @@ public class ProductEntry {
     @Override
     public String toString() {
         return "ProductEntry{" +
-                "productImage='" + productImage + '\'' +
+                "productID='" + productID + '\'' +
+                ", expiryDaysLimit='" + expiryDaysLimit + '\'' +
+                ", productImage='" + productImage + '\'' +
                 ", productName='" + productName + '\'' +
                 ", productCost='" + productCost + '\'' +
+                ", boughtBy=" + boughtBy +
+                ", purchaseTime=" + purchaseTime +
                 '}';
     }
 }

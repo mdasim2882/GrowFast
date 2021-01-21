@@ -22,7 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class ReferenceImagesCardRecyclerViewAdapter extends RecyclerView.Adapter<RefImagesCardItemsViewHolder> {
 
@@ -39,6 +41,8 @@ public class ReferenceImagesCardRecyclerViewAdapter extends RecyclerView.Adapter
     Activity activity;
     public boolean paymentDone = false;
     public RefImagesCardItemsViewHolder abc;
+    Stack<Integer> pos;
+    List<Integer> locations;
 
     public void setAbc(RefImagesCardItemsViewHolder abc) {
         this.abc = abc;
@@ -48,6 +52,8 @@ public class ReferenceImagesCardRecyclerViewAdapter extends RecyclerView.Adapter
         this.productList = uploadImages;
         this.context = context;
         activity = (Activity) context;
+        pos = new Stack<>();
+        locations = new ArrayList<>();
 
     }
 
@@ -64,9 +70,16 @@ public class ReferenceImagesCardRecyclerViewAdapter extends RecyclerView.Adapter
 
         holder.imgCard.setOnClickListener(v -> {
             context = v.getContext();
+//            if(!pos.contains(position)){
+//                pos.add(position);
+//                }
+            pos.push(position);
+
             Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             activity.startActivityForResult(openGallery, GALLERY_CODE);
             setAbc(holder);
+
+
         });
 
 
@@ -88,7 +101,17 @@ public class ReferenceImagesCardRecyclerViewAdapter extends RecyclerView.Adapter
                     try {
                         RefImagesCardItemsViewHolder refImagesCardItemsViewHolder = getAbc();
                         refImagesCardItemsViewHolder.imgCard.setImageURI(imageUri);
-                        WebsiteActivity.imagesSelected.add(imageUri);
+                        Log.d(TAG, "onActivityResult() called with: URI CODE = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + imageUri.toString() + "]");
+                        if (!locations.contains(pos.peek())) {
+                            locations.add(pos.peek());
+
+//                            if (!WebsiteActivity.imagesSelected.contains(imageUri))
+                            WebsiteActivity.imagesSelected.add(imageUri);
+                        } else {
+                            WebsiteActivity.imagesSelected.set(pos.peek(), imageUri);
+                        }
+
+
 //                        updateUI(user, imageUri);
                     } catch (Exception e) {
                         showToaster("Size is too big to upload");

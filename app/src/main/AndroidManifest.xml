@@ -7,28 +7,25 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission
         android:name="android.permission.MANAGE_DOCUMENTS"
         tools:ignore="ProtectedPermissions" />
-
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GrowFast">
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity"></activity>
+        android:theme="@style/Theme.GrowFast"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity" />
         <activity
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
-        <activity
-            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity"
-           />
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
@@ -41,7 +38,9 @@
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity" />
+        <activity
+            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".NavigationItemsFolder.Settings" />
         <activity
             android:name=".NavigationItemsFolder.BusinessManagement"
@@ -63,6 +62,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -72,6 +72,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <service
             android:name=".Services.MyNotificationService"
             android:exported="false">
@@ -79,21 +80,22 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-     See README(https://goo.gl/l4GJaQ) for more. -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_name" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/dark_skyblue" />
-
-        <!--        <meta-data-->
-        <!--            android:name="com.razorpay."-->
-        <!--            android:value="rzp_test_PWXNtHUD6Un5Yo"/>-->
-
+            android:resource="@color/dark_skyblue" /> <!-- <meta-data -->
+        <!-- android:name="com.razorpay." -->
+        <!-- android:value="rzp_test_PWXNtHUD6Un5Yo"/> -->
         <service android:name=".Services.MyDownloadingService" />
     </application>
 

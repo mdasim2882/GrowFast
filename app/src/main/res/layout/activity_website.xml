@@ -48,7 +48,7 @@
                 android:layout_height="match_parent">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
+                    android:id="@+id/mwebprofile_image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
@@ -158,7 +158,7 @@
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/m_emailID"
+                        android:id="@+id/mweb_emailID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -221,7 +221,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/s_facebookId"
+                        android:id="@+id/ms_facebookId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -232,7 +232,7 @@
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/s_linkedId"
+                        android:id="@+id/ms_linkedId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -244,7 +244,7 @@
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/s_whatsappNo"
+                        android:id="@+id/ms_whatsappNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -256,7 +256,7 @@
 
 
                     <EditText
-                        android:id="@+id/s_twitterID"
+                        android:id="@+id/ms_twitterID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -267,7 +267,7 @@
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/s_telegramID"
+                        android:id="@+id/ms_telegramID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -278,7 +278,7 @@
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/s_instagramID"
+                        android:id="@+id/ms_instagramID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -311,7 +311,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/b_workAdd"
+                        android:id="@+id/mb_googleMap"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"

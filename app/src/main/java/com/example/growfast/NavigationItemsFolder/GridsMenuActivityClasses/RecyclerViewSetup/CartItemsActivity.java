@@ -454,7 +454,9 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
 //        p.show();
             for (int i = 0; i < CartManager.managedProductId.size(); i++) {
                 // Remove Particular Card
-                database.collection(CartManager.managedCollectionName.get(i).trim()).document(CartManager.managedProductId.get(i).trim()).set(itemData, SetOptions.merge())
+                database.collection(CartManager.managedCollectionName.get(i).trim())
+                        .document(CartManager.managedProductId.get(i).trim())
+                        .set(itemData, SetOptions.merge())
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Log.e(TAG, "onComplete: QUERY EXECUTED_--------------> " + task.getResult());
