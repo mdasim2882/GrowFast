@@ -79,6 +79,17 @@
                         app:civ_border_color="@color/white"
                         app:civ_border_width="1dp" />
 
+                    <TextView
+                        android:id="@+id/digitalCardAboutusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:tag="cardsTP"
+                        android:textColor="#B2000000"
+                        android:layout_margin="30dp"
+                        android:fontFamily="@font/catamaran"
+                        android:text="It is one of the leading company in the world." />
+
                     <LinearLayout
                         android:id="@+id/linksharesbox"
                         android:layout_width="match_parent"

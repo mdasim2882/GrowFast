@@ -366,7 +366,7 @@ public class CartItemsActivity extends AppCompatActivity implements LoadCartItem
          * Instantiate Checkout
          */
         Checkout checkout = new Checkout();
-        checkout.setKeyID("rzp_test_eqsQIw7DUEqkDB");
+        checkout.setKeyID("rzp_test_t5DZKoybTA6nNW");
         /**
          * Set your logo here
          */

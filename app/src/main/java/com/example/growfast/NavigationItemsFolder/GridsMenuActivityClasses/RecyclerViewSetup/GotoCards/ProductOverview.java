@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -95,6 +96,7 @@ public class ProductOverview extends AppCompatActivity {
     Uri picUri;
     RelativeLayout convertDigitalCardLayout;
     CircleImageView userCenteredImage;
+    TextView textViewAboutUs;
 
 
     private String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/";
@@ -143,12 +145,7 @@ public class ProductOverview extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.digitalCards_greets_details_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_baseline_edit_24));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void initializeViews() throws IOException, BadElementException {
@@ -159,6 +156,7 @@ public class ProductOverview extends AppCompatActivity {
         convertDigitalCardLayout = findViewById(R.id.digitalCardsframetoPDF);
         moveNextbutton = findViewById(R.id.moveNextbtn);
         userCenteredImage = findViewById(R.id.digitalCardCenteredDP);
+        textViewAboutUs = findViewById(R.id.digitalCardAboutusText);
 
 
         cardActual = findViewById(R.id.actualdigitalCardsImage);
@@ -176,7 +174,7 @@ public class ProductOverview extends AppCompatActivity {
 
 
         Picasso.get().load(imageSetter).into(cardActual);
-
+        setAboutUsTextMiddle();
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -188,6 +186,49 @@ public class ProductOverview extends AppCompatActivity {
         h.post(r);
 
 
+    }
+
+    private void setAboutUsTextMiddle() {
+        int mywidth = RelativeLayout.LayoutParams.MATCH_PARENT;
+        Log.d("About Us", "setAboutUsTextMiddle() called with width: " + mywidth);
+        RelativeLayout.LayoutParams textlayoutParams = new RelativeLayout.LayoutParams(500, 225);
+        textViewAboutUs.setLayoutParams(textlayoutParams);
+        textViewAboutUs.setWidth(400);
+        textViewAboutUs.requestLayout();
+//      textViewAboutUs.setWidth(textlayoutParams.width-20);
+
+        textViewAboutUs.setOnTouchListener((view, event) -> {
+            if (view.getTag() != null && view.getTag().equals("cardsTP")) {
+                final int X = (int) event.getRawX();
+                final int Y = (int) event.getRawY();
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+                        RelativeLayout.LayoutParams viewLayoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                        _xDelta = X - viewLayoutParams.leftMargin;
+                        _yDelta = Y - viewLayoutParams.topMargin;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        break;
+                    case MotionEvent.ACTION_POINTER_UP:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        RelativeLayout.LayoutParams moverlayoutParams = (RelativeLayout.LayoutParams) view
+                                .getLayoutParams();
+                        moverlayoutParams.leftMargin = X - _xDelta;
+                        moverlayoutParams.topMargin = Y - _yDelta;
+                        moverlayoutParams.rightMargin = -250;
+                        moverlayoutParams.bottomMargin = -250;
+                        view.setLayoutParams(moverlayoutParams);
+                        break;
+                }
+                rootLayout.invalidate();
+            }
+            return true;
+        });
+//        userCenteredImage.setX(250);
+//        userCenteredImage.setY(500);
     }
 
     private void obtainsTableCells() {
