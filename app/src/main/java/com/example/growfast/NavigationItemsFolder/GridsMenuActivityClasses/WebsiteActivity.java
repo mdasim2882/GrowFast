@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,22 +65,26 @@ public class WebsiteActivity extends AppCompatActivity {
     FirebaseFirestore database;
     RecyclerView recyclerView;
     StorageReference storageReference;
-    private String id;
+    private String id, typeWebsite;
 
     ImageView webprofile_image;
     private FirebaseUser user;
     private WebInfoHelper mywebsite;
     ProgressDialog progressDialog;
+    public static final String TYPE_WEBSITE = "type";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
+        setUpToolbar();
         imagesSelected = new ArrayList<>();
         imagesSelectedURL = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Creating Website...");
+
+        typeWebsite = getIntent().getStringExtra(TYPE_WEBSITE);
 
 //        webView = (WebView) findViewById(R.id.webview);
 ////        ProgressBar pb=findViewById(R.id.progressPage);
@@ -105,6 +110,12 @@ public class WebsiteActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+    }
+
+    private void setUpToolbar() {
+        Toolbar toolbar = findViewById(R.id.mycreatedwebsite_details_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void initializeEditTextFields() {
@@ -194,17 +205,18 @@ public class WebsiteActivity extends AppCompatActivity {
 
             mywebsite.setPhoneNo(reditMobileNo);
             mywebsite.setEmailId(reditEmailId);
+            mywebsite.setWebsiteType(typeWebsite);
 
             mywebsite.setFacebookPageLink(reditFacebookId);
             mywebsite.setLinkedInPageLink(reditLinkedInId);
             mywebsite.setWhatsappNumber(reditWhatsappNo);
-            mywebsite.setTwitterID(reditTwitterId);
-            mywebsite.setTelegramD(reditTelegramId);
-            mywebsite.setInstagramID(reditInstagramId);
+            mywebsite.setTwitterIDLink(reditTwitterId);
+            mywebsite.setTelegramIDLink(reditTelegramId);
+            mywebsite.setInstagramIDLink(reditInstagramId);
 
             mywebsite.setGoogleMapLocationlink(reditGoogleMapLocationLink);
             mywebsite.setAboutUs(reditAboutUs);
-            mywebsite.setImageLink(imageLinkUser);
+            mywebsite.setImageProfileLink(imageLinkUser);
 
             AtomicReference<String> imageLink = new AtomicReference<>("");
             Log.e(TAG, "showInRealtimeDatabase: RealTime UID: " + id

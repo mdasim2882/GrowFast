@@ -25,6 +25,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.growfast.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -35,6 +37,7 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
 
 
     public static final String MAGGY = "MAGGY";
+    public static final String AUTHENTICATION_CHECKUP = "AUTHENTICATION_CHECKUP";
     private int _xDelta;
     private int _yDelta;
     Uri picUri;
@@ -45,8 +48,9 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
     private String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/";
     Button sharePoster, addLogo;
     RelativeLayout convertEditLifetoPdf;
-    TextView dpeditLife, mobileditLife;
+    TextView dpeditLife, mobileditLife, usernameWatermark, mobileWatermark;
     LinearLayout mWatermark;
+    FirebaseFirestore database;
 
     private File sdCard = Environment.getExternalStorageDirectory();
     private ImageView cardActual;
@@ -57,16 +61,50 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
     private Bitmap bitmap, scaledBitmap, scaledBitmapper;
     private Bitmap iconbitmap;
     private Bitmap iconscaledBitmap;
+    FirebaseAuth firebaseAuth;
+
+    String cardUsername = "Unknown", cardPhoneNumber, cardWatermarkName = "Unknown", cardWatermarkPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_f_b_cover_pages);
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
 
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            cardPhoneNumber = firebaseAuth.getCurrentUser().getPhoneNumber();
+            cardWatermarkPhoneNumber = cardPhoneNumber;
+
+            Log.d(AUTHENTICATION_CHECKUP, "onCreate() called with: savedInstanceState = [" + firebaseAuth.getCurrentUser().getPhoneNumber() + "]");
+        }
         //Initialize view here
         initializeViews();
         setUpToolbar();
+        loadNamefromDB();
 
+    }
+
+    private void loadNamefromDB() {
+        database.collection("User").document(firebaseAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    String n = task.getResult().get("name").toString();
+                    if (n != null && !n.equals("")) {
+                        dpeditLife.setText(n);
+                        usernameWatermark.setText(n);
+                    } else {
+                        dpeditLife.setText(cardUsername);
+                        usernameWatermark.setText(cardWatermarkName);
+                    }
+                }).addOnFailureListener(e -> {
+            String message = e.getMessage().toString();
+            String error = "Update your profile to continue.\nError: " + message;
+            showToaster(error);
+            dpeditLife.setText(cardUsername);
+            usernameWatermark.setText(cardUsername);
+        });
     }
 
 
@@ -78,12 +116,17 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
         convertEditLifetoPdf = findViewById(R.id.editFbCovertoPDF);
         dpeditLife = findViewById(R.id.editFBCoverDPUsername);
         mobileditLife = findViewById(R.id.editFBCoverMobile);
+        usernameWatermark = findViewById(R.id.usernameWatermark);
+        mobileWatermark = findViewById(R.id.mobileWatermark);
         sharePoster = findViewById(R.id.FbCoversharePosterButton);
         addLogo = findViewById(R.id.FbCoveraddLogoButton);
 
 
         cardActual = findViewById(R.id.editFbCoverImage);
         mWatermark = findViewById(R.id.Watermark);
+
+        mobileditLife.setText(cardPhoneNumber);
+        mobileWatermark.setText(cardWatermarkPhoneNumber);
 
         Picasso.get().load(imageSetter).into(cardActual);
 

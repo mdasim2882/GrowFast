@@ -19,13 +19,10 @@ import com.example.growfast.InterfacesUsed.LoadMyTemplates;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.DigitalCardRecyclerViewAdapter;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.ProductGridItemDecoration;
 import com.example.growfast.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,17 +63,14 @@ public class DigitalCardsActivity extends AppCompatActivity implements LoadMyTem
     }
 
     private void loadTemplates() {
-        templatesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<ProductEntry> products = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
-                        ProductEntry product = bannerSnapshot.toObject(ProductEntry.class);
-                        products.add(product);
-                    }
-                    loadMyTemplates.onTemplateLoadSuccess(products);
+        templatesRef.get().addOnCompleteListener(task -> {
+            List<ProductEntry> products = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot bannerSnapshot : task.getResult()) {
+                    ProductEntry product = bannerSnapshot.toObject(ProductEntry.class);
+                    products.add(product);
                 }
+                loadMyTemplates.onTemplateLoadSuccess(products);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

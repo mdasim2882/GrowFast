@@ -36,6 +36,7 @@ import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasse
 import static com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity.UID;
 
 public class WebsiteCardRecyclerViewAdapter extends RecyclerView.Adapter<WebsiteCardItemsViewHolder> {
+    public static final String TYPE_WEBSITE = "type";
 
     public static final String COME_FROM = "comeFrom";
     public static final String PRODUCT_NAME = "productName";
@@ -164,7 +165,7 @@ public class WebsiteCardRecyclerViewAdapter extends RecyclerView.Adapter<Website
 
                 if (finalExtPurchase.charAt(0) == 'P' || productCost.equals("Free")) {
                     Intent i = new Intent(v.getContext(), WebsiteActivity.class);
-//                    i.putExtra("digiCardUri", getCardsUri);
+                    i.putExtra(TYPE_WEBSITE, productName);
                     v.getContext().startActivity(i);
 
                     // NOTE: Remember the important feature of Activity typecasting in constructor of Adapter

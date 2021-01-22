@@ -14,13 +14,13 @@
         android:elevation="4dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/website_details_toolbar"
+            android:id="@+id/mycreatedwebsite_details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textAlignment="center"
-            app:title="Create Website"
+            app:title="My Website"
             app:navigationIcon="@drawable/ic_round_arrow_back_24"
             app:titleTextAppearance="@style/AppLayoutGrowFast.ActiveItemTextAppearance"
             app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>

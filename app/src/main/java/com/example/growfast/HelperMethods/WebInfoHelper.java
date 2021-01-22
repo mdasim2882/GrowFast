@@ -3,99 +3,56 @@ package com.example.growfast.HelperMethods;
 public class WebInfoHelper {
     String id;
     String name;
-    String imageLink;
+    String websiteType;
+    String imageProfileLink;
     String designationName;
+
     String businessAddress;
+
     String referenceWebsite;
     String emailId;
     String linkedInPageLink;
     String whatsappNumber;
-    String twitterID;
-    String telegramD;
-    String instagramID;
+    String twitterIDLink;
+    String telegramIDLink;
+    String instagramIDLink;
     String googleMapLocationlink;
     String aboutUs;
-
     String phoneNo;
+
     String facebookPageLink;
     String product_0;
     String product_1;
     String product_2;
     String product_3;
-
-    public String getProduct_0() {
-        return product_0;
-    }
-
-    public void setProduct_0(String product_0) {
-        this.product_0 = product_0;
-    }
-
-    public String getProduct_1() {
-        return product_1;
-    }
-
-    public void setProduct_1(String product_1) {
-        this.product_1 = product_1;
-    }
-
-    public String getProduct_2() {
-        return product_2;
-    }
-
-    public void setProduct_2(String product_2) {
-        this.product_2 = product_2;
-    }
-
-    public String getProduct_3() {
-        return product_3;
-    }
-
-    public void setProduct_3(String product_3) {
-        this.product_3 = product_3;
-    }
-
-    public String getProduct_4() {
-        return product_4;
-    }
-
-    public void setProduct_4(String product_4) {
-        this.product_4 = product_4;
-    }
-
     String product_4;
 //    List<String> productImages;
 
-    public String getId() {
-        return id;
+
+    public String getWebsiteType() {
+        return websiteType;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setWebsiteType(String websiteType) {
+        this.websiteType = websiteType;
     }
 
-//    public List<String> getProductImages() {
-//        return productImages;
-//    }
-//
-//    public void setProductImages(List<String> productImages) {
-//        this.productImages = productImages;
-//    }
+    public WebInfoHelper() {
+    }
 
-
-    public WebInfoHelper(String id, String name, String imageLink, String designationName, String businessAddress, String referenceWebsite, String emailId, String linkedInPageLink, String whatsappNumber, String twitterID, String telegramD, String instagramID, String googleMapLocationlink, String aboutUs, String phoneNo, String facebookPageLink, String product_0, String product_1, String product_2, String product_3, String product_4) {
+    public WebInfoHelper(String id, String name, String imageProfileLink, String designationName, String businessAddress, String referenceWebsite, String emailId, String linkedInPageLink, String whatsappNumber, String twitterIDLink, String telegramIDLink, String instagramIDLink, String googleMapLocationlink, String aboutUs, String phoneNo, String facebookPageLink, String product_0, String product_1, String product_2, String product_3, String product_4) {
         this.id = id;
         this.name = name;
-        this.imageLink = imageLink;
+        this.imageProfileLink = imageProfileLink;
         this.designationName = designationName;
         this.businessAddress = businessAddress;
         this.referenceWebsite = referenceWebsite;
         this.emailId = emailId;
         this.linkedInPageLink = linkedInPageLink;
         this.whatsappNumber = whatsappNumber;
-        this.twitterID = twitterID;
-        this.telegramD = telegramD;
-        this.instagramID = instagramID;
+        this.twitterIDLink = twitterIDLink;
+        this.telegramIDLink = telegramIDLink;
+        this.instagramIDLink = instagramIDLink;
         this.googleMapLocationlink = googleMapLocationlink;
         this.aboutUs = aboutUs;
         this.phoneNo = phoneNo;
@@ -105,6 +62,30 @@ public class WebInfoHelper {
         this.product_2 = product_2;
         this.product_3 = product_3;
         this.product_4 = product_4;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageProfileLink() {
+        return imageProfileLink;
+    }
+
+    public void setImageProfileLink(String imageProfileLink) {
+        this.imageProfileLink = imageProfileLink;
     }
 
     public String getDesignationName() {
@@ -155,28 +136,28 @@ public class WebInfoHelper {
         this.whatsappNumber = whatsappNumber;
     }
 
-    public String getTwitterID() {
-        return twitterID;
+    public String getTwitterIDLink() {
+        return twitterIDLink;
     }
 
-    public void setTwitterID(String twitterID) {
-        this.twitterID = twitterID;
+    public void setTwitterIDLink(String twitterIDLink) {
+        this.twitterIDLink = twitterIDLink;
     }
 
-    public String getTelegramD() {
-        return telegramD;
+    public String getTelegramIDLink() {
+        return telegramIDLink;
     }
 
-    public void setTelegramD(String telegramD) {
-        this.telegramD = telegramD;
+    public void setTelegramIDLink(String telegramIDLink) {
+        this.telegramIDLink = telegramIDLink;
     }
 
-    public String getInstagramID() {
-        return instagramID;
+    public String getInstagramIDLink() {
+        return instagramIDLink;
     }
 
-    public void setInstagramID(String instagramID) {
-        this.instagramID = instagramID;
+    public void setInstagramIDLink(String instagramIDLink) {
+        this.instagramIDLink = instagramIDLink;
     }
 
     public String getGoogleMapLocationlink() {
@@ -195,41 +176,6 @@ public class WebInfoHelper {
         this.aboutUs = aboutUs;
     }
 
-    @Override
-    public String toString() {
-        return "WebInfoHelper{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", phoneNo='" + phoneNo + '\'' +
-                ", facebookPageLink='" + facebookPageLink + '\'' +
-                ", product_0='" + product_0 + '\'' +
-                ", product_1='" + product_1 + '\'' +
-                ", product_2='" + product_2 + '\'' +
-                ", product_3='" + product_3 + '\'' +
-                ", product_4='" + product_4 + '\'' +
-                '}';
-    }
-
-    public WebInfoHelper() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImageLink() {
-        return imageLink;
-    }
-
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
-    }
-
     public String getPhoneNo() {
         return phoneNo;
     }
@@ -244,5 +190,45 @@ public class WebInfoHelper {
 
     public void setFacebookPageLink(String facebookPageLink) {
         this.facebookPageLink = facebookPageLink;
+    }
+
+    public String getProduct_0() {
+        return product_0;
+    }
+
+    public void setProduct_0(String product_0) {
+        this.product_0 = product_0;
+    }
+
+    public String getProduct_1() {
+        return product_1;
+    }
+
+    public void setProduct_1(String product_1) {
+        this.product_1 = product_1;
+    }
+
+    public String getProduct_2() {
+        return product_2;
+    }
+
+    public void setProduct_2(String product_2) {
+        this.product_2 = product_2;
+    }
+
+    public String getProduct_3() {
+        return product_3;
+    }
+
+    public void setProduct_3(String product_3) {
+        this.product_3 = product_3;
+    }
+
+    public String getProduct_4() {
+        return product_4;
+    }
+
+    public void setProduct_4(String product_4) {
+        this.product_4 = product_4;
     }
 }

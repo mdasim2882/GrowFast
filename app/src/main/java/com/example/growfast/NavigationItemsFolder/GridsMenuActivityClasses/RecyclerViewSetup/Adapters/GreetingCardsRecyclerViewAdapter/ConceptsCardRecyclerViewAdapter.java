@@ -53,34 +53,31 @@ public class ConceptsCardRecyclerViewAdapter extends RecyclerView.Adapter<Concep
     }
 
     private DialogInterface.OnClickListener performDialogOperations(String productID, String productName, String productCost) {
-        return new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
-                        Intent i = new Intent(context, CartItemsActivity.class);
-                        i.putExtra(COME_FROM, "conceptsCard");
-                        i.putExtra(PRODUCT_NAME, productName);
-                        i.putExtra(UNIQUE_ID, productID);
-                        i.putExtra(ITEM_TYPE, "Concepts Greetings");
-                        i.putExtra(CATEGORY, "Concepts Greetings");
+        return (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
+                    Intent i = new Intent(context, CartItemsActivity.class);
+                    i.putExtra(COME_FROM, "conceptsCard");
+                    i.putExtra(PRODUCT_NAME, productName);
+                    i.putExtra(UNIQUE_ID, productID);
+                    i.putExtra(ITEM_TYPE, "Concepts Greetings");
+                    i.putExtra(CATEGORY, "Concepts Greetings");
 
-                        i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
+                    i.putExtra(PRODUCT_PRICE, Integer.parseInt(productCost.substring(3)));
 
-                        context.startActivity(i);
-                        ((ConceptsActivity) context).finish();
+                    context.startActivity(i);
+                    ((ConceptsActivity) context).finish();
 
 
-                        Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
-                        break;
+                    Toast.makeText(context, "Yes Clicked", Toast.LENGTH_SHORT).show();
+                    break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        break;
-                }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    Toast.makeText(context, "No Clicked", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    break;
             }
         };
     }

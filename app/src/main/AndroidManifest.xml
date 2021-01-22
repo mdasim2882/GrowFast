@@ -17,6 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.GrowFast"
         android:usesCleartextTraffic="true">
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity"></activity>
@@ -40,7 +41,8 @@
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
         <activity
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:hardwareAccelerated="false" />
         <activity android:name=".NavigationItemsFolder.Settings" />
         <activity
             android:name=".NavigationItemsFolder.BusinessManagement"
