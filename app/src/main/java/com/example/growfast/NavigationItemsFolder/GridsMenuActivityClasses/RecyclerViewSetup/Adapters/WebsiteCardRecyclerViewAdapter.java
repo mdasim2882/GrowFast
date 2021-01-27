@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.ProductEntry;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity;
-import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Holders.WebsiteCardItemsViewHolder;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity;
@@ -287,16 +286,6 @@ public class WebsiteCardRecyclerViewAdapter extends RecyclerView.Adapter<Website
         };
     }
 
-    private void goToProductdetailsActivity(View v, String title, Integer imageID, Integer priceIDs) {
-        Intent i = new Intent(v.getContext(), ProductOverview.class);
-        i.putExtra("Title", title);
-        i.putExtra("ImageID", imageID);
-        i.putExtra("PriceBar", priceIDs);
-        v.getContext().startActivity(i);
-        // NOTE: Remember the important feature of Activity typecasting in constructor of Adapter
-        // in order to use overridePendingTransition() method
-        activity.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-    }
 
     private void startMyItemAddedBroadCast() {
         System.out.println("SEND");

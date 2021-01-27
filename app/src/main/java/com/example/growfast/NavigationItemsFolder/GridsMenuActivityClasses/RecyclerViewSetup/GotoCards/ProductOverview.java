@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,6 +59,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -97,7 +100,7 @@ public class ProductOverview extends AppCompatActivity {
     RelativeLayout convertDigitalCardLayout;
     CircleImageView userCenteredImage;
     TextView textViewAboutUs;
-
+    private android.app.AlertDialog.Builder modeDesc;
 
     private String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/";
     private File sdCard = Environment.getExternalStorageDirectory();
@@ -172,6 +175,8 @@ public class ProductOverview extends AppCompatActivity {
         // For drag and Drop movement between images
         setProfileMiddleLogo();
 
+        setDescriptionTheme();
+
 
         Picasso.get().load(imageSetter).into(cardActual);
         setAboutUsTextMiddle();
@@ -185,6 +190,32 @@ public class ProductOverview extends AppCompatActivity {
         Handler h = new Handler();
         h.post(r);
 
+
+    }
+
+    private void setDescriptionTheme() {
+        modeDesc = new android.app.AlertDialog.Builder(this);
+        modeDesc.setTitle("Select Description Theme-");
+
+        final List<String> status = new ArrayList<>();
+        status.add("Dark");
+        status.add("Light");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, status);
+
+        modeDesc.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        modeDesc.setAdapter(arrayAdapter, (dialog, which) -> {
+            String strName = arrayAdapter.getItem(which);
+
+            if (strName.equals("Dark")) {
+                textViewAboutUs.setTextColor(Color.BLACK);
+            } else if (strName.equals("Light")) {
+                textViewAboutUs.setTextColor(Color.YELLOW);
+            }
+
+
+//            Toast.makeText(this, "Item selected: "+ strName, Toast.LENGTH_SHORT).show();
+        });
 
     }
 
@@ -570,6 +601,9 @@ public class ProductOverview extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.frameDPCentered) {
             CropImage.activity().setAspectRatio(1, 1).start(ProductOverview.this);
+        }
+        if (item.getItemId() == R.id.editdescription_color) {
+            modeDesc.show();
         }
         return super.onOptionsItemSelected(item);
     }

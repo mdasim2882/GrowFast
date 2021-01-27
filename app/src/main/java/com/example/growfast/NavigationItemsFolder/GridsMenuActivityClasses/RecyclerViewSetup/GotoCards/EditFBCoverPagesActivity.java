@@ -138,12 +138,7 @@ public class EditFBCoverPagesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.editFbCover_greets_details_toolbar);
         setSupportActionBar(toolbar);
         toolbar.hideOverflowMenu();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     public boolean isStoragePermissionGranted() {

@@ -4,4 +4,9 @@
         android:id="@+id/frameDPCentered"
         android:icon="@drawable/ic_baseline_edit_24"
         android:title="Edit Picture" />
+
+    <item
+        android:id="@+id/editdescription_color"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Edit Description" />
 </menu>
