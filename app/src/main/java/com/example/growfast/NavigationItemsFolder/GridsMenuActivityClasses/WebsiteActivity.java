@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.growfast.HelperMethods.WebInfoHelper;
+import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.WebsitePreviewActivity;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.Adapters.ReferenceImagesCardRecyclerViewAdapter;
 import com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.ProductGridItemDecoration;
 import com.example.growfast.R;
@@ -82,6 +83,7 @@ public class WebsiteActivity extends AppCompatActivity {
         imagesSelectedURL = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Creating Website...");
 
         typeWebsite = getIntent().getStringExtra(TYPE_WEBSITE);
@@ -165,7 +167,7 @@ public class WebsiteActivity extends AppCompatActivity {
         reditAboutUs = editAboutUs.getText().toString();
     }
 
-    private void updateUI(FirebaseUser user, List<Uri> image) {
+    private void updateUI(FirebaseUser user, List<Uri> image, boolean status) {
         AtomicInteger a = new AtomicInteger();
         a.set(0);
 
@@ -180,17 +182,40 @@ public class WebsiteActivity extends AppCompatActivity {
                 spaceRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     Log.e(TAG, "updateUI: PHOTO URL TO BE SAVED: " + uri);
 
+                    if (a.get() == image.size() - 1) {
+                        Log.e(TAG, "ATOMIC VALUE after update = [" + a.get() + "]");
+                    }
 //                 imagesSelectedURL.add(uri.toString());
-
                     Map<String, Object> map = new HashMap<>();
                     map.put("product_" + a, uri.toString());
                     websiteData.child(id).updateChildren(map);
                     a.set(a.get() + 1);
                 });
-            }).addOnCompleteListener(task -> {
-                Toast.makeText(this, "Done with uploading...", Toast.LENGTH_SHORT).show();
-            }).addOnFailureListener(e -> Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show());
+            })
+                    .addOnCompleteListener(task -> {
+//                Toast.makeText(this, "Done with uploading...", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show());
         }
+
+        if (status) {
+            uploadProfilePicture();
+        }
+    }
+
+    private void uploadProfilePicture() {
+        StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
+        spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+//                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+            spaceRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                Log.e(TAG, "updateUI: PHOTO URL TO BE SAVED: " + uri);
+//                 imagesSelectedURL.add(uri.toString());
+                Map<String, Object> map = new HashMap<>();
+                map.put("imageProfileLink", uri.toString());
+                imageLinkUser = uri.toString();
+                websiteData.child(id).updateChildren(map);
+            });
+        });
     }
 
     private void showInRealtimeDatabase() {
@@ -277,23 +302,42 @@ public class WebsiteActivity extends AppCompatActivity {
     }
 
     public void addtoRealtimeDatabase(View view) {
-        imagesSelectedURL = new ArrayList<>();
-        String name = editName.getText().toString();
-        if (!TextUtils.isEmpty(name)) {
-            progressDialog.show();
-            showInRealtimeDatabase();
+        try {
+            imagesSelectedURL = new ArrayList<>();
+            String name = editName.getText().toString();
+            if (!TextUtils.isEmpty(name)) {
+                progressDialog.show();
+                showInRealtimeDatabase();
 
-            updateUI(user, imagesSelected);
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(() -> {
-                //Do something after 8000ms
-                progressDialog.dismiss();
-                Toast.makeText(WebsiteActivity.this, "Created...", Toast.LENGTH_SHORT).show();
-            }, 8000);
+                updateUI(user, imagesSelected, true);
+            } else {
+                Toast.makeText(this, "Name can't be empty", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            updateUI(user, imagesSelected, false);
 
-        } else {
-            Toast.makeText(this, "Name can't be empty", Toast.LENGTH_SHORT).show();
+//            StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
+//            spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+////                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+//                spaceRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                    Log.e(TAG, "updateUI: PHOTO URL TO BE SAVED: " + uri);
+////                 imagesSelectedURL.add(uri.toString());
+//                    Map<String, Object> map = new HashMap<>();
+//                    map.put("imageLink", uri.toString());
+//                    imageLinkUser = uri.toString();
+////                        websiteData.child(id).updateChildren(map);
+//                });
+//            });
         }
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            //Do something after 8000ms
+            progressDialog.dismiss();
+            Intent intent = new Intent(this, WebsitePreviewActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(WebsiteActivity.this, "Created.", Toast.LENGTH_SHORT).show();
+        }, 20000);
     }
 
     @Override
@@ -306,21 +350,21 @@ public class WebsiteActivity extends AppCompatActivity {
                 imageUri = data.getData();
                 webprofile_image.setImageURI(imageUri);
 
-                StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
-                spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
-//                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                    spaceRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        Log.e(TAG, "updateUI: PHOTO URL TO BE SAVED: " + uri);
-//                 imagesSelectedURL.add(uri.toString());
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("imageLink", uri.toString());
-                        imageLinkUser = uri.toString();
-//                        websiteData.child(id).updateChildren(map);
-                    });
+//                StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
+//                spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+////                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+//                    spaceRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                        Log.e(TAG, "updateUI: PHOTO URL TO BE SAVED: " + uri);
+////                 imagesSelectedURL.add(uri.toString());
+//                        Map<String, Object> map = new HashMap<>();
+//                        map.put("imageLink", uri.toString());
+//                        imageLinkUser = uri.toString();
+////                        websiteData.child(id).updateChildren(map);
+//                    });
 
-                }).addOnCompleteListener(task -> {
-                    Toast.makeText(this, "Done with uploading...", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show());
+//                }).addOnCompleteListener(task -> {
+//                    Toast.makeText(this, "Done with uploading...", Toast.LENGTH_SHORT).show();
+//                }).addOnFailureListener(e -> Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show());
             }
         }
 

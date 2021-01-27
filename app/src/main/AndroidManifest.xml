@@ -15,12 +15,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/Theme.GrowFast"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.WebsitePreviewActivity"></activity>
+        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity" />
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity" />
         <activity
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
@@ -41,8 +42,8 @@
         <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
         <activity
             android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".NavigationItemsFolder.Settings" />
         <activity
             android:name=".NavigationItemsFolder.BusinessManagement"

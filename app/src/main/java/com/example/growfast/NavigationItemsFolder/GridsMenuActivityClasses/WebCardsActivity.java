@@ -42,6 +42,7 @@ public class WebCardsActivity extends AppCompatActivity implements LoadMyTemplat
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.refreshiconclick) {
