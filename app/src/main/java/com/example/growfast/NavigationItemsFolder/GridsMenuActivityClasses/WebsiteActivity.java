@@ -335,8 +335,8 @@ public class WebsiteActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Intent intent = new Intent(this, WebsitePreviewActivity.class);
             startActivity(intent);
-            finish();
             Toast.makeText(WebsiteActivity.this, "Created.", Toast.LENGTH_SHORT).show();
+            finish();
         }, 20000);
     }
 
