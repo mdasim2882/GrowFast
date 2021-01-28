@@ -1,10 +1,19 @@
 package com.example.growfast.NavigationItemsFolder.GridsMenuActivityClasses;
 
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +32,20 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WebCardsActivity extends AppCompatActivity implements LoadMyTemplates {
+    public final String REF_WEBSITE_LINK = "websiteLink";
+    public final String LOGIN_STATS = "loginStats";
+    public static final String TYPE_WEBSITE = "type";
+    SharedPreferences sharedPreferences;
+    String getTypeWebsite;
+    TextView createdWebsiteRecycler;
+
     LoadMyTemplates loadMyTemplates;
     private RecyclerView recyclerView;
     List<ProductEntry> refreshList;
-
+    LinearLayout websiteRecycler;
     CollectionReference templatesRef;
     private WebsiteCardRecyclerViewAdapter adapter;
 
@@ -62,8 +79,20 @@ public class WebCardsActivity extends AppCompatActivity implements LoadMyTemplat
     private void initializeCards() {
         templatesRef = FirebaseFirestore.getInstance().collection("CreateWebsite");
         loadMyTemplates = this;
+        websiteRecycler = findViewById(R.id.websiteDetailsRecycler);
+        createdWebsiteRecycler = findViewById(R.id.created_websiteRecycler);
+        sharedPreferences = getSharedPreferences(LOGIN_STATS, Context.MODE_PRIVATE);
+        getTypeWebsite = sharedPreferences.getString(REF_WEBSITE_LINK, "");
+        if (!getTypeWebsite.equals("")) {
+            showLastCreatedWebsite();
+        }
         setUpToolbar();
         loadTemplates();
+    }
+
+    private void showLastCreatedWebsite() {
+        websiteRecycler.setVisibility(View.VISIBLE);
+        createdWebsiteRecycler.setText(getTypeWebsite);
     }
 
     private void loadTemplates() {
@@ -115,5 +144,35 @@ public class WebCardsActivity extends AppCompatActivity implements LoadMyTemplat
     @Override
     public void onTemplatedLoadFailure(String message) {
 
+    }
+
+    public void copyWebsiteButtonRecycler(View view) {
+        ClipboardManager clipboard = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
+        clipboard.setText(createdWebsiteRecycler.getText().toString());
+        Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+    }
+
+    public void shareViaWhatsappLogo(View view) {
+        shareViaWhatsApp();
+    }
+
+    public void shareViaWhatsApp() {
+        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+        whatsappIntent.setType("text/plain");
+        whatsappIntent.setPackage("com.whatsapp");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, createdWebsiteRecycler.getText().toString());
+        try {
+            Objects.requireNonNull(this).startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.whatsapp")));
+        }
+    }
+
+    public void sharetoOthers(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, createdWebsiteRecycler.getText().toString());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

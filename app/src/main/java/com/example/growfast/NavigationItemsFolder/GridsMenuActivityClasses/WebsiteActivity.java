@@ -106,7 +106,10 @@ public class WebsiteActivity extends AppCompatActivity {
         initializeEditTextFields();
         websiteData = FirebaseDatabase.getInstance().getReference("Users");
         setRecyclerView();
-        id = websiteData.push().getKey();
+        //Todo: Update 4
+//        id = websiteData.push().getKey();
+        Log.e(TAG, "onCreate: TYPE WEBSITE" + typeWebsite);
+        id = FirebaseAuth.getInstance().getCurrentUser().getUid() + typeWebsite;
 
         storageReference = FirebaseStorage.getInstance().getReference();
         database = FirebaseFirestore.getInstance();
@@ -188,7 +191,9 @@ public class WebsiteActivity extends AppCompatActivity {
 //                 imagesSelectedURL.add(uri.toString());
                     Map<String, Object> map = new HashMap<>();
                     map.put("product_" + a, uri.toString());
+                    //TODO: Update 1
                     websiteData.child(id).updateChildren(map);
+//                    websiteData.updateChildren(map);
                     a.set(a.get() + 1);
                 });
             })
@@ -213,7 +218,9 @@ public class WebsiteActivity extends AppCompatActivity {
                 Map<String, Object> map = new HashMap<>();
                 map.put("imageProfileLink", uri.toString());
                 imageLinkUser = uri.toString();
+                //TODO: Update 2;
                 websiteData.child(id).updateChildren(map);
+//                websiteData.updateChildren(map);
             });
         });
     }
@@ -260,8 +267,10 @@ public class WebsiteActivity extends AppCompatActivity {
 //            Map<String,String> valuesDB=new HashMap<>();
 //            valuesDB.put("name",name);
 
+            //TODO: Update 3
             websiteData.child(id).setValue(mywebsite);
-            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+//            websiteData.setValue(mywebsite);
+//            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Name can't be empty", Toast.LENGTH_SHORT).show();
         }
@@ -302,9 +311,10 @@ public class WebsiteActivity extends AppCompatActivity {
     }
 
     public void addtoRealtimeDatabase(View view) {
+        String name = editName.getText().toString();
         try {
             imagesSelectedURL = new ArrayList<>();
-            String name = editName.getText().toString();
+
             if (!TextUtils.isEmpty(name)) {
                 progressDialog.show();
                 showInRealtimeDatabase();
@@ -329,15 +339,19 @@ public class WebsiteActivity extends AppCompatActivity {
 //                });
 //            });
         }
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> {
-            //Do something after 8000ms
-            progressDialog.dismiss();
-            Intent intent = new Intent(this, WebsitePreviewActivity.class);
-            startActivity(intent);
-            Toast.makeText(WebsiteActivity.this, "Created.", Toast.LENGTH_SHORT).show();
-            finish();
-        }, 20000);
+        if (!TextUtils.isEmpty(name)) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(() -> {
+                //Do something after 8000ms
+                progressDialog.dismiss();
+                Intent intent = new Intent(this, WebsitePreviewActivity.class);
+                intent.putExtra(TYPE_WEBSITE, typeWebsite);
+                startActivity(intent);
+                Toast.makeText(WebsiteActivity.this, "Created.", Toast.LENGTH_SHORT).show();
+                finish();
+            }, 20000);
+        }
+
     }
 
     @Override
