@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.growfast">
+    package="com.digitaladvisor.growfast">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,41 +20,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowFast"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.WebsitePreviewActivity"></activity>
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.WebsitePreviewActivity"></activity>
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebCardsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity" />
         <activity
-            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
+            android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ExoVideosWpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ConceptsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ComboPostersActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.HealthActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.LifeActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.GreetingsActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview" />
-        <activity android:name=".NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.CartItemsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.FillDigitalCardDetailsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.VideosCardsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditsDifferentGreetingsCards" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.WhatsappVideos" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ConceptsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.CombinationActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.ComboPostersActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.HealthActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsCardsActivities.LifeActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.GreetingsActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WhatsappStatusVideoActivity" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.ProductOverview" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.DigitalCardsActivity" />
         <activity
-            android:name=".NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"
+            android:name="com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.WebsiteActivity"
             android:hardwareAccelerated="false"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".NavigationItemsFolder.Settings" />
+        <activity android:name="com.digitaladvisor.growfast.NavigationItemsFolder.Settings" />
         <activity
-            android:name=".NavigationItemsFolder.BusinessManagement"
+            android:name="com.digitaladvisor.growfast.NavigationItemsFolder.BusinessManagement"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".StructureBaseActivity" />
-        <activity android:name=".WelcomePagesActivity" />
-        <activity android:name=".Authentication.PhoneAuthActivity" />
+        <activity android:name="com.digitaladvisor.growfast.StructureBaseActivity" />
+        <activity android:name="com.digitaladvisor.growfast.WelcomePagesActivity" />
+        <activity android:name="com.digitaladvisor.growfast.Authentication.PhoneAuthActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.digitaladvisor.growfast.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,7 +77,7 @@
         </provider>
 
         <service
-            android:name=".Services.MyNotificationService"
+            android:name="com.digitaladvisor.growfast.Services.MyNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -99,7 +99,7 @@
             android:resource="@color/dark_skyblue" /> <!-- <meta-data -->
         <!-- android:name="com.razorpay." -->
         <!-- android:value="rzp_test_PWXNtHUD6Un5Yo"/> -->
-        <service android:name=".Services.MyDownloadingService" />
+        <service android:name="com.digitaladvisor.growfast.Services.MyDownloadingService" />
     </application>
 
 </manifest>

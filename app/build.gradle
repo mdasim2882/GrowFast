@@ -4,17 +4,26 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        'RELEASE SHA1' {
+            storeFile file('C:\\Users\\acer\\Desktop\\Release Pack\\Signed\\KEYS\\DigitalAdvisor\\digital_advisor_first.jks')
+            storePassword 'digitaladvisor'
+            keyPassword 'digitaladvisor'
+            keyAlias 'release_key_da'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.growfast"
+        applicationId "com.digitaladvisor.growfast"
         minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.'RELEASE SHA1'
     }
 
 
@@ -23,7 +32,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

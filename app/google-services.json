@@ -8,20 +8,57 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:305260667369:android:821b57a22a3fd781bdeb78",
+        "mobilesdk_app_id": "1:305260667369:android:566075264cd22921bdeb78",
+        "android_client_info": {
+          "package_name": "com.digitaladvisor.growfast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305260667369-i0c1tdqus9evujdcp0qpa1fda8mrjb7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitaladvisor.growfast",
+            "certificate_hash": "802152c318f81bf46fba6ad4fadda52e6c8b2b3e"
+          }
+        },
+        {
+          "client_id": "305260667369-nattjo9c8afoik0310nahegoggtf6f65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitaladvisor.growfast",
+            "certificate_hash": "92868152e3738fb39da6b0ebf03e095b3a396d0a"
+          }
+        },
+        {
+          "client_id": "305260667369-iatijor5accl2ra939s01ftm0477tshv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5lNY1phUPJKYpYEPzqNyjqDvxnirxsEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305260667369-iatijor5accl2ra939s01ftm0477tshv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305260667369:android:2187e3512da80f65bdeb78",
         "android_client_info": {
           "package_name": "com.example.growfast"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "305260667369-2ka2erg1vk75vouobj9nk7c3sipls36u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.growfast",
-            "certificate_hash": "92868152e3738fb39da6b0ebf03e095b3a396d0a"
-          }
-        },
         {
           "client_id": "305260667369-iatijor5accl2ra939s01ftm0477tshv.apps.googleusercontent.com",
           "client_type": 3
