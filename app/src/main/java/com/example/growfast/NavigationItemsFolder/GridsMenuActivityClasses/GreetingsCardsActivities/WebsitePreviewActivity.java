@@ -25,6 +25,7 @@ import java.util.Objects;
 
 public class WebsitePreviewActivity extends AppCompatActivity {
     public final String REF_WEBSITE_LINK = "websiteLink";
+    private final String BASE_URL = "http://digitaladvisor.co.in/";
     public final String LOGIN_STATS = "loginStats";
     public static final String TYPE_WEBSITE = "type";
 
@@ -33,6 +34,7 @@ public class WebsitePreviewActivity extends AppCompatActivity {
     TextView websiteLink;
     private ProgressBar pb;
     String getTypeWebsite;
+    private String website;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class WebsitePreviewActivity extends AppCompatActivity {
         initializeViews();
 
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.google.com/");
+        webView.loadUrl(website);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 Log.e("progress", "" + progress);
@@ -62,7 +64,7 @@ public class WebsitePreviewActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(LOGIN_STATS, Context.MODE_PRIVATE);
         pb = findViewById(R.id.progressPage);
 
-        String website = "" + FirebaseAuth.getInstance().getCurrentUser().getUid() + getTypeWebsite;
+        website = BASE_URL + FirebaseAuth.getInstance().getCurrentUser().getUid() + getTypeWebsite;
         websiteLink.setText(website);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();

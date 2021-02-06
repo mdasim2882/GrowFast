@@ -55,10 +55,7 @@ public class WebCardsActivity extends AppCompatActivity implements LoadMyTemplat
         setContentView(R.layout.activity_web_cards);
         initializeCards();
         setRecyclerView();
-
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

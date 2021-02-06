@@ -87,7 +87,6 @@ public class WebsiteActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Website...");
 
         typeWebsite = getIntent().getStringExtra(TYPE_WEBSITE);
-
 //        webView = (WebView) findViewById(R.id.webview);
 ////        ProgressBar pb=findViewById(R.id.progressPage);
 //        webView.setWebViewClient(new WebViewClient());
@@ -303,7 +302,6 @@ public class WebsiteActivity extends AppCompatActivity {
 
         adapter = new ReferenceImagesCardRecyclerViewAdapter(this, values);
 
-
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.updown_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.side_product_grid_spacing_small);
@@ -325,7 +323,6 @@ public class WebsiteActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             updateUI(user, imagesSelected, false);
-
 //            StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
 //            spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
 ////                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
@@ -363,7 +360,6 @@ public class WebsiteActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 imageUri = data.getData();
                 webprofile_image.setImageURI(imageUri);
-
 //                StorageReference spaceRef = storageReference.child("USERS/" + user.getUid() + "/WebProfilePicture" + System.currentTimeMillis() + ".jpg");
 //                spaceRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
 ////                    Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
@@ -381,7 +377,6 @@ public class WebsiteActivity extends AppCompatActivity {
 //                }).addOnFailureListener(e -> Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show());
             }
         }
-
     }
 //    @Override
 //    public void onBackPressed() {
