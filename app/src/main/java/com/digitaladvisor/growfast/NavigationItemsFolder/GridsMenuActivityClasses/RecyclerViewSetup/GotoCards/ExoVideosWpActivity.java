@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,13 +17,19 @@ import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.digitaladvisor.growfast.NavigationItemsFolder.CoreFragments.ProfileDetails;
 import com.digitaladvisor.growfast.R;
 import com.digitaladvisor.growfast.Services.MyDownloadingService;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -38,6 +45,12 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.digitaladvisor.growfast.NavigationItemsFolder.GridsMenuActivityClasses.RecyclerViewSetup.GotoCards.EditFBCoverPagesActivity.MAGGY;
 
@@ -50,13 +63,23 @@ public class ExoVideosWpActivity extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     private String urlVideo;
 
+    private CircleImageView videoComapny;
+    private EditText videoDescription, videoContactno;
+    LinearLayout videoDescriptionLayout;
+    RadioGroup itemGroup;
+    RadioButton colorBox;
+    FirebaseFirestore database;
+    Uri vidoepicUri;
+
+    boolean statusImagePicker = false;
+    private boolean valid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exo_videos_wp);
         setUpToolbar();
-        boolean valid = getIntent().getBooleanExtra("statusVideo", false);
+        valid = getIntent().getBooleanExtra("statusVideo", false);
 //        AndExoPlayerView andExoPlayerView = findViewById(R.id.andExoPlayerView);
 
         andExoPlayerView = findViewById(R.id.andExoPlayerView);
@@ -85,14 +108,149 @@ public class ExoVideosWpActivity extends AppCompatActivity {
         }
     }
 
+    private void startPlayer() {
+        Log.d(TAG, "startPlayer: called with value: " + urlVideo);
+        valid = getIntent().getBooleanExtra("statusVideo", false);
+//        AndExoPlayerView andExoPlayerView = findViewById(R.id.andExoPlayerView);
+
+        andExoPlayerView = findViewById(R.id.andExoPlayerView);
+        intializeViews();
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+
+        exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
+
+        if (valid) {
+
+            urlVideo = getIntent().getStringExtra("videoUrl");
+            Uri uri = Uri.parse(urlVideo);
+//            andExoPlayerView.setSource(urlVideo);
+//            Log.i("TAG", "onCreate: URL "+urlVideo+"\n URI: "+uri.toString());
+
+            DefaultHttpDataSourceFactory defdataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
+            ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+            MediaSource mediaSource = new ExtractorMediaSource(uri, defdataSourceFactory, extractorsFactory, null, null);
+            andExoPlayerView.setPlayer(exoPlayer);
+            exoPlayer.prepare(mediaSource);
+            exoPlayer.setPlayWhenReady(true);
+
+
+        }
+
+    }
+
     private void intializeViews() {
         // instantiate it within the onCreate method
+
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Downloading...");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
         mProgressDialog.setCanceledOnTouchOutside(false);
+
+
+        videoDescriptionLayout = findViewById(R.id.ll_videodesc);
+        videoDescription = findViewById(R.id.videoDescription);
+        videoContactno = findViewById(R.id.videoContactno);
+        itemGroup = findViewById(R.id.radioGroupColorBox);
+        videoComapny = findViewById(R.id.videoComantyIcon);
+        int selectedId = itemGroup.getCheckedRadioButtonId();
+        Log.d(TAG, "intializeViews: SELECTED_ID: " + selectedId);
+//         colorBox = findViewById(selectedId);
+        itemGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Log.d(TAG, "intializeViews: CHECKED_ID: " + checkedId);
+            Log.d(TAG, "intializeViews: RADIO GROUP_CHECKED_ID: " + group.getCheckedRadioButtonId());
+
+            colorBox = findViewById(checkedId);
+            try {
+                if (colorBox != null) {
+                    String color = colorBox.getText().toString();
+//                     Toast.makeText(this, color+" Color", Toast.LENGTH_SHORT).show();
+                    switch (color) {
+                        case "Purple":
+                            videoDescriptionLayout.setBackgroundColor(Color.parseColor("#D427F1"));
+                            videoDescriptionLayout.setBackgroundResource(R.color.purple);
+                            break;
+
+                        case "Green":
+//                    videoDescriptionLayout.setBackgroundColor(Color.GREEN);
+                            videoDescriptionLayout.setBackgroundResource(R.color.green);
+
+                            break;
+                        case "Blue":
+//                    videoDescriptionLayout.setBackgroundColor(Color.BLUE);
+                            videoDescriptionLayout.setBackgroundResource(R.color.blue);
+
+                            break;
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "intializeViews: " + e.getMessage());
+            }
+        });
+        database = FirebaseFirestore.getInstance();
+        //loadIconsAndDescription();
+        setListeners();
+    }
+
+    private void setListeners() {
+        videoComapny.setOnClickListener(v -> {
+            CropImage.activity().setAspectRatio(1, 1).start(ExoVideosWpActivity.this);
+            statusImagePicker = true;
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        data.putExtra("videoUrl", urlVideo);
+        data.putExtra("statusVideo", valid);
+        Log.d(TAG, "onActivityResult: VIDEO_URL==> " + urlVideo);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+                && data != null) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                vidoepicUri = result.getUri();
+                videoComapny.setImageURI(vidoepicUri);
+                Log.d(TAG, "onActivityResult: videoPicUri==> " + vidoepicUri.toString());
+            }
+
+
+        } else {
+            Toast.makeText(this, "Error: Try again...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void loadIconsAndDescription() {
+        database.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String companyPhotoUrl = task.getResult().get(ProfileDetails.M_DP_URI).toString();
+                String companyDescription = task.getResult().get(ProfileDetails.ABOUT_US).toString();
+                String companyContactno = task.getResult().get(ProfileDetails.MOBILE).toString();
+
+                if (companyPhotoUrl != null) {
+                    Picasso.get().load(companyPhotoUrl).into(videoComapny);
+                }
+                if (companyContactno != null || !companyContactno.equals("")) {
+                    videoContactno.setText("Contact no. " + companyContactno);
+                }
+                if (companyDescription != null || !companyDescription.equals("")) {
+                    videoDescription.setText(companyDescription);
+                }
+
+
+            } else {
+                Toast.makeText(this, "Logo not updated yet", Toast.LENGTH_LONG);
+            }
+        });
     }
 
     private void stopPlayer(PlayerView pv, SimpleExoPlayer absPlayer) {
@@ -135,7 +293,12 @@ public class ExoVideosWpActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        if (!statusImagePicker) {
+            recreate();
+        } else {
+            startPlayer();
+            statusImagePicker = false;
+        }
     }
 
     public void downloadVideoButton(View view) {
