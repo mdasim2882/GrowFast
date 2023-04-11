@@ -4,8 +4,24 @@
 
 ## Introduction
 
-- It is an Android Application that provides all the stuff related to Digital Marketing
-- It allows user to create Digital Cards, Greetings, WhatsAppVideos and even a simple website with some product images.
+- It is an Android Application that provides all the stuff related to Digital Marketing.
+- It allows user to create, edit and share Digital or Greetings Cards on social media platforms like Whatsapp, Facebook, etc.
+
+
+## Technology and Framerworks Used
+
+- Java
+- XML
+- Firebase
+- AsyncTask
+- HaMeR
+
+## Features: 
+
+- It is useful for Digital Marketing.
+- A user can create the Digital Cards with company logo, description and embedded social media platform links.
+- It allows user to generate a simple website with product images and company description.
+- It allows user to edit videos with their company logo and contact details.
 
 ## Final App
 <img src=https://i.ibb.co/6YcBDDb/20210206-174653.jpg width="500" height="315"> <img src=https://i.ibb.co/6bpMTPf/tia1767129093.png width="200" height="315">
