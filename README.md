@@ -23,7 +23,7 @@
 - It allows user to generate a simple website with product images and company description.
 - It allows user to edit videos with their company logo and contact details.
 
-## Final App
+## Final App (Preview)
 <img src=https://i.ibb.co/6YcBDDb/20210206-174653.jpg width="500" height="315"> <img src=https://i.ibb.co/6bpMTPf/tia1767129093.png width="200" height="315">
 
  <img src="https://i.ibb.co/vVZ6yn4/Screenshot-20230110-030428-2.png"  width="200" height="315"> <img src="https://i.ibb.co/q9XssY3/tia368254829.png" width="200" height="315">
@@ -32,4 +32,4 @@
 
 
 ## **UPDATE** 
-The above application is under production and not available on Google Play Store.
+The above application is under production phase and **_not yet_ available on Google Play Store.**
